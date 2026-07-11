@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flight Delay Protection - PVI × Vietnam Airlines · Giải pháp bảo hiểm trễ chuyến bay</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   THEME TOKENS - TỔNG CÔNG TY BẢO HIỂM PVI (Light Executive)
+   Brand colors extracted from PVI report deck.
+   ============================================================ */
+:root{
+  /* PVI brand */
+  --pvi-blue:#003087;     /* PVI corporate blue (primary) */
+  --pvi-indigo:#1A237E;   /* deep indigo */
+  --pvi-cyan:#0097DC;     /* PVI bright accent */
+  --pvi-sky:#1565C0;
+  --gold:#E65100;         /* highlight / warning accent */
+  --green:#2E7D32; --red:#C62828; --teal:#00ACC1;
+  --info:#1565C0; --caution:#E65100; --success:#2E7D32; --danger:#C62828; --warning:#E65100;
+
+  --ink-900:#0F1B33; --ink-700:#1E2A44; --ink-600:#3A4861; --ink-500:#64748B;
+  --bg-100:#F5F7FA; --bg-200:#E6F1FB; --white:#FFFFFF;
+
+  /* Fonts */
+  --font-display:"Montserrat", "Be Vietnam Pro", system-ui, sans-serif;
+  --font-body:"Be Vietnam Pro", system-ui, sans-serif;
+
+  /* animation engine hooks */
+  --ac-accent:#003087; --ac-accent-2:#0097DC; --ac-accent-3:#1A237E; --ac-accent-4:#1565C0;
+  --ac-fg:#0F1B33; --ac-muted:#64748B;
+  --ac-track:rgba(0,48,135,.10); --ac-line:rgba(0,48,135,.14);
+  --ac-ease:cubic-bezier(.22,.8,.18,1); --ac-ease-bounce:cubic-bezier(.34,1.56,.64,1);
+  --ac-dur:.8s; --ac-stagger:80ms;
+
+  --rail:268px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ============== viewport base ============== */
+html, body{ height:100%; overflow-x:hidden; }
+html{ scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+.slide{ width:100vw; height:100vh; height:100dvh; overflow:hidden; scroll-snap-align:start; display:flex; flex-direction:column; position:relative; }
+.slide-content{ flex:1; display:flex; flex-direction:column; justify-content:center; max-height:100%; overflow:hidden; padding:var(--slide-padding); }
+:root{
+  --title-size:clamp(1.8rem, 6vh, 4rem);
+  --h2-size:clamp(1.5rem, 4.5vh, 3rem);
+  --h3-size:clamp(1.2rem, 3.5vh, 2.1rem);
+  --body-size:clamp(1rem, 2.5vh, 1.7rem);
+  --small-size:clamp(.82rem, 2vh, 1.35rem);
+  --slide-padding:clamp(1.2rem, 4.5vh, 4rem);
+  --content-gap:clamp(.8rem, 2.5vh, 2.2rem);
+}
+@media (max-height:760px){ :root{ --slide-padding:clamp(.9rem,3vh,2rem); --body-size:clamp(.85rem,2vh,1.25rem); --small-size:clamp(.72rem,1.6vh,1rem);} }
+@media (max-height:600px){ :root{ --slide-padding:.7rem; } .hint,.nav-dots{ display:none; } }
+@media (prefers-reduced-motion:reduce){ *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.2s!important; } html{ scroll-behavior:auto; } }
+
+/* ============== animation core ============== */
+.ac-reveal{ opacity:0; transform:translateY(28px); }
+.ac-reveal--left{ transform:translateX(-32px);} .ac-reveal--right{ transform:translateX(32px);} .ac-reveal--zoom{ transform:scale(.86);}
+.ac-on .ac-reveal{ animation:ac-fade-up var(--ac-dur) var(--ac-ease) both; animation-delay:calc(var(--i,0)*var(--ac-stagger) + var(--ac-delay,0ms)); }
+.ac-on .ac-reveal--left,.ac-on .ac-reveal--right{ animation-name:ac-fade-x; }
+.ac-on .ac-reveal--zoom{ animation-name:ac-zoom-in; animation-timing-function:var(--ac-ease-bounce); }
+@keyframes ac-fade-up{ from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+@keyframes ac-fade-x{ from{opacity:0} to{opacity:1;transform:none} }
+@keyframes ac-zoom-in{ from{opacity:0;transform:scale(.86)} to{opacity:1;transform:scale(1)} }
+.ac-pop{ opacity:0; transform:scale(.4); }
+.ac-on .ac-pop{ animation:ac-pop var(--ac-dur) var(--ac-ease-bounce) both; animation-delay:calc(var(--i,0)*var(--ac-stagger) + var(--ac-delay,0ms)); }
+@keyframes ac-pop{ from{opacity:0;transform:scale(.4)} to{opacity:1;transform:scale(1)} }
+.ac-bar{ height:0!important; transition:height 1s var(--ac-ease); transition-delay:calc(var(--i,0)*var(--ac-stagger)); }
+.ac-on .ac-bar{ height:var(--h)!important; }
+.ac-fill-x{ width:0!important; transition:width 1s var(--ac-ease); transition-delay:calc(var(--i,0)*var(--ac-stagger)); }
+.ac-on .ac-fill-x{ width:var(--w)!important; }
+.ac-ring-val{ stroke-dasharray:var(--circ); stroke-dashoffset:var(--circ); transition:stroke-dashoffset 1.2s var(--ac-ease); transition-delay:calc(var(--i,0)*var(--ac-stagger)); }
+.ac-on .ac-ring-val{ stroke-dashoffset:calc(var(--circ)*(1 - var(--p))); }
+.ac-float{ animation:ac-float 6s ease-in-out infinite; }
+@keyframes ac-float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.ac-drift{ animation:ac-drift 22s ease-in-out infinite alternate; }
+@keyframes ac-drift{ 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(4%,-3%) scale(1.08)} }
+@media (prefers-reduced-motion:reduce){
+  .ac-reveal,.ac-pop{ opacity:1!important; transform:none!important; }
+  .ac-bar{ height:var(--h)!important; } .ac-fill-x{ width:var(--w)!important; }
+  .ac-ring-val{ stroke-dashoffset:calc(var(--circ)*(1 - var(--p)))!important; }
+  .ac-float,.ac-drift{ animation:none!important; }
+}
+
+/* ============== global look ============== */
+body{
+  font-family:var(--font-body); color:var(--ink-600);
+  background:
+    radial-gradient(1100px 760px at 84% -12%, rgba(0,151,220,.12), transparent 60%),
+    radial-gradient(940px 680px at -8% 112%, rgba(0,48,135,.10), transparent 55%),
+    linear-gradient(135deg,#FFFFFF 0%, #EAF1F9 100%);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.wrap{ width:min(94%, 1500px); margin-inline:auto; position:relative; z-index:2; }
+@media (min-width:1000px){ .slide-content{ padding-left:calc(var(--slide-padding) + var(--rail)); } }
+
+.head{ display:flex; flex-direction:column; gap:.35rem; margin-bottom:clamp(.6rem,2.2vh,1.4rem); }
+.eyebrow{ font-family:var(--font-display); font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--pvi-cyan); font-size:clamp(.62rem,1vw,.82rem); }
+.s-title{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1.35rem,3.4vw,2.5rem); line-height:1.1; letter-spacing:-.01em; }
+.s-sub{ font-size:var(--small-size); color:var(--ink-500); }
+.unit{ font-size:.72rem; color:var(--ink-500); font-style:italic; align-self:flex-start; }
+
+/* ============== rail ============== */
+.rail{ position:fixed; inset:0 auto 0 0; width:var(--rail); height:100dvh; z-index:50; display:flex; flex-direction:column; justify-content:center; gap:.1rem; padding:1.4rem 1rem;
+  background:linear-gradient(180deg, rgba(255,255,255,.93), rgba(234,241,249,.9)); backdrop-filter:blur(10px); border-right:1px solid rgba(0,48,135,.12); }
+.rail__brand{ display:flex; align-items:center; gap:.6rem; margin-bottom:.1rem; }
+.rail__logo{ width:38px; height:38px; border-radius:9px; background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); display:grid; place-content:center; color:#fff; font-family:var(--font-display); font-weight:800; font-size:.92rem; box-shadow:0 6px 16px rgba(0,48,135,.35); }
+.rail__title{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:.92rem; line-height:1.05; }
+.rail__sub{ font-size:.56rem; color:var(--ink-500); text-transform:uppercase; letter-spacing:.14em; margin:.12rem 0 1rem; }
+.rail__item{ display:flex; gap:.5rem; align-items:center; padding:.42rem .5rem; border-radius:10px; cursor:pointer; color:var(--ink-500); font-size:.72rem; font-weight:600; line-height:1.2; transition:color .25s, background .25s; }
+.rail__item .dot{ width:7px; height:7px; border-radius:50%; background:var(--ac-track); flex:none; transition:background .25s, box-shadow .25s; }
+.rail__num{ font-family:var(--font-display); font-weight:700; opacity:.45; font-size:.68rem; min-width:1.4em; }
+.rail__item:hover{ color:var(--ink-700); background:rgba(0,151,220,.08); }
+.rail__item.is-active{ color:var(--pvi-blue); background:rgba(0,48,135,.10); }
+.rail__item.is-active .dot{ background:var(--pvi-cyan); box-shadow:0 0 0 4px rgba(0,151,220,.18); }
+.rail__item.is-active .rail__num{ opacity:1; color:var(--pvi-blue); }
+@media (max-width:999px){ .rail{ display:none; } }
+
+/* ============== counter / progress / hint ============== */
+.counter{ position:fixed; top:1rem; right:1.4rem; z-index:60; font-family:var(--font-display); font-weight:700; color:var(--pvi-blue); font-size:.92rem; background:rgba(255,255,255,.75); padding:.3rem .8rem; border-radius:999px; border:1px solid rgba(0,48,135,.14); backdrop-filter:blur(6px); }
+.counter #cur{ color:var(--pvi-cyan); } .counter .sep{ opacity:.4; margin:0 .16rem; }
+.progress{ position:fixed; top:0; left:0; height:3px; width:100%; z-index:61; }
+.progress__fill{ height:100%; width:0; background:linear-gradient(90deg,var(--pvi-blue),var(--pvi-cyan)); transition:width .45s var(--ac-ease); }
+.hint{ position:fixed; bottom:.9rem; left:1.4rem; z-index:55; font-size:.64rem; color:var(--ink-500); letter-spacing:.04em; }
+@media (max-width:999px){ .hint{ display:none; } }
+
+/* nav buttons */
+.navbtns{ position:fixed; right:1.4rem; bottom:1.2rem; z-index:65; display:flex; flex-direction:column; gap:.55rem; }
+.navbtn{ width:48px; height:48px; border-radius:50%; border:1px solid rgba(0,48,135,.22); background:rgba(255,255,255,.88); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); color:var(--pvi-blue); cursor:pointer; display:grid; place-content:center; box-shadow:0 10px 26px rgba(0,48,135,.2); transition:background .2s, color .2s, transform .2s, opacity .2s; }
+.navbtn:hover{ background:var(--pvi-blue); color:#fff; transform:translateY(-2px) scale(1.06); }
+.navbtn:active{ transform:scale(.94); }
+.navbtn:disabled{ opacity:.35; cursor:default; pointer-events:none; }
+@media (max-width:600px){ .navbtn{ width:42px; height:42px; } .navbtns{ right:.8rem; bottom:.8rem; } }
+
+/* ============== ambient (insurance motif) ============== */
+.ambient{ position:fixed; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
+.orb{ position:absolute; border-radius:50%; filter:blur(80px); }
+.orb--1{ width:50vmax; height:50vmax; top:-18vmax; left:-10vmax; background:radial-gradient(circle,rgba(0,48,135,.20),transparent 68%); }
+.orb--2{ width:46vmax; height:46vmax; bottom:-16vmax; right:-12vmax; background:radial-gradient(circle,rgba(0,151,220,.20),transparent 68%); }
+.grid-glow{ position:absolute; inset:0; background-image:linear-gradient(rgba(0,48,135,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,48,135,.06) 1px,transparent 1px); background-size:46px 46px; mask-image:radial-gradient(circle at 50% 40%,#000,transparent 72%); -webkit-mask-image:radial-gradient(circle at 50% 40%,#000,transparent 72%); opacity:.6; }
+.shield{ position:absolute; opacity:.06; color:var(--pvi-blue); }
+.brandmark{ position:absolute; opacity:.07; pointer-events:none; user-select:none; filter:saturate(.9); }
+
+/* ============== components ============== */
+.kpis{ display:grid; gap:clamp(.6rem,1.4vw,1rem); }
+.kpis--4{ grid-template-columns:repeat(4,1fr); } .kpis--3{ grid-template-columns:repeat(3,1fr); } .kpis--2{ grid-template-columns:repeat(2,1fr); }
+.kpi{ background:#fff; border:1px solid var(--ac-line); border-top:4px solid var(--pvi-blue); border-radius:16px; padding:clamp(.9rem,1.8vw,1.4rem); box-shadow:0 12px 34px rgba(0,48,135,.07); display:flex; flex-direction:column; gap:.3rem; transition:transform .3s, box-shadow .3s, border-color .3s; }
+.kpi:hover{ transform:translateY(-6px); box-shadow:0 22px 50px rgba(0,48,135,.16); }
+.kpi--cyan{ border-top-color:var(--pvi-cyan);} .kpi--green{ border-top-color:var(--green);} .kpi--red{ border-top-color:var(--red);} .kpi--gold{ border-top-color:var(--gold);}
+.kpi__v{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1.5rem,3.2vw,2.5rem); line-height:1; letter-spacing:-.01em; }
+.kpi--green .kpi__v{ color:var(--green);} .kpi--red .kpi__v{ color:var(--red);} .kpi--cyan .kpi__v{ color:var(--pvi-cyan);} .kpi--gold .kpi__v{ color:var(--gold);}
+.kpi__l{ font-weight:700; color:var(--ink-700); font-size:clamp(.82rem,1.5vw,1.05rem); }
+.kpi__t{ font-size:var(--small-size); color:var(--ink-500); }
+.tag{ align-self:flex-start; font-family:var(--font-display); font-weight:700; font-size:.7rem; padding:.18rem .55rem; border-radius:999px; }
+.tag--g{ color:var(--green); background:rgba(46,125,50,.12);} .tag--r{ color:var(--red); background:rgba(198,40,40,.12);} .tag--b{ color:var(--pvi-cyan); background:rgba(0,151,220,.12);} .tag--o{ color:var(--gold); background:rgba(230,81,0,.12);}
+
+/* tables */
+.tbl{ width:100%; border-collapse:collapse; font-size:var(--small-size); background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 12px 36px rgba(0,48,135,.08); }
+.tbl th{ background:var(--pvi-blue); color:#fff; font-family:var(--font-display); font-weight:700; padding:.6rem .7rem; text-align:right; font-size:clamp(.72rem,1.3vw,.95rem); }
+.tbl th:first-child{ text-align:left; }
+.tbl td{ padding:.5rem .7rem; text-align:right; border-bottom:1px solid var(--ac-line); color:var(--ink-700); }
+.tbl td:first-child{ text-align:left; font-weight:600; color:var(--pvi-blue); }
+.tbl tr:last-child td{ border-bottom:none; }
+.tbl tr.total td{ background:rgba(0,48,135,.06); font-weight:800; color:var(--pvi-blue); }
+.pos{ color:var(--green); font-weight:700; } .neg{ color:var(--red); font-weight:700; }
+
+/* bar chart */
+.chart{ background:#fff; border:1px solid var(--ac-line); border-radius:16px; padding:clamp(.9rem,2vw,1.5rem) clamp(.7rem,1.6vw,1.2rem) clamp(.6rem,1.4vw,1rem); box-shadow:0 12px 36px rgba(0,48,135,.07); }
+.bars{ display:flex; align-items:flex-end; gap:clamp(.25rem,.8vw,.7rem); height:clamp(150px,30vh,300px); }
+.barcol{ flex:1; display:flex; flex-direction:column; align-items:center; gap:.3rem; height:100%; justify-content:flex-end; }
+.barstack{ width:100%; max-width:34px; display:flex; flex-direction:column-reverse; height:100%; justify-content:flex-start; align-self:flex-end; }
+.seg{ width:100%; border-radius:4px 4px 0 0; }
+.seg--goc{ background:linear-gradient(180deg,var(--pvi-blue),#00205c); }
+.seg--tai{ background:linear-gradient(180deg,var(--pvi-cyan),#0079b3); border-radius:4px 4px 0 0; }
+.barcol small{ font-size:.6rem; color:var(--ink-500); font-weight:600; }
+.barval{ font-size:.58rem; color:var(--pvi-blue); font-weight:700; font-family:var(--font-display); }
+.legend{ display:flex; gap:1.2rem; justify-content:center; margin-top:.6rem; flex-wrap:wrap; }
+.legend span{ display:flex; align-items:center; gap:.4rem; font-size:.74rem; color:var(--ink-600); font-weight:600; }
+.legend i{ width:14px; height:14px; border-radius:4px; display:inline-block; }
+
+/* horizontal bars */
+.hbars{ display:flex; flex-direction:column; gap:.55rem; }
+.hbar{ display:grid; grid-template-columns:clamp(90px,16%,170px) 1fr auto; align-items:center; gap:.6rem; }
+.hbar__l{ font-weight:600; color:var(--ink-700); font-size:var(--small-size); }
+.hbar__track{ height:clamp(16px,2.4vh,26px); background:var(--ac-track); border-radius:999px; overflow:hidden; }
+.hbar__fill{ height:100%; border-radius:999px; background:linear-gradient(90deg,var(--pvi-blue),var(--pvi-cyan)); }
+.hbar__v{ font-family:var(--font-display); font-weight:700; color:var(--pvi-blue); font-size:var(--small-size); white-space:nowrap; }
+
+/* donut */
+.donut-wrap{ display:flex; align-items:center; gap:clamp(.8rem,2vw,1.6rem); }
+.donut{ width:clamp(120px,16vw,190px); height:auto; transform:rotate(-90deg); }
+.donut-leg{ display:flex; flex-direction:column; gap:.6rem; }
+.donut-leg div{ display:flex; align-items:center; gap:.5rem; font-size:var(--body-size); color:var(--ink-700); font-weight:600; }
+.donut-leg i{ width:14px; height:14px; border-radius:4px; }
+
+/* generic cards */
+.cards{ display:grid; gap:clamp(.6rem,1.4vw,1rem); }
+.cards--3{ grid-template-columns:repeat(3,1fr);} .cards--2{ grid-template-columns:repeat(2,1fr);}
+.card{ background:#fff; border:1px solid var(--ac-line); border-left:4px solid var(--pvi-cyan); border-radius:14px; padding:clamp(.85rem,1.8vw,1.3rem); box-shadow:0 10px 30px rgba(0,48,135,.06); transition:transform .3s, box-shadow .3s; }
+.card:hover{ transform:translateY(-5px); box-shadow:0 20px 46px rgba(0,48,135,.15); }
+.card--warn{ border-left-color:var(--gold);} .card--bad{ border-left-color:var(--red);} .card--ok{ border-left-color:var(--green);}
+.card h4{ font-family:var(--font-display); color:var(--pvi-blue); font-weight:700; font-size:clamp(.92rem,1.7vw,1.18rem); margin-bottom:.35rem; display:flex; align-items:center; gap:.45rem; }
+.card p{ color:var(--ink-600); font-size:var(--small-size); line-height:1.45; }
+.card__ic{ width:30px; height:30px; flex:none; border-radius:8px; background:rgba(0,151,220,.12); color:var(--pvi-cyan); display:grid; place-content:center; }
+.card--warn .card__ic{ background:rgba(230,81,0,.12); color:var(--gold);} .card--bad .card__ic{ background:rgba(198,40,40,.12); color:var(--red);} .card--ok .card__ic{ background:rgba(46,125,50,.12); color:var(--green);}
+
+/* numbered steps */
+.steps{ display:grid; gap:clamp(.55rem,1.2vw,.9rem); }
+.step{ display:grid; grid-template-columns:auto 1fr; gap:.8rem; align-items:start; background:#fff; border:1px solid var(--ac-line); border-radius:14px; padding:clamp(.75rem,1.6vw,1.1rem); box-shadow:0 8px 24px rgba(0,48,135,.06); transition:transform .3s, box-shadow .3s; }
+.step:hover{ transform:translateY(-4px); box-shadow:0 18px 40px rgba(0,48,135,.14); }
+.step__n{ width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); color:#fff; font-family:var(--font-display); font-weight:800; display:grid; place-content:center; font-size:1.1rem; box-shadow:0 6px 16px rgba(0,48,135,.25); }
+.step h4{ font-family:var(--font-display); color:var(--pvi-blue); font-weight:700; font-size:clamp(.88rem,1.6vw,1.1rem); margin-bottom:.2rem; }
+.step p{ color:var(--ink-600); font-size:var(--small-size); line-height:1.4; }
+.blist{ margin:.3rem 0 0; padding-left:1.15rem; display:flex; flex-direction:column; gap:.24rem; }
+.blist li{ color:var(--ink-600); font-size:var(--small-size); line-height:1.42; }
+.blist li::marker{ color:var(--pvi-cyan); }
+
+/* section divider */
+.divider{ display:flex; flex-direction:column; align-items:flex-start; gap:.6rem; }
+.divider__no{ font-family:var(--font-display); font-weight:800; font-size:clamp(4rem,16vw,12rem); line-height:.8; letter-spacing:-.02em;
+  background:linear-gradient(120deg,var(--pvi-indigo),var(--pvi-blue) 45%,var(--pvi-cyan)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.divider__t{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1.4rem,4vw,3rem); max-width:22ch; line-height:1.12; }
+.divider__bar{ width:90px; height:5px; border-radius:99px; background:linear-gradient(90deg,var(--pvi-blue),var(--pvi-cyan)); }
+
+/* hero */
+.hero{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:.5rem; }
+.hero__kicker{ font-family:var(--font-display); font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--pvi-cyan); font-size:clamp(.7rem,1.4vw,1rem); }
+.hero__word{ font-family:var(--font-display); font-weight:800; line-height:.9; letter-spacing:-.02em; font-size:clamp(3.6rem,15vw,11rem);
+  background:linear-gradient(120deg,var(--pvi-indigo) 0%,var(--pvi-blue) 45%,var(--pvi-cyan) 70%,var(--pvi-blue) 100%); background-size:220% 100%;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.ac-on .hero__word{ animation:heroIn 1.2s var(--ac-ease-bounce) .08s both, shine 6s linear 1.3s infinite; }
+@keyframes heroIn{ 0%{opacity:0;transform:scale(.6);filter:blur(20px)} 60%{opacity:1;filter:blur(0)} 80%{transform:scale(1.06)} 100%{opacity:1;transform:scale(1)} }
+@keyframes shine{ to{ background-position:220% 0; } }
+.hero__sub{ font-family:var(--font-display); font-weight:700; color:var(--ink-700); font-size:clamp(1rem,2.8vw,1.9rem); max-width:24ch; line-height:1.2; }
+.hero__org{ color:var(--pvi-blue); font-weight:700; font-size:clamp(.85rem,1.6vw,1.15rem); margin-top:.6rem; }
+.hero__meta{ color:var(--ink-500); font-size:clamp(.78rem,1.3vw,1rem); }
+.hero__pills{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin-top:.8rem; }
+.pill{ font-family:var(--font-display); font-weight:700; font-size:clamp(.74rem,1.3vw,.95rem); color:#fff; background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); padding:.45rem 1rem; border-radius:999px; box-shadow:0 8px 20px rgba(0,48,135,.22); }
+
+/* toc */
+.toc{ display:flex; flex-direction:column; gap:clamp(.5rem,1.4vh,1rem); }
+.toc__item{ display:grid; grid-template-columns:auto 1fr; gap:1rem; align-items:center; background:#fff; border:1px solid var(--ac-line); border-radius:14px; padding:clamp(.7rem,1.6vw,1.1rem) clamp(.9rem,2vw,1.4rem); box-shadow:0 10px 28px rgba(0,48,135,.06); transition:transform .3s, box-shadow .3s, border-color .3s; cursor:pointer; }
+.toc__item:hover{ transform:translateX(8px); box-shadow:0 18px 40px rgba(0,48,135,.14); border-color:var(--pvi-cyan); }
+.toc__no{ font-family:var(--font-display); font-weight:800; font-size:clamp(1.4rem,3.2vw,2.4rem); color:var(--pvi-cyan); min-width:1.6em; }
+.toc__t{ font-family:var(--font-display); font-weight:700; color:var(--pvi-blue); font-size:clamp(.95rem,1.9vw,1.4rem); }
+
+.note{ font-size:var(--small-size); color:var(--ink-700); background:rgba(0,151,220,.08); border:1px dashed rgba(0,151,220,.4); border-radius:12px; padding:.7rem 1rem; }
+.note--g{ color:var(--green); background:rgba(46,125,50,.08); border-color:rgba(46,125,50,.4); }
+.note--o{ color:var(--gold); background:rgba(230,81,0,.08); border-color:rgba(230,81,0,.4); }
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(.8rem,2vw,1.6rem); align-items:center; }
+@media (max-width:860px){ .grid2,.kpis--4{ grid-template-columns:1fr 1fr; } .donut-wrap{ flex-direction:column; } }
+@media (max-width:600px){ .kpis--4,.kpis--3,.cards--3,.cards--2,.grid2{ grid-template-columns:1fr; } }
+
+/* ============================================================
+   MOBILE / PHONE-PORTRAIT - auto-optimize for vertical screens
+   Slides stop being clipped full-screens and become natural-height
+   scrolling sections; all multi-column layouts collapse to 1 column;
+   type is sized to viewport WIDTH so it stays readable on tall screens.
+   ============================================================ */
+@media (max-width:768px){
+  /* free vertical scroll - no forced snap that traps overflowing content */
+  html{ scroll-snap-type:none; -webkit-text-size-adjust:100%; }
+  .slide{ height:auto; min-height:100svh; scroll-snap-align:none; }
+  .slide-content{ overflow:visible; max-height:none;
+    padding:clamp(3rem,8vh,4rem) 1.05rem clamp(1.6rem,6vh,2.6rem); }
+  .wrap{ width:100%; }
+
+  /* size text to screen width, not height */
+  :root{
+    --title-size:clamp(1.5rem,7vw,2.4rem);
+    --h2-size:clamp(1.3rem,6vw,2rem);
+    --h3-size:clamp(1.15rem,5vw,1.6rem);
+    --body-size:clamp(.98rem,4.2vw,1.2rem);
+    --small-size:clamp(.9rem,3.8vw,1.08rem);
+    --content-gap:clamp(.9rem,3.2vw,1.5rem);
+  }
+  .s-title{ font-size:clamp(1.4rem,6.6vw,2.1rem); }
+
+  /* collapse every multi-column layout to a single column */
+  .kpis--4,.kpis--3,.kpis--2,.cards--3,.cards--2,.grid2{ grid-template-columns:1fr!important; }
+  .donut-wrap{ flex-direction:column; text-align:center; gap:1rem; }
+  .donut{ width:clamp(150px,48vw,210px); }
+
+  /* horizontal bars: label on its own line above the bar */
+  .hbar{ grid-template-columns:1fr auto; row-gap:.15rem; }
+  .hbar__l{ grid-column:1 / -1; }
+
+  /* hover transforms feel wrong on touch */
+  .toc__item:hover,.kpi:hover,.card:hover,.step:hover{ transform:none; }
+
+  /* hero / dividers / closing scale down to fit the narrow column */
+  .hero__word{ font-size:clamp(2.8rem,17vw,5rem); }
+  .end__big{ font-size:clamp(2rem,11vw,3.6rem); }
+  .divider__no{ font-size:clamp(3.4rem,26vw,7rem); }
+  .cover .divider__no{ font-size:clamp(3rem,24vw,6.5rem); }
+
+  /* keep nav buttons within thumb reach */
+  .navbtns{ right:.7rem; bottom:1rem; }
+  .brandmark{ opacity:.05; }
+
+  /* CRITICAL: a slide taller than the screen never hits the 0.55 visibility
+     threshold, so its reveal animation never fires. Force all content visible
+     so nothing is ever stuck at opacity:0 on a phone. */
+  .ac-reveal,.ac-pop{ opacity:1!important; transform:none!important; }
+  .ac-bar{ height:var(--h)!important; }
+  .ac-fill-x{ width:var(--w)!important; }
+  .ac-ring-val{ stroke-dashoffset:calc(var(--circ)*(1 - var(--p)))!important; }
+  .lc-path{ stroke-dashoffset:0!important; }
+  .lc-dot{ opacity:1!important; }
+}
+
+.end__big{ font-family:var(--font-display); font-weight:800; font-size:clamp(2.2rem,8vw,5.5rem); line-height:1.05; letter-spacing:-.01em;
+  background:linear-gradient(120deg,var(--pvi-indigo),var(--pvi-blue) 45%,var(--pvi-cyan)); background-size:220% 100%;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.ac-on .end__big{ animation:heroIn 1.2s var(--ac-ease-bounce) .15s both, shine 6s linear 1.4s infinite; }
+
+/* ============== SLIDE 1 - photo motion background (PVI HQ stairs) ============== */
+.hero-stage{ position:absolute; inset:0; z-index:0; overflow:hidden; background:#04162a; }
+/* the reference photo, with a slow Ken-Burns push toward the tower */
+.hero-stage__photo{ position:absolute; inset:-5%; width:110%; height:110%;
+  background-image:url("1780624473615_3504659696103963496_3504659696103963496_b92882459629cb269087bb8e63a541d6.jpg");
+  background-size:cover; background-position:50% 40%; transform-origin:50% 36%;
+  filter:saturate(1.08) contrast(1.05); animation:heroKen 32s ease-in-out infinite alternate; will-change:transform; }
+@keyframes heroKen{ 0%{ transform:scale(1.05) translateY(0); } 100%{ transform:scale(1.17) translateY(-2.2%); } }
+
+/* pulsing glow behind the rooftop PVI sign */
+.hero-pulse{ position:absolute; left:50%; top:24%; width:34vmax; height:34vmax; transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(126,230,255,.34), rgba(126,230,255,0) 62%); mix-blend-mode:screen; pointer-events:none;
+  animation:heroPulse 4.6s ease-in-out infinite; }
+@keyframes heroPulse{ 0%,100%{ opacity:.30; transform:translate(-50%,-50%) scale(.9); } 50%{ opacity:.8; transform:translate(-50%,-50%) scale(1.1); } }
+
+/* digital-rain canvas (matches the binary code in the sky) */
+.hero-rain{ position:absolute; inset:0; width:100%; height:100%; opacity:.45; mix-blend-mode:screen; pointer-events:none; }
+
+/* glowing data-motes drifting UP the staircase toward the building */
+.hero-motes{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.mote{ position:absolute; bottom:-4%; width:6px; height:6px; border-radius:50%;
+  background:radial-gradient(circle,#dffaff 0%,#7fe6ff 45%,rgba(126,230,255,0) 70%);
+  box-shadow:0 0 10px 2px rgba(126,230,255,.65); opacity:0;
+  animation:moteRise var(--md,12s) linear infinite; animation-delay:var(--mdel,0s); }
+@keyframes moteRise{ 0%{ transform:translateY(0) scale(.6); opacity:0; }
+  12%{ opacity:.95; } 78%{ opacity:.85; } 100%{ transform:translateY(-94vh) scale(1.25); opacity:0; } }
+
+.hero-stage__veil{ position:absolute; inset:0; background:
+   linear-gradient(180deg, rgba(2,10,28,.42) 0%, rgba(2,10,28,.10) 40%, rgba(2,8,22,.74) 100%),
+   radial-gradient(120% 95% at 50% 40%, rgba(0,48,135,.16), rgba(2,6,18,.50) 92%); }
+.hero-stage__scan{ position:absolute; left:0; right:0; height:42%; top:-42%;
+  background:linear-gradient(180deg, transparent, rgba(0,151,220,.18), transparent); mix-blend-mode:screen; }
+.slide--hero.ac-on .hero-stage__scan{ animation:scan 7.5s cubic-bezier(.16,.7,.2,1) forwards; }
+@keyframes scan{ 0%{ top:-42%; opacity:0; } 12%{ opacity:1; } 100%{ top:120%; opacity:0; } }
+
+.slide--hero .hero{ z-index:2; }
+/* logo sits on a frosted chip so the navy mark stays legible on the dark photo */
+.hero__logo{ margin-bottom:.7rem; }
+.hero__logo .pvi-logo{ height:clamp(48px,8vh,82px); width:auto; display:block; }
+.slide--hero .hero__logo{ display:inline-flex; padding:.6rem 1.15rem; border-radius:16px;
+  background:rgba(255,255,255,.94); box-shadow:0 12px 34px rgba(0,0,0,.45); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
+.slide:not(.slide--hero) .hero__logo .pvi-logo{ filter:drop-shadow(0 8px 20px rgba(0,48,135,.18)); }
+.slide--hero .hero__kicker{ color:#8fd6ff; }
+.slide--hero .hero__word{ background:linear-gradient(120deg,#ffffff 0%,#a7e2ff 52%,#ffffff 100%); background-size:220% 100%;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 8px 40px rgba(0,0,0,.35); }
+.slide--hero .hero__sub{ color:#fff; text-shadow:0 2px 14px rgba(0,0,0,.5); }
+.slide--hero .hero__org{ color:#cfeaff; text-shadow:0 2px 12px rgba(0,0,0,.5); }
+.slide--hero .hero__meta{ color:rgba(255,255,255,.82); }
+.rail__brand{ color:var(--pvi-blue); }
+.rail__brand .pvi-logo{ height:30px; width:auto; display:block; }
+@media (prefers-reduced-motion:reduce){ .hero-stage__photo{ animation:none!important; } .hero-pulse,.mote{ animation:none!important; } .hero-stage__scan{ display:none; } }
+
+/* ============================================================
+   ADDITIONS - responsive tables, rail scroll, line/pie charts,
+   monthly tables, bullet cards, section covers
+   ============================================================ */
+
+/* --- mobile: bảng số liệu cuộn ngang được --- */
+.tbl-scroll{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:14px; }
+.tbl-scroll .tbl{ min-width:560px; }
+@media (max-width:600px){
+  .tbl-scroll .tbl{ min-width:620px; font-size:.8rem; }
+  .tbl-scroll::after{ content:"↔ vuốt ngang để xem đủ bảng"; display:block; font-size:.62rem; color:var(--ink-500); text-align:center; padding:.3rem 0 .1rem; }
+}
+
+/* --- rail: cho phép cuộn khi nhiều slide --- */
+.rail{ justify-content:flex-start; overflow-y:auto; scrollbar-width:thin; }
+.rail::-webkit-scrollbar{ width:5px; } .rail::-webkit-scrollbar-thumb{ background:rgba(0,48,135,.22); border-radius:99px; }
+.rail__item{ padding:.34rem .5rem; }
+
+/* --- biểu đồ đường (line / cumulative) --- */
+.linechart{ background:#fff; border:1px solid var(--ac-line); border-radius:16px; padding:clamp(.8rem,1.8vw,1.3rem) clamp(.7rem,1.5vw,1.1rem) clamp(.5rem,1.2vw,.9rem); box-shadow:0 12px 36px rgba(0,48,135,.07); }
+.linechart svg{ width:100%; height:auto; display:block; overflow:visible; }
+.lc-grid{ stroke:var(--ac-line); stroke-width:1; }
+.lc-axis{ fill:var(--ink-500); font-size:9px; font-family:var(--font-body); }
+.lc-path{ fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:var(--len); stroke-dashoffset:var(--len); }
+.ac-on .lc-path{ animation:lcDraw 1.4s var(--ac-ease) forwards; animation-delay:calc(var(--i,0)*200ms); }
+@keyframes lcDraw{ to{ stroke-dashoffset:0; } }
+.lc-dot{ opacity:0; } .ac-on .lc-dot{ animation:lcDot .4s var(--ac-ease) both; animation-delay:calc(.6s + var(--i,0)*60ms); }
+@keyframes lcDot{ from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+@media (prefers-reduced-motion:reduce){ .lc-path{ stroke-dashoffset:0!important; } .lc-dot{ opacity:1!important; } }
+.lc-legend{ display:flex; gap:1.2rem; justify-content:center; margin-top:.5rem; flex-wrap:wrap; }
+.lc-legend span{ display:flex; align-items:center; gap:.4rem; font-size:.72rem; color:var(--ink-600); font-weight:600; }
+.lc-legend i{ width:16px; height:4px; border-radius:99px; display:inline-block; }
+
+/* --- pie chart (tỷ trọng Gốc / Tái) --- */
+.pie-wrap{ display:flex; align-items:center; gap:clamp(.9rem,2vw,1.6rem); }
+.pie{ width:clamp(120px,15vw,180px); height:auto; }
+.pie-slice{ transform-origin:center; opacity:0; }
+.ac-on .pie-slice{ animation:pieIn .8s var(--ac-ease-bounce) both; animation-delay:calc(.15s + var(--i,0)*.18s); }
+@keyframes pieIn{ from{opacity:0;transform:scale(.4) rotate(-25deg)} to{opacity:1;transform:scale(1) rotate(0)} }
+@media (prefers-reduced-motion:reduce){ .pie-slice{ opacity:1!important; transform:none!important; } }
+.pie-leg{ display:flex; flex-direction:column; gap:.55rem; }
+.pie-leg div{ display:flex; align-items:center; gap:.55rem; font-size:var(--small-size); color:var(--ink-700); font-weight:600; }
+.pie-leg b{ color:var(--pvi-blue); }
+.pie-leg i{ width:14px; height:14px; border-radius:4px; flex:none; }
+
+/* --- bảng tháng gọn (12 tháng) --- */
+.tbl--mini{ font-size:clamp(.62rem,1.05vw,.8rem); }
+.tbl--mini th, .tbl--mini td{ padding:.26rem .5rem; }
+.tbl--mini th{ font-size:clamp(.6rem,1vw,.78rem); }
+.up{ color:var(--green); font-weight:800; } .down{ color:var(--red); font-weight:800; }
+
+/* --- bullet list trong card --- */
+.card ul.blt{ margin:.3rem 0 0; padding-left:1.05rem; }
+.card ul.blt li{ color:var(--ink-600); font-size:var(--small-size); line-height:1.5; margin-bottom:.25rem; }
+.card ul.blt li::marker{ color:var(--pvi-cyan); }
+
+/* --- section cover (divider biến thể có số mục) --- */
+.cover .divider__no{ font-size:clamp(3.4rem,13vw,9rem); }
+.cover .divider__kicker{ font-family:var(--font-display); font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--pvi-cyan); font-size:clamp(.66rem,1.1vw,.9rem); margin-bottom:.3rem; }
+
+/* khó khăn HKKG: cho phép cuộn dọc nếu text dài */
+.scroll-y{ overflow-y:auto; max-height:100%; padding-right:.4rem; scrollbar-width:thin; }
+
+@keyframes floatIc { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.ic-float { display: inline-block; animation: floatIc 2s ease-in-out infinite; }
+</style>
+
+</head>
+<body>
+
+<!-- ambient -->
+<div class="ambient" aria-hidden="true">
+  <div class="orb orb--1 ac-drift"></div>
+  <div class="orb orb--2 ac-drift" style="animation-delay:-8s"></div>
+  <div class="grid-glow"></div>
+  <img class="brandmark ac-float" src="PVI%20Logo%20(cropped).png" alt="" style="top:10%;right:6%;width:150px" />
+  <img class="brandmark ac-float" src="PVI%20Logo%20(cropped).png" alt="" style="bottom:13%;left:5%;width:120px;animation-delay:-3s" />
+</div>
+
+<!-- rail -->
+<nav class="rail" id="rail" aria-label="Mục lục slide"></nav>
+
+<!-- counter / progress / hint -->
+<div class="progress"><div class="progress__fill" id="prog"></div></div>
+<div class="counter"><span id="cur">01</span><span class="sep">/</span><span id="tot">18</span></div>
+<div class="hint">↑ ↓ · cuộn hoặc dùng phím mũi tên để chuyển slide</div>
+<div class="navbtns" aria-label="Điều hướng slide">
+  <button class="navbtn" id="navPrev" aria-label="Slide trước" title="Slide trước (↑)">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button class="navbtn" id="navNext" aria-label="Slide sau" title="Slide sau (↓)">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</div>
+
+<main id="deck">
+
+<style>
+/* ===== Flight Delay Protection - add-on styles (giữ nguyên hệ token PVI) ===== */
+.hero__x{ font-family:var(--font-display); font-weight:700; color:var(--pvi-blue); font-size:clamp(1rem,2.2vw,1.6rem); opacity:.5; margin:0 .1rem; }
+.slide--hero .hero__x{ color:#0a2238; }
+.hero__logo .vna-logo{ height:clamp(30px,5.4vh,54px); width:auto; display:block; }
+.slide--hero .hero__logo{ align-items:center; gap:.7rem; }
+/* revenue simulator */
+.rvsim{ display:grid; grid-template-columns:1.05fr 1fr; gap:clamp(.9rem,2vw,1.6rem); align-items:stretch; }
+.rvsim__inputs{ display:flex; flex-direction:column; gap:.5rem; }
+.rvfld{ display:grid; grid-template-columns:1fr auto; align-items:center; gap:.4rem .7rem; }
+.rvfld label{ font-size:var(--small-size); color:var(--ink-700); font-weight:600; }
+.rvfld b{ font-family:var(--font-display); font-weight:700; color:var(--pvi-blue); font-size:var(--small-size); text-align:right; white-space:nowrap; }
+.rvfld input[type=range]{ grid-column:1 / -1; -webkit-appearance:none; appearance:none; height:5px; border-radius:99px; background:var(--ac-track); outline:none; }
+.rvfld input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--pvi-cyan); cursor:pointer; box-shadow:0 2px 8px rgba(0,151,220,.5); }
+.rvfld input[type=range]::-moz-range-thumb{ width:16px; height:16px; border:none; border-radius:50%; background:var(--pvi-cyan); cursor:pointer; }
+.rvsim__out{ display:flex; flex-direction:column; gap:.6rem; }
+.rvbig{ background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); color:#fff; border-radius:14px; padding:clamp(.7rem,1.6vw,1.1rem) clamp(.9rem,2vw,1.3rem); box-shadow:0 12px 30px rgba(0,48,135,.22); }
+.rvbig .l{ font-size:var(--small-size); letter-spacing:.02em; opacity:.9; font-weight:600; }
+.rvbig .v{ font-family:var(--font-display); font-weight:800; font-size:clamp(1.5rem,3.4vw,2.5rem); line-height:1.05; }
+.rvbig .v small{ font-size:.42em; opacity:.85; font-weight:600; }
+.rvmini{ display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+.rvcell{ background:#fff; border:1px solid var(--ac-line); border-radius:11px; padding:.55rem .8rem; }
+.rvcell .l{ font-size:.72rem; color:var(--ink-500); font-weight:600; text-transform:uppercase; letter-spacing:.03em; }
+.rvcell .v{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1rem,2vw,1.4rem); }
+.rvdonut{ display:flex; align-items:center; gap:.8rem; }
+.rvdonut svg{ width:76px; height:76px; flex:none; }
+.rvdonut .leg{ display:flex; flex-direction:column; gap:.35rem; font-size:.78rem; color:var(--ink-700); font-weight:600; }
+.rvdonut .leg div{ display:flex; align-items:center; gap:.45rem; }
+.rvdonut .leg i{ width:12px; height:12px; border-radius:3px; }
+.rvdonut .leg b{ font-family:var(--font-display); color:var(--pvi-blue); }
+@media (max-width:860px){ .rvsim{ grid-template-columns:1fr; } }
+@media (max-height:820px){
+  .kpis--4{ margin-bottom:.7rem!important; }
+  .rvsim__inputs{ gap:.3rem; } .rvfld{ row-gap:.12rem; }
+  .rvsim__out{ gap:.4rem; } .rvdonut svg{ width:60px; height:60px; }
+  .rvbig{ padding:.5rem .85rem; } .rvmini{ gap:.4rem; }
+  #rvSim{ } .chart:has(#rvSim){ padding:.7rem .9rem .6rem; }
+}
+
+/* ===== V2 - hero logos no-chip + glow, VNA bigger ===== */
+.slide--hero .hero__logo{ background:none!important; box-shadow:none!important; padding:0!important; -webkit-backdrop-filter:none!important; backdrop-filter:none!important; align-items:center; gap:clamp(.7rem,1.6vw,1.3rem); }
+.slide--hero .hero__logo .pvi-logo{ height:clamp(54px,9vh,92px); filter:drop-shadow(0 0 16px rgba(127,230,255,.55)) drop-shadow(0 6px 22px rgba(0,0,0,.65)); }
+.slide--hero .hero__logo .vna-logo{ height:clamp(46px,8vh,84px); filter:drop-shadow(0 0 16px rgba(255,214,130,.5)) drop-shadow(0 6px 22px rgba(0,0,0,.65)); }
+.slide--hero .hero__x{ color:#cfeaff; opacity:.75; text-shadow:0 0 12px rgba(127,230,255,.8); }
+.hero__logo .vna-logo{ height:clamp(40px,6.8vh,70px); }
+.hero__logo{ display:inline-flex; align-items:center; }
+
+/* ===== runway timeline (NĐ208 + roadmap) ===== */
+.rwy{ margin-bottom:var(--content-gap); }
+.rwy__track{ position:relative; height:10px; border-radius:99px; margin:0 2% 1.6rem;
+  background:repeating-linear-gradient(90deg,var(--pvi-blue) 0 24px,rgba(0,48,135,.16) 24px 42px); box-shadow:0 5px 16px rgba(0,48,135,.2); }
+.rwy__plane{ position:absolute; top:50%; left:0; transform:translate(-20%,-62%); font-size:clamp(1.4rem,2.6vw,2.1rem);
+  filter:drop-shadow(0 4px 10px rgba(0,48,135,.45)); }
+.ac-on .rwy__plane{ animation:rwyFly 2.8s var(--ac-ease) .25s both; }
+@keyframes rwyFly{ from{ left:0; } to{ left:96%; } }
+.rwy__stops{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(.5rem,1.3vw,1rem); }
+.rwy--5 .rwy__stops{ grid-template-columns:repeat(5,1fr); }
+.rwy__stop{ background:#fff; border:1px solid var(--ac-line); border-radius:16px; text-align:center;
+  padding:clamp(1.4rem,2.6vh,1.9rem) clamp(.5rem,1vw,.9rem) clamp(.6rem,1.4vh,.9rem);
+  box-shadow:0 10px 28px rgba(0,48,135,.08); display:flex; flex-direction:column; gap:.3rem; align-items:center; position:relative; transition:transform .3s, box-shadow .3s; }
+.rwy__stop:hover{ transform:translateY(-5px); box-shadow:0 20px 44px rgba(0,48,135,.16); }
+.rwy__badge{ position:absolute; top:0; left:50%; transform:translate(-50%,-55%);
+  width:clamp(42px,4.6vw,60px); height:clamp(42px,4.6vw,60px); border-radius:50%;
+  background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); color:#fff; font-family:var(--font-display); font-weight:800;
+  display:grid; place-content:center; font-size:clamp(.95rem,1.7vw,1.35rem); border:3px solid #fff; box-shadow:0 8px 22px rgba(0,151,220,.5); }
+.rwy__stop h4{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(.82rem,1.5vw,1.08rem); margin-top:.5rem; line-height:1.15; }
+.rwy__stop p{ font-size:clamp(.68rem,1.15vw,.88rem); color:var(--ink-600); line-height:1.35; }
+.rwy__stop .tag{ align-self:center; margin-top:auto; }
+.rwy--5 .rwy__stop h4{ font-size:clamp(.78rem,1.3vw,1rem); }
+.rwy--5 .rwy__stop p{ font-size:clamp(.64rem,1.05vw,.82rem); }
+
+/* ===== protection gap chart ===== */
+.gapc{ margin-bottom:var(--content-gap); position:relative; }
+.gapc__axis{ position:relative; height:1.1rem; margin-left:clamp(96px,15%,170px); margin-bottom:.3rem; }
+.gapc__axis span{ position:absolute; transform:translateX(-50%); font-size:.68rem; font-weight:700; color:var(--ink-500); font-family:var(--font-display); }
+.gapc__stage{ position:relative; display:flex; flex-direction:column; gap:.55rem; }
+.gapc__zone{ position:absolute; top:-1.4rem; bottom:-.4rem; left:calc(clamp(96px,15%,170px) + (100% - clamp(96px,15%,170px)) * .286); width:calc((100% - clamp(96px,15%,170px)) * .286);
+  background:linear-gradient(180deg,rgba(230,81,0,.10),rgba(230,81,0,.04)); border:1.5px dashed rgba(230,81,0,.45); border-radius:12px; z-index:0; pointer-events:none; }
+.gapc__zone span{ position:absolute; top:.2rem; left:50%; transform:translateX(-50%); font-family:var(--font-display); font-weight:800; font-size:clamp(.5rem,.9vw,.66rem); color:var(--gold); text-align:center; letter-spacing:.06em; line-height:1.2; white-space:nowrap; }
+.gapc__lane{ display:grid; grid-template-columns:clamp(96px,15%,170px) 1fr; align-items:center; position:relative; z-index:1; }
+.gapc__lbl{ font-size:clamp(.66rem,1.1vw,.85rem); font-weight:700; color:var(--ink-700); line-height:1.2; padding-right:.6rem; }
+.gapc__lbl i{ font-style:normal; color:var(--pvi-cyan); font-family:var(--font-display); font-weight:800; }
+.gapc__row{ position:relative; height:clamp(30px,4.6vh,42px); background:var(--ac-track); border-radius:10px; }
+.gapc__chip{ position:absolute; top:50%; transform:translate(-12%,-50%); background:#fff; border:1px solid var(--ac-line); border-radius:999px;
+  padding:.2rem .55rem; font-size:clamp(.6rem,1vw,.78rem); font-weight:700; color:var(--pvi-blue); white-space:nowrap; box-shadow:0 5px 14px rgba(0,48,135,.14); }
+.gapc__bar{ position:absolute; top:4px; bottom:4px; right:4px; border-radius:8px; display:flex; align-items:center; padding:0 .7rem;
+  font-size:clamp(.6rem,1.05vw,.82rem); font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; }
+.gapc__bar--prem{ background:linear-gradient(90deg,var(--pvi-cyan),var(--pvi-blue)); box-shadow:0 6px 18px rgba(0,151,220,.35); }
+.gapc__bar--lite{ background:linear-gradient(90deg,#3555a5,var(--pvi-blue)); box-shadow:0 6px 18px rgba(0,48,135,.3); }
+.gapc__foot{ margin-top:.55rem; font-size:.66rem; color:var(--ink-500); font-style:italic; }
+
+/* ===== ecosystem equation ===== */
+.eco{ display:grid; grid-template-columns:1fr auto 1fr; gap:clamp(.5rem,1.4vw,1rem); align-items:stretch; margin-bottom:.7rem; }
+.eco__panel{ border-radius:20px; padding:clamp(.8rem,1.8vw,1.2rem); background:#fff; border:1px solid var(--ac-line); box-shadow:0 12px 34px rgba(0,48,135,.08); display:flex; flex-direction:column; gap:.55rem; }
+.eco__panel--tc{ border-top:5px solid var(--pvi-blue); }
+.eco__panel--fa{ border-top:5px solid var(--pvi-cyan); background:linear-gradient(180deg,#fff,rgba(0,151,220,.05)); }
+.eco__head b{ display:block; font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(.95rem,1.8vw,1.3rem); }
+.eco__head span{ font-size:clamp(.68rem,1.15vw,.86rem); color:var(--ink-500); font-weight:600; }
+.eco__chips{ display:flex; flex-wrap:wrap; gap:.35rem; }
+.eco__chips span{ background:rgba(0,48,135,.06); border:1px solid rgba(0,48,135,.12); border-radius:999px; padding:.24rem .6rem;
+  font-size:clamp(.62rem,1.05vw,.8rem); font-weight:600; color:var(--ink-700); }
+.eco__panel--fa .eco__chips span{ background:rgba(0,151,220,.09); border-color:rgba(0,151,220,.22); }
+.eco__foot{ margin-top:auto; font-size:.68rem; color:var(--ink-500); font-style:italic; border-top:1px dashed var(--ac-line); padding-top:.4rem; }
+.eco__plus{ align-self:center; font-family:var(--font-display); font-weight:800; font-size:clamp(1.6rem,3.4vw,2.8rem); color:var(--pvi-cyan); }
+.eco__eq{ text-align:center; font-family:var(--font-display); font-weight:800; letter-spacing:.02em; font-size:clamp(.95rem,2.2vw,1.7rem); margin-bottom:.7rem;
+  background:linear-gradient(120deg,var(--pvi-indigo),var(--pvi-blue) 45%,var(--pvi-cyan)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+
+/* ===== flight delay bar (scenario 2h) ===== */
+.fltbar__meta{ display:flex; gap:1rem; flex-wrap:wrap; align-items:center; font-size:clamp(.72rem,1.25vw,.95rem); color:var(--ink-600); margin-bottom:.7rem; }
+.fltbar__meta>b{ font-family:var(--font-display); color:var(--pvi-blue); font-size:clamp(.85rem,1.6vw,1.15rem); }
+.fltbar__meta b{ color:var(--pvi-blue); }
+.fltbar__delay{ margin-left:auto; background:rgba(198,40,40,.1); color:var(--red); font-weight:800; font-family:var(--font-display); padding:.25rem .7rem; border-radius:999px; font-size:clamp(.72rem,1.25vw,.95rem); }
+.fltbar__scale{ position:relative; height:1rem; margin-bottom:.25rem; }
+.fltbar__scale span{ position:absolute; transform:translateX(-50%); font-size:.66rem; font-weight:700; color:var(--ink-500); font-family:var(--font-display); }
+.fltbar__scale span:last-child{ transform:translateX(-100%); }
+.fltbar__track{ position:relative; height:clamp(26px,4vh,36px); background:var(--ac-track); border-radius:99px; margin-bottom:1.5rem; }
+.fltbar__fill{ position:absolute; inset:4px auto 4px 4px; border-radius:99px; background:linear-gradient(90deg,var(--pvi-blue),var(--pvi-cyan)); box-shadow:0 6px 18px rgba(0,151,220,.35); }
+.fltbar__mark{ position:absolute; top:-6px; bottom:-6px; }
+.fltbar__mark i{ display:block; width:3px; height:100%; background:var(--ink-500); border-radius:2px; opacity:.55; }
+.fltbar__mark em{ position:absolute; top:100%; left:50%; transform:translateX(-50%); margin-top:.25rem; font-style:normal; white-space:nowrap;
+  font-size:clamp(.6rem,1.05vw,.78rem); font-weight:700; color:var(--ink-500); font-family:var(--font-display); }
+.fltbar__mark:last-child em{ transform:translateX(-90%); }
+.fltbar__mark--on i{ background:var(--gold); opacity:1; box-shadow:0 0 10px rgba(230,81,0,.5); }
+.fltbar__mark--on em{ color:var(--gold); }
+.fltbar__payout{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1.3rem,2.6vw,2rem); margin-top:.2rem; }
+
+/* ===== outcome chips (scenario 4h) ===== */
+.oc{ display:grid; grid-template-columns:auto 1fr; gap:.5rem; align-items:start; margin-top:.4rem; }
+.oc span{ font-size:clamp(.68rem,1.15vw,.86rem); color:var(--ink-600); line-height:1.35; }
+.oc__k{ font-family:var(--font-display); font-weight:800; font-size:.6rem; letter-spacing:.04em; border-radius:6px; padding:.18rem .4rem; min-width:2.6em; text-align:center; }
+.oc__k--v{ background:rgba(0,48,135,.1); color:var(--pvi-blue); }
+.oc__k--i{ background:rgba(0,151,220,.12); color:var(--pvi-cyan); }
+.oc__k--t{ background:rgba(100,116,139,.12); color:var(--ink-500); }
+
+/* ===== radar ===== */
+.radar svg{ width:100%; max-width:430px; height:auto; display:block; margin:0 auto; }
+
+/* ===== CTA banner (roadmap) ===== */
+.cta{ display:flex; align-items:center; justify-content:space-between; gap:1.2rem; border-radius:18px; padding:clamp(.8rem,1.8vw,1.3rem) clamp(1rem,2.2vw,1.6rem);
+  background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); color:#fff; box-shadow:0 16px 40px rgba(0,48,135,.3); }
+.cta__k{ font-family:var(--font-display); font-weight:800; letter-spacing:.08em; font-size:clamp(.9rem,1.9vw,1.4rem); }
+.cta p{ font-size:clamp(.72rem,1.25vw,.95rem); color:#eaf4ff; max-width:56ch; margin-top:.2rem; line-height:1.4; }
+.cta__tag{ font-family:var(--font-display); font-weight:700; font-size:clamp(.66rem,1.15vw,.9rem); text-align:right; border-left:3px solid rgba(255,255,255,.55); padding-left:1rem; line-height:1.5; white-space:nowrap; }
+@media (max-width:860px){ .eco{ grid-template-columns:1fr; } .eco__plus{ justify-self:center; } .rwy__stops,.rwy--5 .rwy__stops{ grid-template-columns:1fr 1fr; row-gap:1.6rem; } .cta{ flex-direction:column; align-items:flex-start; } .cta__tag{ border-left:none; padding-left:0; text-align:left; } .gapc__lane{ grid-template-columns:1fr; row-gap:.15rem; } .gapc__axis{ margin-left:0; } .gapc__zone{ display:none; } }
+@media (max-width:600px){ .rwy__stops,.rwy--5 .rwy__stops{ grid-template-columns:1fr; } }
+
+/* ===== phone landscape / short screens ===== */
+@media (max-height:560px){
+  html{ scroll-snap-type:none; }
+  .slide{ height:auto; min-height:100svh; scroll-snap-align:none; }
+  .slide-content{ overflow:visible; max-height:none; padding:1rem; }
+  .ac-reveal,.ac-pop{ opacity:1!important; transform:none!important; }
+  .ac-bar{ height:var(--h)!important; } .ac-fill-x{ width:var(--w)!important; }
+  .rail,.hint{ display:none; }
+  .counter{ top:.4rem; right:.7rem; }
+}
+
+/* ===== V3 — bỏ rail & nút điều hướng, chiếm trọn chiều ngang ===== */
+:root{ --rail:0px; }
+#rail, .navbtns{ display:none!important; }
+
+/* ===== V3 — hero aviation scene (Vietnam Airlines) ===== */
+.hero-sky{ position:absolute; inset:0; background:linear-gradient(180deg,#04162e 0%,#0a2b4d 45%,#123f63 78%,#1d557a 100%); }
+.hero-av{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.hero-cloud{ animation:cloudDrift 46s linear infinite alternate; }
+.hero-cloud--2{ animation-duration:60s; animation-direction:alternate-reverse; }
+@keyframes cloudDrift{ from{ transform:translateX(-3%); } to{ transform:translateX(4%); } }
+.hero-plane{ transform-origin:center; animation:planeBob 7s ease-in-out infinite; }
+@keyframes planeBob{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(-.6%,-1.4%); } }
+.slide--hero.ac-on .hero-plane{ animation:planeIn 1.5s var(--ac-ease) both, planeBob 7s ease-in-out 1.5s infinite; }
+@keyframes planeIn{ from{ opacity:0; transform:translate(-7%,4%); } to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce){ .hero-cloud,.hero-plane{ animation:none!important; } }
+.hero__name{ font-family:var(--font-display); font-weight:800; letter-spacing:.14em; font-size:clamp(1rem,2.8vw,1.9rem);
+  color:#ffd98a; text-shadow:0 2px 18px rgba(0,0,0,.5); margin-bottom:-.15em; }
+
+/* ===== V3 — logos: no chip, glow, VNA lớn hơn ===== */
+.slide--hero .hero__logo{ background:none!important; box-shadow:none!important; padding:0!important; -webkit-backdrop-filter:none!important; backdrop-filter:none!important; align-items:center; gap:clamp(.8rem,1.8vw,1.5rem); }
+.slide--hero .hero__logo .pvi-logo{ height:clamp(52px,8.4vh,88px); filter:drop-shadow(0 0 18px rgba(127,230,255,.55)) drop-shadow(0 6px 22px rgba(0,0,0,.6)); }
+.slide--hero .hero__logo .vna-logo{ height:clamp(62px,10.4vh,112px); filter:drop-shadow(0 0 18px rgba(255,214,130,.6)) drop-shadow(0 6px 22px rgba(0,0,0,.6)); }
+.slide--hero .hero__x{ color:#cfeaff; opacity:.7; text-shadow:0 0 12px rgba(127,230,255,.8); }
+.hero__logo .vna-logo{ height:clamp(52px,8.6vh,88px); }
+.hero__logo .pvi-logo{ height:clamp(40px,6.6vh,66px); }
+
+/* ===== V3 — NĐ208 stop icon ===== */
+.rwy__ic{ font-size:clamp(1.4rem,3vw,2.2rem); line-height:1; margin-top:.1rem; }
+
+/* ===== V3 — hai phương án offer ===== */
+.opts{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(.8rem,2vw,1.5rem); margin-bottom:.7rem; }
+.opt{ position:relative; background:#fff; border:1px solid var(--ac-line); border-radius:18px; padding:clamp(1rem,2.2vw,1.5rem); box-shadow:0 14px 38px rgba(0,48,135,.09); border-top:5px solid var(--pvi-blue); display:flex; flex-direction:column; gap:.55rem; }
+.opt:nth-child(2){ border-top-color:var(--pvi-cyan); }
+.opt__tag{ align-self:flex-start; font-family:var(--font-display); font-weight:800; font-size:clamp(.66rem,1.15vw,.85rem); letter-spacing:.1em; text-transform:uppercase; color:#fff; background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); padding:.28rem .8rem; border-radius:999px; }
+.opt__tag--2{ background:linear-gradient(135deg,var(--pvi-cyan),#0079b3); }
+.opt__title{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1.05rem,2.2vw,1.6rem); line-height:1.15; }
+.opt__title b{ color:var(--pvi-cyan); }
+.opt__desc{ font-size:var(--small-size); color:var(--ink-600); line-height:1.45; }
+.opt__rows{ display:flex; flex-direction:column; gap:.5rem; margin-top:.2rem; }
+.opt__row{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; background:var(--bg-100); border:1px solid var(--ac-line); border-radius:12px; padding:.6rem .85rem; }
+.opt__row--hi{ background:rgba(0,151,220,.08); border-color:rgba(0,151,220,.3); }
+.opt__cabin b{ display:block; font-family:var(--font-display); font-weight:700; color:var(--pvi-blue); font-size:clamp(.85rem,1.5vw,1.08rem); }
+.opt__cabin span{ font-size:clamp(.66rem,1.1vw,.82rem); color:var(--ink-500); }
+.opt__val{ font-family:var(--font-display); font-weight:800; color:var(--ink-600); font-size:clamp(.72rem,1.25vw,.95rem); text-align:center; white-space:nowrap; display:flex; flex-direction:column; line-height:1; }
+.opt__val em{ font-style:normal; font-size:clamp(1.5rem,3.4vw,2.6rem); color:var(--pvi-blue); }
+.opt__val--hi em{ color:var(--pvi-cyan); }
+.opt__amt{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1.05rem,2.2vw,1.7rem); white-space:nowrap; }
+.opt__amt--hi{ color:var(--pvi-cyan); }
+.opt__pro{ margin-top:auto; font-size:clamp(.7rem,1.2vw,.9rem); color:var(--green); font-weight:600; background:rgba(46,125,50,.08); border-radius:10px; padding:.5rem .75rem; }
+@media (max-width:860px){ .opts{ grid-template-columns:1fr; } }
+
+/* ===== V3 — demo giao diện đặt vé VNA ===== */
+.fdemo__route{ font-size:clamp(.78rem,1.4vw,1.05rem); color:var(--ink-700); margin-bottom:.7rem; padding:.5rem .9rem; background:#fff; border:1px solid var(--ac-line); border-radius:12px; box-shadow:0 8px 22px rgba(0,48,135,.06); }
+.fdemo__route b{ font-family:var(--font-display); color:#0a7d92; }
+.fdemo__route span{ color:var(--ink-500); }
+.fcards{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.7rem,1.6vw,1.2rem); }
+.fcard{ background:#fff; border:1px solid var(--ac-line); border-radius:16px; overflow:hidden; box-shadow:0 12px 32px rgba(0,48,135,.08); display:flex; flex-direction:column; transition:transform .3s, box-shadow .3s; }
+.fcard:hover{ transform:translateY(-5px); box-shadow:0 22px 48px rgba(0,48,135,.16); }
+.fcard--flex{ border:2px solid #0a7d92; }
+.fcard__h{ background:linear-gradient(135deg,#0a7d92,#065d6e); color:#fff; padding:.7rem .95rem; }
+.fcard--flex .fcard__h{ background:linear-gradient(135deg,#c9922a,#a9761b); }
+.fcard__cl{ font-family:var(--font-display); font-weight:800; font-size:clamp(.92rem,1.7vw,1.2rem); }
+.fcard__pr{ font-family:var(--font-display); font-weight:800; font-size:clamp(1rem,2vw,1.45rem); margin-top:.1rem; }
+.fcard__pr small{ font-size:.5em; font-weight:600; opacity:.85; }
+.fcard__b{ padding:.5rem .7rem .7rem; display:flex; flex-direction:column; }
+.frow{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.42rem .2rem; border-bottom:1px dashed var(--ac-line); font-size:clamp(.68rem,1.2vw,.9rem); color:var(--ink-600); }
+.frow:last-child{ border-bottom:none; }
+.frow b{ font-family:var(--font-display); font-weight:700; color:var(--ink-700); white-space:nowrap; }
+.frow--ins{ margin-top:.4rem; background:rgba(198,40,40,.06); border:1.5px solid var(--red); border-radius:10px; padding:.55rem .6rem; }
+.frow--ins span{ font-weight:700; color:var(--red); }
+.frow--ins b{ color:var(--red); font-size:1.1em; }
+.frow--ins2{ background:rgba(230,81,0,.07); border-color:var(--gold); }
+.frow--ins2 span, .frow--ins2 b{ color:var(--caution); }
+@media (max-width:860px){ .fcards{ grid-template-columns:1fr; } .frow--ins{ margin-top:.3rem; } }
+
+/* ===== V3 — roadmap: motion mới (connector fill + gate pop, không máy bay) ===== */
+.rmap{ position:relative; margin-bottom:var(--content-gap); padding-top:clamp(1.6rem,3vh,2.4rem); }
+.rmap__conn{ position:absolute; top:clamp(2.1rem,3.6vh,3rem); left:9%; right:9%; height:5px; border-radius:99px; background:var(--ac-track); overflow:hidden; z-index:0; }
+.rmap__conn i{ display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,var(--pvi-blue),var(--pvi-cyan)); width:0; }
+.rmap__steps{ position:relative; z-index:1; display:grid; grid-template-columns:repeat(5,1fr); gap:clamp(.5rem,1.3vw,1rem); }
+.rmap__step{ background:#fff; border:1px solid var(--ac-line); border-radius:16px; padding:clamp(1.3rem,2.4vh,1.8rem) clamp(.6rem,1.1vw,.95rem) clamp(.7rem,1.4vh,1rem); box-shadow:0 10px 28px rgba(0,48,135,.08); text-align:center; display:flex; flex-direction:column; gap:.35rem; align-items:center; position:relative; transition:transform .3s, box-shadow .3s; }
+.rmap__step:hover{ transform:translateY(-5px); box-shadow:0 20px 44px rgba(0,48,135,.16); }
+.rmap__step:last-child{ background:linear-gradient(160deg,#fff,rgba(230,81,0,.06)); border-color:rgba(230,81,0,.3); }
+.rmap__num{ position:absolute; top:0; left:50%; transform:translate(-50%,-55%); width:clamp(40px,4.4vw,56px); height:clamp(40px,4.4vw,56px); border-radius:50%; background:linear-gradient(135deg,var(--pvi-blue),var(--pvi-cyan)); color:#fff; font-family:var(--font-display); font-weight:800; display:grid; place-content:center; font-size:clamp(1rem,1.8vw,1.4rem); border:3px solid #fff; box-shadow:0 8px 22px rgba(0,151,220,.5); }
+.rmap__step:last-child .rmap__num{ background:linear-gradient(135deg,var(--gold),#a9761b); }
+.rmap__step h4{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(.78rem,1.35vw,1.02rem); margin-top:.4rem; line-height:1.15; }
+.rmap__step p{ font-size:clamp(.64rem,1.05vw,.82rem); color:var(--ink-600); line-height:1.32; }
+.rmap__step .tag{ margin-top:auto; }
+@media (max-width:860px){ .rmap__steps{ grid-template-columns:1fr 1fr; row-gap:1.8rem; } .rmap__conn{ display:none; } }
+@media (max-width:600px){ .rmap__steps{ grid-template-columns:1fr; } }
+
+/* ===== V4 — cân đối cỡ chữ + chống xuống dòng gãy từ ===== */
+.nb{ white-space:nowrap; }
+/* tiêu đề bớt to, hài hoà hơn */
+.s-title{ font-size:clamp(1.25rem,2.75vw,2rem)!important; line-height:1.14; }
+.divider__t{ font-size:clamp(1.3rem,3vw,2.2rem)!important; max-width:28ch; line-height:1.16; }
+.cover .divider__no{ font-size:clamp(3rem,10.5vw,7.4rem)!important; }
+.hero__word{ font-size:clamp(3rem,12vw,8.6rem); }
+/* chữ trong box/note đọc được rõ hơn */
+.note{ font-size:clamp(.95rem,1.55vw,1.18rem)!important; line-height:1.52; }
+.note .unit{ font-size:.82em; }
+.note--g, .note--o{ padding:.8rem 1.05rem; }
+.opt__pro{ font-size:clamp(.82rem,1.35vw,1.02rem)!important; }
+.kpi__t{ font-size:clamp(.86rem,1.45vw,1.05rem); line-height:1.4; }
+.card p{ font-size:clamp(.86rem,1.45vw,1.05rem); }
+.eco__chips span{ font-size:clamp(.72rem,1.15vw,.9rem); }
+.eco__foot,.gapc__foot,.unit{ font-size:clamp(.72rem,1.15vw,.9rem); }
+
+/* ===== V5 — hero nền ảnh máy bay Vietnam Airlines ===== */
+.hero-photo-vna{ position:absolute; inset:-4%; width:108%; height:108%;
+  background:url("hero-bg.jpg") center 42% / cover no-repeat; transform-origin:52% 44%;
+  animation:heroKen 34s ease-in-out infinite alternate; will-change:transform; }
+@keyframes heroKen{ 0%{ transform:scale(1.04); } 100%{ transform:scale(1.16) translateY(-1.6%); } }
+.hero-veil-vna{ position:absolute; inset:0; background:
+  linear-gradient(180deg, rgba(3,11,30,.60) 0%, rgba(3,11,30,.32) 42%, rgba(3,11,30,.86) 100%),
+  radial-gradient(120% 92% at 50% 46%, rgba(3,11,30,.16), rgba(3,11,30,.64) 96%); }
+@media (prefers-reduced-motion:reduce){ .hero-photo-vna{ animation:none!important; } }
+/* logo PVI - VNA phóng to, cân đối */
+.slide--hero .hero__logo{ gap:clamp(1rem,2.3vw,2rem)!important; margin-bottom:clamp(.6rem,1.6vh,1.2rem); }
+.slide--hero .hero__logo .pvi-logo{ height:clamp(64px,10.5vh,118px)!important; }
+.slide--hero .hero__logo .vna-logo{ height:clamp(82px,13.5vh,152px)!important; }
+/* phụ đề luôn 1 dòng, không gãy chữ "bay" */
+.slide--hero .hero__sub{ white-space:nowrap; }
+@media (max-width:420px){ .slide--hero .hero__sub{ font-size:clamp(.9rem,4.4vw,1.1rem); } }
+
+
+/* ===== V6 — hero bỏ kicker, logo to hơn ===== */
+.slide--hero .hero__logo{ gap:clamp(1.1rem,2.6vw,2.4rem)!important; margin-bottom:clamp(.8rem,2vh,1.6rem)!important; }
+.slide--hero .hero__logo .pvi-logo{ height:clamp(80px,13vh,150px)!important; }
+.slide--hero .hero__logo .vna-logo{ height:clamp(102px,16.5vh,196px)!important; }
+
+
+/* ===== V7 — logo bìa to hơn, khung giờ vàng, dòng BH kiểu Bamboo ===== */
+.slide--hero .hero__logo{ gap:clamp(1.2rem,3vw,2.8rem)!important; margin-bottom:clamp(1rem,2.4vh,2rem)!important; }
+.slide--hero .hero__logo .pvi-logo{ height:clamp(96px,16vh,185px)!important; }
+.slide--hero .hero__logo .vna-logo{ height:clamp(120px,20vh,235px)!important; }
+@media (max-width:420px){ .slide--hero .hero__sub{ font-size:3.6vw; } }
+/* nhãn khung giờ vàng nằm đáy vùng, không đè trục 3h */
+.gapc__zone span{ top:auto; bottom:.25rem; white-space:normal; width:100%; }
+/* dòng bảo hiểm trong thẻ vé: xếp dọc như mẫu Bamboo */
+.frow--ins{ flex-direction:column; align-items:flex-start; gap:.15rem; }
+.frow--ins span{ font-weight:800; }
+.frow--ins b{ font-size:1em; font-weight:700; }
+
+
+/* ===== V9 — roadmap: line nối chạy ngang tâm các nút số, tag căn giữa ===== */
+.rmap__conn{ top:calc(clamp(1.6rem,3vh,2.4rem) - 6px); }
+.rmap__step .tag{ align-self:center!important; text-align:center; }
+
+/* ===== V8 — nhãn khung giờ vàng nằm hẳn trên trục giờ ===== */
+.chart.gapc{ padding-top:clamp(2.2rem,4.6vh,3rem); }
+.gapc__zone span{ top:-2.75rem; bottom:auto; white-space:nowrap; width:auto; }
+/* dòng bảo hiểm trong thẻ vé: format thường như các dòng khác */
+.frow--ins{ margin-top:0!important; background:none!important; border:none!important; border-radius:0!important;
+  padding:.42rem .2rem!important; flex-direction:row!important; align-items:center!important; gap:.5rem!important;
+  border-bottom:1px dashed var(--ac-line)!important; }
+.frow--ins:last-child{ border-bottom:none!important; }
+.frow--ins span{ font-weight:600!important; color:var(--ink-600)!important; }
+.frow--ins b{ color:var(--ink-700)!important; font-weight:700!important; font-size:1em!important; }
+
+/* ===== print - A4 landscape, 1 slide / page ===== */
+@media print{
+  @page{ size:A4 landscape; margin:0; }
+  html{ scroll-snap-type:none; scroll-behavior:auto; }
+  html,body{ height:auto; overflow:visible; background:#fff; }
+  .rail,.counter,.progress,.hint,.navbtns,.ambient,.hero-rain,.hero-motes,.hero-stage__scan{ display:none!important; }
+  .slide{ width:100%; height:100vh; min-height:100vh; overflow:hidden; page-break-after:always; break-after:page; page-break-inside:avoid; }
+  .slide:last-child{ page-break-after:auto; }
+  .slide-content{ overflow:hidden; max-height:100vh; padding-left:var(--slide-padding)!important; }
+  .ac-reveal,.ac-pop{ opacity:1!important; transform:none!important; animation:none!important; }
+  .ac-bar{ height:var(--h)!important; } .ac-fill-x{ width:var(--w)!important; }
+  .ac-ring-val{ stroke-dashoffset:calc(var(--circ)*(1 - var(--p)))!important; }
+  .lc-path{ stroke-dashoffset:0!important; animation:none!important; } .lc-dot{ opacity:1!important; }
+  .pie-slice{ opacity:1!important; transform:none!important; }
+  .rwy__plane{ animation:none!important; left:96%!important; }
+  .hero__word,.end__big{ animation:none!important; }
+  *{ print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+}
+
+</style>
+
+<!-- ===== S1 HERO ===== -->
+<section class="slide slide--hero" data-title="Trang bìa">
+  <div class="hero-stage" aria-hidden="true">
+    <div class="hero-photo-vna"></div>
+    <div class="hero-veil-vna"></div>
+  </div>
+  <div class="slide-content"><div class="wrap hero">
+    <div class="hero__logo ac-reveal"><img class="pvi-logo" src="PVI%20Logo%20white.png" alt="Bảo hiểm PVI" /><span class="hero__x">×</span><img class="vna-logo" src="VNA%20Logo%20white.png" alt="Vietnam Airlines" /></div>
+    <div class="hero__name ac-reveal" style="--i:2">FLIGHT DELAY</div>
+    <div class="hero__word">PROTECTION</div>
+    <div class="hero__sub ac-reveal nb" style="--i:3">Giải pháp bảo hiểm trễ chuyến bay cho Vietnam Airlines</div>
+    <div class="hero__org ac-reveal" style="--i:4">Chúng tôi biến thời gian chờ đợi của khách thành một trải nghiệm được bảo vệ</div>
+  </div></div>
+</section>
+
+<!-- ===== S2 MỤC LỤC ===== -->
+<section class="slide" data-title="Mục lục">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><h2 class="s-title ac-reveal">Mục lục</h2></div>
+    <div class="toc">
+      <div class="toc__item ac-reveal" style="--i:1" data-go="2"><span class="toc__no">01</span><span class="toc__t">Bối cảnh &amp; cơ hội thị trường</span></div>
+      <div class="toc__item ac-reveal" style="--i:2" data-go="6"><span class="toc__no">02</span><span class="toc__t">Đề xuất sản phẩm bảo hiểm trễ chuyến bay</span></div>
+      <div class="toc__item ac-reveal" style="--i:3" data-go="10"><span class="toc__no">03</span><span class="toc__t">Tình huống minh họa quyền lợi cho hành khách</span></div>
+      <div class="toc__item ac-reveal" style="--i:4" data-go="13"><span class="toc__no">04</span><span class="toc__t">Giá trị mang lại cho Vietnam Airlines</span></div>
+      <div class="toc__item ac-reveal" style="--i:5" data-go="15"><span class="toc__no">05</span><span class="toc__t">Định hướng hợp tác giữa Vietnam Airlines &amp; PVI</span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ===== COVER 01 ===== -->
+<section class="slide" data-title="Mục 01 · Bối cảnh &amp; Cơ hội">
+  <div class="slide-content"><div class="wrap divider cover">
+    <div class="divider__kicker ac-reveal">Phần 01</div>
+    <div class="divider__no ac-reveal" style="--i:1">01</div>
+    <div class="divider__bar ac-reveal" style="--i:2"></div>
+    <div class="divider__t ac-reveal" style="--i:3">Bối cảnh &amp; cơ hội thị trường</div>
+  </div></div>
+</section>
+
+<!-- ===== S3 EXECUTIVE PROPOSITION ===== -->
+<section class="slide" data-title="Đề xuất tổng quan">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Bối cảnh mở ra cơ hội cho một sản phẩm bổ trợ mới</h2><span class="s-sub ac-reveal" style="--i:2">Trễ chuyến là điều khách khó chịu nhất, trong khi doanh thu bổ trợ đang là hướng tăng trưởng trọng yếu của ngành hàng không.</span></div>
+    <div class="cards cards--3" style="margin-bottom:var(--content-gap)">
+      <div class="card ac-reveal" style="--i:3"><h4><span class="card__ic">⏱️</span> Điểm khách bức xúc nhất</h4><p>Trễ chuyến ảnh hưởng trực tiếp tới thời gian, chi phí và lịch trình - nhưng khách hiếm khi nhận lại giá trị tương xứng cho khoảng thời gian đã mất.</p></div>
+      <div class="card ac-reveal" style="--i:4"><h4><span class="card__ic">📈</span> Doanh thu bổ trợ lên ngôi</h4><p>Bán kèm quyền lợi là hướng tăng trưởng trọng yếu của các hãng - vừa thêm nguồn thu, vừa cho khách thêm lý do chọn hạng vé cao hơn.</p></div>
+      <div class="card card--warn ac-reveal" style="--i:5"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🎯</span> Còn thiếu một sản phẩm</h4><p>Chưa có sản phẩm chuyên biệt cho rủi ro trễ chuyến với quyền lợi tiền mặt rõ ràng, đơn giản, mua được ngay khi đặt vé.</p></div>
+    </div>
+    <div class="note note--o ac-reveal" style="--i:6"><b>Đề xuất:</b> bổ sung một sản phẩm bổ trợ mới - bảo hiểm trễ chuyến bay - với quyền lợi tiền mặt cố định, thông điệp gọn, gắn ngay vào hành trình đặt vé.</div>
+    <div class="note note--g ac-reveal" style="--i:7">🤝 <b>Vì sao làm cùng PVI:</b> tận dụng ngay nền tảng phân phối bảo hiểm TripCARE sẵn có với Vietnam Airlines, gia tăng doanh thu bổ trợ và trao cho khách quyền lợi rõ ràng khi chuyến bay gián đoạn - trong khi Vietnam Airlines không phải tự đứng ra vận hành bảo hiểm.</div>
+  </div></div>
+</section>
+
+<!-- ===== S4 REGULATORY NĐ208 ===== -->
+<section class="slide" data-title="Nghị định 208">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Nghị định 208 thay đổi kỳ vọng của hành khách như thế nào?</h2><span class="s-sub ac-reveal" style="--i:2">Nghị định 208/2026/NĐ-CP về vận tải hàng không · hiệu lực từ ngày <b>01/07/2026</b> · nghĩa vụ chăm sóc hành khách tăng dần theo thời gian trễ.</span></div>
+    <div class="rwy ac-reveal" style="--i:2">
+      <div class="rwy__track"><span class="rwy__plane">✈</span></div>
+      <div class="rwy__stops">
+        <div class="rwy__stop ac-pop" style="--i:3">
+          <div class="rwy__badge">2h</div>
+          <div class="rwy__ic">🥤</div>
+          <h4>Nghĩa vụ chăm sóc</h4>
+          <p>Phục vụ nước uống hoặc voucher tương đương · re-book, re-route nếu lỗi thuộc hãng và khách có yêu cầu</p>
+          <span class="tag tag--b">Nước uống</span>
+        </div>
+        <div class="rwy__stop ac-pop" style="--i:4">
+          <div class="rwy__badge">3h</div>
+          <div class="rwy__ic">🍜</div>
+          <h4>Đồ ăn &amp; nước uống</h4>
+          <p>Phục vụ đồ ăn, nước uống hoặc voucher tương đương · tiếp tục các nghĩa vụ đã phát sinh tại mốc 2 giờ</p>
+          <span class="tag tag--b">Suất ăn</span>
+        </div>
+        <div class="rwy__stop ac-pop" style="--i:5">
+          <div class="rwy__badge">4h</div>
+          <div class="rwy__ic">🎫</div>
+          <h4>Hoàn vé &amp; bồi thường</h4>
+          <p>Nếu lỗi thuộc hãng: hoàn tiền vé hoặc phần chưa sử dụng · bồi thường ứng trước không hoàn lại theo quy định</p>
+          <span class="tag tag--o">Hoàn vé</span>
+        </div>
+        <div class="rwy__stop ac-pop" style="--i:6">
+          <div class="rwy__badge">6h</div>
+          <div class="rwy__ic">🛏️</div>
+          <h4>Bố trí nơi nghỉ</h4>
+          <p>Bố trí nơi nghỉ hoặc chỗ ngủ phù hợp theo khung giờ, trừ khi hành khách đã chấp nhận hoàn vé</p>
+          <span class="tag tag--g">Lưu trú</span>
+        </div>
+      </div>
+    </div>
+    <div class="note ac-reveal" style="--i:7">⚖️ Nghị định xác lập <b>nghĩa vụ tối thiểu</b> của hãng hàng không đối với hành khách khi chuyến bay bị trễ - đây là chuẩn dịch vụ mà mọi hãng phải tuân thủ.</div>
+    <div class="unit ac-reveal" style="--i:8;margin-top:.35rem">Nguồn: Nghị định 208/2026/NĐ-CP, Điều 36 - rà soát lại số điều và cách diễn giải trước khi trình bày chính thức.</div>
+  </div></div>
+</section>
+
+<!-- ===== S5 PROTECTION GAP ===== -->
+<section class="slide" data-title="Khoảng trống bảo vệ">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Khoảng trống bảo vệ nằm ở đâu?</h2><span class="s-sub ac-reveal" style="--i:2">Hành khách chịu ảnh hưởng từ mốc 2 giờ - quyền hoàn vé &amp; bồi thường tại mốc 4 giờ chỉ áp dụng khi lỗi thuộc người vận chuyển.</span></div>
+    <div class="chart gapc ac-reveal" style="--i:3">
+      <div class="gapc__axis"><span style="left:0%">0h</span><span style="left:14.3%">1h</span><span style="left:28.6%">2h</span><span style="left:42.9%">3h</span><span style="left:57.2%">4h</span><span style="left:71.5%">5h</span><span style="left:85.8%">6h</span></div>
+      <div class="gapc__stage">
+        <div class="gapc__zone"><span>KHUNG GIỜ VÀNG<br>2 - 4 GIỜ</span></div>
+        <div class="gapc__lane">
+          <span class="gapc__lbl">✈ Hãng hàng không<br><i>nghĩa vụ chăm sóc</i></span>
+          <div class="gapc__row">
+            <span class="gapc__chip" style="left:28.6%">🥤 Nước uống</span>
+            <span class="gapc__chip" style="left:42.9%">🍜 Đồ ăn</span>
+            <span class="gapc__chip" style="left:57.2%">🎫 Hoàn vé*</span>
+            <span class="gapc__chip" style="left:85.8%">🛏 Nơi nghỉ</span>
+          </div>
+        </div>
+        <div class="gapc__lane">
+          <span class="gapc__lbl">🛡 Quyền lợi nâng cao<br><i>từ 2 giờ</i></span>
+          <div class="gapc__row"><div class="gapc__bar gapc__bar--prem ac-fill-x" style="--w:71.4%">Bảo hiểm chi trả tiền mặt ngay từ mốc 2 giờ</div></div>
+        </div>
+        <div class="gapc__lane">
+          <span class="gapc__lbl">🛡 Quyền lợi cơ bản<br><i>từ 3 giờ</i></span>
+          <div class="gapc__row"><div class="gapc__bar gapc__bar--lite ac-fill-x" style="--w:57.1%">Bảo hiểm chi trả từ mốc 3 giờ</div></div>
+        </div>
+      </div>
+      <div class="gapc__foot">*Hoàn vé &amp; bồi thường ứng trước tại mốc 4h chỉ khi lỗi thuộc hãng · Nguyên nhân ngoài kiểm soát: quyền lợi bảo hiểm độc lập tùy phạm vi được phê duyệt</div>
+    </div>
+    <div class="grid2" style="align-items:stretch">
+      <div class="note note--o ac-reveal" style="--i:5"><b>Khách đã chịu thiệt ngay từ mốc 2 giờ</b>, nhưng theo quy định, hãng chưa chắc đã phải hoàn vé hay bồi thường ở mốc này.</div>
+      <div class="note note--g ac-reveal" style="--i:6">🎯 Nghị định đặt ra <b>chuẩn dịch vụ tối thiểu</b>; sản phẩm bảo hiểm bổ sung cho khách <b>một khoản hỗ trợ tài chính</b> rõ ràng, dễ nhận biết.</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ===== COVER 02 ===== -->
+<section class="slide" data-title="Mục 02 · Kiến trúc sản phẩm">
+  <div class="slide-content"><div class="wrap divider cover">
+    <div class="divider__kicker ac-reveal">Phần 02</div>
+    <div class="divider__no ac-reveal" style="--i:1">02</div>
+    <div class="divider__bar ac-reveal" style="--i:2"></div>
+    <div class="divider__t ac-reveal" style="--i:3">Đề xuất sản phẩm</div>
+  </div></div>
+</section>
+
+<!-- ===== S6 PORTFOLIO ECOSYSTEM ===== -->
+<section class="slide" data-title="Hệ sinh thái bảo vệ">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1"><span class="nb">Flight Delay Protection</span> không thay thế TripCARE, mà bổ sung để trọn vẹn việc bảo vệ hành trình</h2></div>
+    <div class="eco">
+      <div class="eco__panel eco__panel--tc ac-reveal" style="--i:2">
+        <div class="eco__head"><b>🌐 TripCARE</b><span>Bảo vệ trọn cả chuyến đi</span></div>
+        <div class="eco__chips">
+          <span>🏥 Tai nạn &amp; chi phí y tế</span><span>🔁 Hủy / rút ngắn chuyến đi</span><span>🧳 Mất / hỏng / chậm hành lý</span><span>🌍 Hỗ trợ toàn cầu 24/7</span><span>⚠️ Sự cố &amp; bất tiện khi đi lại</span><span>⏱ Trễ chuyến theo điều kiện TripCARE</span>
+        </div>
+        <div class="eco__foot">Phạm vi rộng · nhiều nhóm rủi ro</div>
+      </div>
+      <div class="eco__plus ac-pop" style="--i:3">+</div>
+      <div class="eco__panel eco__panel--fa ac-reveal" style="--i:4">
+        <div class="eco__head"><b>🛡️ Flight Delay Protection</b><span>Chuyên cho một rủi ro: trễ chuyến</span></div>
+        <div class="eco__chips">
+          <span>⚡ Quyền lợi phân theo hạng vé</span><span>💵 Chi trả tiền mặt cố định</span><span>🧾 Không phải chứng minh chi phí</span><span>📱 Cổng bồi thường riêng</span><span>🎫 Gắn sẵn vào hạng vé</span><span>📣 Thông điệp gọn, dễ hiểu</span>
+        </div>
+        <div class="eco__foot">Phí nhỏ · số lượng lớn · dễ tiếp cận</div>
+      </div>
+    </div>
+    <div class="eco__eq ac-reveal" style="--i:5">= HỆ SINH THÁI BẢO VỆ HÀNH TRÌNH CỦA VIETNAM AIRLINES</div>
+    <div class="note note--g ac-reveal" style="--i:6">TripCARE lo trọn cả hành trình; <span class="nb">Flight Delay Protection</span> tập trung xử lý đúng một rủi ro - trễ chuyến - với quyền lợi gọn và rõ ràng hơn.</div>
+  </div></div>
+</section>
+
+
+
+<!-- ===== S8 HAI PHƯƠNG ÁN OFFER ===== -->
+<section class="slide" data-title="Hai phương án đề xuất">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Hai phương án để Vietnam Airlines lựa chọn</h2><span class="s-sub ac-reveal" style="--i:2">Cùng một sản phẩm bảo hiểm trễ chuyến, hai cách tạo khác biệt giữa các hạng vé. Vietnam Airlines chọn cách phù hợp với chiến lược hạng vé của mình.</span></div>
+    <div class="opts">
+      <div class="opt ac-reveal" style="--i:3">
+        <div class="opt__tag">Phương án 1</div>
+        <h3 class="opt__title">Khác nhau ở <b>thời gian trễ</b></h3>
+        <p class="opt__desc">Giữ nguyên mức chi trả <b>1.000.000₫</b> cho mọi hạng vé - chỉ khác nhau ở mốc thời gian được kích hoạt.</p>
+        <div class="opt__rows">
+          <div class="opt__row"><div class="opt__cabin"><b>Hạng phổ thông</b><span>Economy Lite · Classic · Flex</span></div><div class="opt__val">từ<em>3</em>giờ</div></div>
+          <div class="opt__row opt__row--hi"><div class="opt__cabin"><b>Phổ thông đặc biệt &amp; Thương gia</b><span>Eco Premium · Business Classic/Flex</span></div><div class="opt__val opt__val--hi">từ<em>2</em>giờ</div></div>
+        </div>
+        <div class="opt__pro">✔ Hạng vé cao được bảo vệ <b>sớm hơn</b> - đặc quyền về thời gian, giữ chi trả đồng nhất 1.000.000₫</div>
+      </div>
+      <div class="opt ac-reveal" style="--i:4">
+        <div class="opt__tag opt__tag--2">Phương án 2</div>
+        <h3 class="opt__title">Khác nhau ở <b>số tiền chi trả</b></h3>
+        <p class="opt__desc">Giữ nguyên mốc trễ <b>2 giờ</b> cho mọi hạng vé - chỉ khác nhau ở mức tiền được chi trả.</p>
+        <div class="opt__rows">
+          <div class="opt__row"><div class="opt__cabin"><b>Hạng phổ thông</b><span>Economy · trễ từ 2 giờ</span></div><div class="opt__amt">1.000.000₫</div></div>
+          <div class="opt__row opt__row--hi"><div class="opt__cabin"><b>Phổ thông đặc biệt &amp; Thương gia</b><span>Eco Premium · Business · trễ từ 2 giờ</span></div><div class="opt__amt opt__amt--hi">2.000.000₫</div></div>
+        </div>
+        <div class="opt__pro">✔ Khác biệt bằng <b>giá trị tiền mặt</b> rõ ràng - dễ truyền thông, giữ mốc trễ đồng nhất 2 giờ</div>
+      </div>
+    </div>
+    <div class="note note--g ac-reveal" style="--i:5">🧭 Vietnam Airlines chọn một trong hai phương án, hoặc kết hợp cả hai. Ở cả hai phương án, hạng vé cao hơn luôn nhận ưu đãi tốt hơn: được chi trả sớm hơn (từ 2 giờ) hoặc nhận số tiền cao hơn (2.000.000₫). PVI sẽ chốt mốc trễ, mức phí và phạm vi sau khi hai bên thẩm định rủi ro và tính phí.</div>
+  </div></div>
+</section>
+
+<!-- ===== S8B DEMO GIAO DIỆN VNA ===== -->
+<section class="slide" data-title="Demo trên giao diện đặt vé">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Quyền lợi bảo hiểm hiện ngay tại bước chọn hạng vé</h2></div>
+    <div class="fdemo">
+      <div class="fdemo__route ac-reveal" style="--i:2"><b>HAN → SGN</b> · bay thẳng · 05:00 - 07:10 · VN 205 · <span>Chọn hạng vé phổ thông</span></div>
+      <div class="fcards">
+        <div class="fcard ac-reveal" style="--i:3">
+          <div class="fcard__h"><div class="fcard__cl">Economy Lite</div><div class="fcard__pr">2.025.181 <small>VND</small></div></div>
+          <div class="fcard__b">
+            <div class="frow"><span>✏️ Đổi vé</span><b>Phí tối đa 1.600.000₫</b></div>
+            <div class="frow"><span>↩️ Hoàn vé</span><b>Phí tối đa 1.600.000₫</b></div>
+            <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
+            <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
+            <div class="frow"><span>💺 Cộng dặm</span><b>60%</b></div>
+            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Hạn mức: VND 1.000.000</b></div>
+          </div>
+        </div>
+        <div class="fcard ac-reveal" style="--i:4">
+          <div class="fcard__h"><div class="fcard__cl">Economy Classic</div><div class="fcard__pr">2.609.181 <small>VND</small></div></div>
+          <div class="fcard__b">
+            <div class="frow"><span>✏️ Đổi vé</span><b>Phí tối đa 1.010.000₫</b></div>
+            <div class="frow"><span>↩️ Hoàn vé</span><b>Phí tối đa 1.150.000₫</b></div>
+            <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
+            <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
+            <div class="frow"><span>💺 Cộng dặm</span><b>80%</b></div>
+            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Hạn mức: VND 1.000.000</b></div>
+          </div>
+        </div>
+        <div class="fcard fcard--flex ac-reveal" style="--i:5">
+          <div class="fcard__h"><div class="fcard__cl">Economy Flex</div><div class="fcard__pr">3.666.181 <small>VND</small></div></div>
+          <div class="fcard__b">
+            <div class="frow"><span>✏️ Đổi vé</span><b>Miễn phí</b></div>
+            <div class="frow"><span>↩️ Hoàn vé</span><b>Phí tối đa 500.000₫</b></div>
+            <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
+            <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
+            <div class="frow"><span>💺 Cộng dặm</span><b>110%</b></div>
+            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Hạn mức: VND 2.000.000</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="note note--g ac-reveal" style="--i:6">🎫 Dòng bảo hiểm hiện cùng các quyền lợi khác của hạng vé, khách thấy ngay giá trị được bảo vệ; vé linh hoạt hơn đi kèm mức bảo vệ cao hơn. Áp dụng tương tự cho Eco Premium &amp; Business.</div>
+  </div></div>
+</section>
+
+<!-- ===== COVER 03 ===== -->
+<section class="slide" data-title="Mục 03 · Kịch bản khách hàng">
+  <div class="slide-content"><div class="wrap divider cover">
+    <div class="divider__kicker ac-reveal">Phần 03</div>
+    <div class="divider__no ac-reveal" style="--i:1">03</div>
+    <div class="divider__bar ac-reveal" style="--i:2"></div>
+    <div class="divider__t ac-reveal" style="--i:3">Tình huống minh họa</div>
+  </div></div>
+</section>
+
+<!-- ===== S9 SCENARIO 2H ===== -->
+<section class="slide" data-title="Kịch bản trễ 2 giờ">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Chuyến bay trễ 130 phút: khách chạm mốc 2 giờ và nhận quyền lợi</h2></div>
+    <div class="chart fltbar ac-reveal" style="--i:2">
+      <div class="fltbar__meta"><b>VNxxx · HAN → SGN</b><span>Dự kiến <b>10:00</b></span><span>Thực tế <b>12:10</b></span><span class="fltbar__delay">⏱ Trễ 130 phút</span></div>
+      <div class="fltbar__scale"><span style="left:0%">10:00</span><span style="left:33.3%">11:00</span><span style="left:66.7%">12:00</span><span style="left:100%">13:00</span></div>
+      <div class="fltbar__track">
+        <div class="fltbar__fill ac-fill-x" style="--w:72.2%"></div>
+        <div class="fltbar__mark fltbar__mark--on" style="left:66.7%"><i></i><em>2h · quyền lợi kích hoạt ✓</em></div>
+        <div class="fltbar__mark" style="left:100%"><i></i><em>3h · chưa chạm mốc</em></div>
+      </div>
+    </div>
+    <div class="grid2" style="align-items:stretch;margin-top:var(--content-gap)">
+      <div class="step ac-reveal" style="--i:3"><span class="step__n">1</span><div><h4>Vietnam Airlines · Nghĩa vụ chăm sóc</h4><p>Nước uống / voucher tương đương · cập nhật thông tin &amp; lý do chậm chuyến · các nghĩa vụ khác theo quy định.</p></div></div>
+      <div class="step ac-reveal" style="--i:4;border-left:4px solid var(--pvi-cyan)"><span class="step__n">2</span><div><h4>Flight Delay Protection · mốc kích hoạt 2 giờ</h4><p>Khách vào cổng bồi thường trực tuyến, PVI/TPA đối chiếu dữ liệu chuyến bay rồi chi trả thẳng vào tài khoản.</p><div class="fltbar__payout">1.000.000₫ - 2.000.000₫ <small style="font-size:.5em;color:var(--ink-500)">tuỳ phương án &amp; hạng vé</small></div></div></div>
+    </div>
+    <div class="note note--g ac-reveal" style="--i:5;margin-top:var(--content-gap)">✨ Với phương án 1, khách hạng Eco Premium &amp; Business nhận 1.000.000₫ ngay từ mốc 2 giờ, còn khách Economy chờ mốc 3 giờ. Với phương án 2, mọi hạng vé đều được chi trả từ mốc 2 giờ.</div>
+    <div class="unit ac-reveal" style="--i:6;margin-top:.35rem">Quyền lợi chỉ phát sinh khi hợp đồng có hiệu lực và đủ điều kiện, không thay thế nghĩa vụ của hãng. Cổng bồi thường trực tuyến do PVI vận hành.</div>
+  </div></div>
+</section>
+
+<!-- ===== S10 SCENARIO 4H DECISION TREE ===== -->
+<section class="slide" data-title="Kịch bản trễ 4 giờ">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Chuyến bay trễ hơn 4 giờ: mọi hạng vé, ở cả hai phương án, đều được chi trả</h2><span class="s-sub ac-reveal" style="--i:2"><b>VNxxx · SGN → DAD</b> · dự kiến 14:00 · thực tế 18:20 · <b style="color:var(--red)">tổng trễ 260 phút</b> - quyền lợi phụ thuộc nguyên nhân sự cố.</span></div>
+    <div class="cards cards--2" style="margin-bottom:var(--content-gap)">
+      <div class="card ac-reveal" style="--i:2;border-left-color:var(--green)"><h4><span class="card__ic" style="background:rgba(46,125,50,.12);color:var(--green)">🛫</span> Lỗi thuộc hãng</h4>
+        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Chăm sóc · hoàn vé · đổi hành trình · bồi thường ứng trước</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">BH</b><span>Mọi hạng vé đã vượt mốc kích hoạt · PVI chi trả <b>1.000.000₫ hoặc 2.000.000₫</b> theo phương án đã chọn</span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Quyền lợi trễ chuyến theo điều kiện hợp đồng</span></div></div>
+      <div class="card card--warn ac-reveal" style="--i:3"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🌧️</span> Thời tiết</h4>
+        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Nghĩa vụ chăm sóc vẫn phát sinh · quyền lợi do lỗi hãng có thể không áp dụng</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">BH</b><span><i>Theo phạm vi được phê duyệt - không mặc nhiên chi trả</i></span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Tùy điều khoản hợp đồng</span></div></div>
+      <div class="card card--warn ac-reveal" style="--i:4"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🗼</span> ATC / Sân bay</h4>
+        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Chăm sóc hành khách theo khung giờ thực tế</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">BH</b><span><i>Tùy điều khoản hợp đồng &amp; phạm vi phê duyệt</i></span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Đối chiếu điều kiện riêng</span></div></div>
+      <div class="card card--bad ac-reveal" style="--i:5"><h4><span class="card__ic" style="background:rgba(198,40,40,.12);color:var(--red)">⚠️</span> Ngoài kiểm soát của hãng</h4>
+        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Một số quyền lợi do lỗi hãng không áp dụng</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">BH</b><span><i>Xác định theo phạm vi được phê duyệt</i></span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Theo điều khoản hợp đồng</span></div></div>
+    </div>
+    <div class="note ac-reveal" style="--i:6">🔀 Nghĩa vụ của hãng &amp; quyền lợi bảo hiểm <b>vận hành song song</b> - phát sinh từ các cơ sở pháp lý khác nhau. Mỗi hành khách chỉ nhận một mức quyền lợi cho một sự kiện; cách phối hợp với TripCARE do điều khoản hợp đồng quy định.</div>
+  </div></div>
+</section>
+
+<!-- ===== COVER 04 ===== -->
+<section class="slide" data-title="Mục 04 · Giá trị cho Vietnam Airlines">
+  <div class="slide-content"><div class="wrap divider cover">
+    <div class="divider__kicker ac-reveal">Phần 04</div>
+    <div class="divider__no ac-reveal" style="--i:1">04</div>
+    <div class="divider__bar ac-reveal" style="--i:2"></div>
+    <div class="divider__t ac-reveal" style="--i:3">Giá trị cho <span class="nb">Vietnam Airlines</span></div>
+  </div></div>
+</section>
+
+<!-- ===== S11 VALUE + REVENUE SIMULATOR ===== -->
+<section class="slide" data-title="Giá trị &amp; Mô phỏng doanh thu">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">04 · Giá trị cho Vietnam Airlines</div><h2 class="s-title ac-reveal" style="--i:1">Sản phẩm mới mở thêm dư địa doanh thu cho Vietnam Airlines</h2></div>
+    <div class="kpis kpis--4 ac-reveal" style="--i:2;margin-bottom:var(--content-gap)">
+      <div class="kpi"><span class="kpi__l">01 · Phân nhóm khách hàng</span><span class="kpi__t">Vietnam Airlines phục vụ trọn cả tệp khách phổ thông lẫn nhóm khách cao cấp cần mức bảo vệ cao hơn.</span></div>
+      <div class="kpi kpi--cyan"><span class="kpi__l">02 · Khác biệt hạng vé</span><span class="kpi__t">Hạng vé cao hơn luôn được ưu đãi hơn: chi trả sớm hơn hoặc số tiền lớn hơn, tuỳ phương án đã chọn.</span></div>
+      <div class="kpi kpi--cyan"><span class="kpi__l">03 · Cơ hội bán thêm</span><span class="kpi__t">Khách thấy rõ hạng vé cao hơn được bảo vệ tốt hơn, nên có thêm lý do nâng hạng.</span></div>
+      <div class="kpi kpi--gold"><span class="kpi__l">04 · Theo dõi hiệu quả</span><span class="kpi__t">Tỷ lệ đính kèm, tỷ lệ kích hoạt, doanh thu trên mỗi khách, hiệu quả bán thêm, mức hài lòng sau bồi thường.</span></div>
+    </div>
+    <div class="chart ac-reveal" style="--i:3">
+      <div class="s-sub" style="margin-bottom:.7rem;font-weight:700;color:var(--pvi-blue);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">Ước tính doanh thu bổ trợ <span class="tag tag--o">Chỉ minh hoạ · có thể chỉnh</span></div>
+      <div id="rvSim" class="rvsim"></div>
+    </div>
+    <div class="unit ac-reveal" style="--i:6;margin-top:.5rem">Toàn bộ số liệu chỉ mang tính minh hoạ và có thể chỉnh sửa. Các giả định cuối cùng sẽ được xác nhận sau khi thống nhất thiết kế sản phẩm, mức phí, kênh phân phối và cơ chế thương mại.</div>
+  </div></div>
+</section>
+
+<!-- ===== COVER 05 ===== -->
+<section class="slide" data-title="Mục 05 · Định hướng hợp tác">
+  <div class="slide-content"><div class="wrap divider cover">
+    <div class="divider__kicker ac-reveal">Phần 05</div>
+    <div class="divider__no ac-reveal" style="--i:1">05</div>
+    <div class="divider__bar ac-reveal" style="--i:2"></div>
+    <div class="divider__t ac-reveal" style="--i:3">Định hướng hợp tác</div>
+  </div></div>
+</section>
+
+<!-- ===== S12 FINTECH VS INSURANCE ===== -->
+<section class="slide" data-title="Định vị vs Fintech">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Không chỉ là "Fintech hay Bảo hiểm" - mà mô hình nào phù hợp nhất với chiến lược Vietnam Airlines</h2></div>
+    <div class="grid2" style="align-items:center">
+      <div class="chart radar ac-reveal" style="--i:2">
+        <svg viewBox="0 0 260 240" role="img" aria-label="So sánh mức độ phù hợp chiến lược">
+          <g fill="none" stroke="rgba(0,48,135,.13)" stroke-width="1">
+            <polygon points="130,95 153.8,112.3 144.7,140.2 115.3,140.2 106.2,112.3"/>
+            <polygon points="130,70 177.6,104.6 159.4,160.5 100.6,160.5 82.4,104.6"/>
+            <polygon points="130,45 201.3,96.8 174.1,180.7 85.9,180.7 58.7,96.8"/>
+            <polygon points="130,20 225.1,89.1 188.8,200.9 71.2,200.9 34.9,89.1"/>
+            <line x1="130" y1="120" x2="130" y2="20"/><line x1="130" y1="120" x2="225.1" y2="89.1"/><line x1="130" y1="120" x2="188.8" y2="200.9"/><line x1="130" y1="120" x2="71.2" y2="200.9"/><line x1="130" y1="120" x2="34.9" y2="89.1"/>
+          </g>
+          <polygon points="130,28 177.6,104.6 162.3,164.5 103.5,156.4 77.7,103" fill="rgba(100,116,139,.16)" stroke="#64748B" stroke-width="2"/>
+          <polygon points="130,48 220.3,90.6 182.9,192.8 75.9,194.4 39.7,90.6" fill="rgba(0,151,220,.2)" stroke="#003087" stroke-width="2.5"/>
+          <g font-family="Be Vietnam Pro,sans-serif" font-size="9.5" font-weight="700" fill="#1E2A44">
+            <text x="130" y="12" text-anchor="middle">Trải nghiệm số</text>
+            <text x="231" y="86" text-anchor="start">Pháp lý VN</text>
+            <text x="192" y="214" text-anchor="middle">Tùy chỉnh SP</text>
+            <text x="68" y="214" text-anchor="middle">Xử lý bồi thường</text>
+            <text x="29" y="86" text-anchor="end">Hệ sinh thái VNA</text>
+          </g>
+        </svg>
+        <div class="lc-legend"><span><i style="background:#003087"></i>PVI Insurance</span><span><i style="background:#64748B"></i>Nền tảng Fintech</span><span class="unit" style="font-style:italic">Đánh giá định tính minh hoạ</span></div>
+      </div>
+      <div>
+        <div class="card ac-reveal" style="--i:3;margin-bottom:.7rem"><h4><span class="card__ic">⚡</span> Nền tảng Fintech · điểm mạnh</h4>
+          <div class="eco__chips" style="margin-top:.3rem"><span>Trải nghiệm số nhanh</span><span>Hệ sinh thái công nghệ HK</span><span>Hoàn tiền tức thời</span><span>Đồng nhất đa thị trường</span></div></div>
+        <div class="card ac-reveal" style="--i:4;border-left-color:var(--pvi-blue)"><h4><span class="card__ic">🛡️</span> PVI Insurance · lợi thế chiến lược</h4>
+          <div class="eco__chips" style="margin-top:.3rem"><span>Khuôn khổ pháp lý Việt Nam</span><span>Quan hệ TripCARE hiện hữu</span><span>Thiết kế quyền lợi theo nhu cầu</span><span>Bồi thường &amp; CSKH trong nước</span><span>VNA không phải xử lý bồi thường</span></div></div>
+      </div>
+    </div>
+    <div class="note note--o ac-reveal" style="--i:5;margin-top:var(--content-gap)">🤝 <b>PVI cam kết đồng hành cùng Vietnam Airlines:</b> chi trả quyền lợi hoa hồng hấp dẫn cho kênh phân phối · cơ chế chia sẻ doanh thu linh hoạt · đồng hành truyền thông, đào tạo và vận hành lâu dài · sẵn sàng điều chỉnh sản phẩm theo chiến lược thương mại của Vietnam Airlines.</div>
+  </div></div>
+</section>
+
+<!-- ===== S13 NEXT STEPS ===== -->
+<section class="slide" data-title="Lộ trình phối hợp">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Đề xuất lộ trình phối hợp tiếp theo</h2><span class="s-sub ac-reveal" style="--i:2">Hai bên thống nhất bài toán kinh doanh và trải nghiệm khách hàng trước, rồi mới bàn sâu về kết nối kỹ thuật.</span></div>
+    <div class="rmap ac-reveal" style="--i:2">
+      <div class="rmap__conn"><i class="ac-fill-x" style="--w:100%"></i></div>
+      <div class="rmap__steps">
+        <div class="rmap__step ac-pop" style="--i:3"><div class="rmap__num">1</div><h4>Thống nhất bài toán</h4><p>Gói mua thêm độc lập · nhúng theo hạng vé · hay kết hợp cả hai</p><span class="tag tag--b">Bản mô tả ý tưởng</span></div>
+        <div class="rmap__step ac-pop" style="--i:4"><div class="rmap__num">2</div><h4>Thiết kế hai cấp độ</h4><p>Ngưỡng trễ, mức phí, tần suất trễ, nguồn dữ liệu chuyến bay</p><span class="tag tag--b">Bảng quyền lợi · điều khoản</span></div>
+        <div class="rmap__step ac-pop" style="--i:5"><div class="rmap__num">3</div><h4>Bài toán kinh doanh</h4><p>Kịch bản theo hạng vé · mô hình mua thêm / nhúng sẵn / kết hợp</p><span class="tag tag--b">Mô phỏng doanh thu</span></div>
+        <div class="rmap__step ac-pop" style="--i:6"><div class="rmap__num">4</div><h4>Demo trải nghiệm</h4><p>Giao diện hạng vé · thông báo · cổng bồi thường trực tuyến</p><span class="tag tag--b">Bản demo tương tác</span></div>
+        <div class="rmap__step ac-pop" style="--i:7"><div class="rmap__num">5</div><h4>Khả thi &amp; Thí điểm</h4><p>Nguồn dữ liệu · đối soát · chọn tuyến, kênh thí điểm</p><span class="tag tag--o">Kế hoạch thí điểm</span></div>
+      </div>
+    </div>
+    <div class="cta ac-reveal" style="--i:8">
+      <div><div class="cta__k">PVI SẴN SÀNG ĐỒNG HÀNH</div><p>Chúng tôi sẽ xây dựng <b>ý tưởng sản phẩm &amp; demo trải nghiệm</b> để hai bên cùng xem xét trong các bước triển khai tiếp theo.</p></div>
+      <div class="cta__tag">Bảo vệ hành trình<br>Nâng tầm trải nghiệm<br>Gia tăng doanh thu</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ===== S14 THANK YOU ===== -->
+<section class="slide" data-title="Cảm ơn">
+  <div class="slide-content"><div class="wrap hero">
+    <div class="hero__logo ac-reveal"><img class="pvi-logo" src="PVI%20Logo%20(cropped).png" alt="Bảo hiểm PVI" /><span class="hero__x">×</span><img class="vna-logo" src="VNA%20Logo.png" alt="Vietnam Airlines" /></div>
+    <div class="hero__kicker ac-reveal" style="--i:1;color:var(--pvi-cyan)">PVI Insurance × Vietnam Airlines</div>
+    <div class="end__big">TRÂN TRỌNG CẢM ƠN</div>
+    <div class="hero__org ac-reveal" style="--i:3">Flight Delay Protection · Giải pháp bảo hiểm trễ chuyến bay</div>
+    <div class="hero__meta ac-reveal" style="--i:4">Bảo vệ hành trình · Nâng tầm trải nghiệm · Gia tăng doanh thu.</div>
+    
+  </div></div>
+</section>
+
+</main>
+
+<script>
+/* ===== SLIDE 1 - hero motion background (motes + digital rain) ===== */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* glowing data-motes drifting up the staircase, biased toward the centre */
+  const motes=document.getElementById('heroMotes');
+  if(motes && !reduce){
+    const N=24;
+    for(let i=0;i<N;i++){
+      const m=document.createElement('span'); m.className='mote';
+      const centre=50, spread=(Math.random()-0.5)*60;     // cluster around the stairs
+      m.style.left=(centre+spread).toFixed(1)+'%';
+      m.style.setProperty('--md',(8+Math.random()*9).toFixed(1)+'s');
+      m.style.setProperty('--mdel',(-Math.random()*12).toFixed(1)+'s');
+      const s=(3+Math.random()*5).toFixed(1); m.style.width=s+'px'; m.style.height=s+'px';
+      motes.appendChild(m);
+    }
+  }
+
+  /* matrix-style digital rain over the sky */
+  const cv=document.querySelector('.hero-rain');
+  if(cv && !reduce){
+    const ctx=cv.getContext('2d');
+    const glyphs='01PVIBAOHIEM01';
+    let cols, drops, fontSize, raf, w, h, dpr;
+    function size(){
+      dpr=Math.min(window.devicePixelRatio||1,2);
+      w=cv.clientWidth; h=cv.clientHeight;
+      cv.width=w*dpr; cv.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      fontSize=Math.max(13,Math.round(w/95));
+      cols=Math.ceil(w/fontSize);
+      drops=new Array(cols).fill(0).map(()=>Math.random()*-40);
+    }
+    function frame(){
+      ctx.fillStyle='rgba(4,18,38,0.18)'; ctx.fillRect(0,0,w,h);
+      ctx.font=fontSize+'px monospace';
+      for(let i=0;i<cols;i++){
+        const ch=glyphs[(Math.random()*glyphs.length)|0];
+        const x=i*fontSize, y=drops[i]*fontSize;
+        ctx.fillStyle = Math.random()<0.06 ? 'rgba(190,238,255,0.9)' : 'rgba(45,183,230,0.55)';
+        ctx.fillText(ch,x,y);
+        if(y>h && Math.random()>0.975) drops[i]=Math.random()*-20;
+        drops[i]+=0.5;
+      }
+      raf=requestAnimationFrame(frame);
+    }
+    size(); frame();
+    let t; window.addEventListener('resize',()=>{ clearTimeout(t); t=setTimeout(size,180); });
+  }
+})();
+
+/* ===== Flight Delay Protection - Ước tính doanh thu bổ trợ (illustrative) ===== */
+(function(){
+  const host=document.getElementById('rvSim'); if(!host) return;
+  const CFG={ // ILLUSTRATIVE ONLY - editable
+    eco:1000000, biz:100000,
+    liteRate:0.05, premRate:0.25,
+    litePrem:30000, premPrem:80000
+  };
+  const F=[
+    {k:'eco',label:'Khách Economy / năm',min:0,max:3000000,step:50000,fmt:'int'},
+    {k:'biz',label:'Khách Eco Premium &amp; Business / năm',min:0,max:400000,step:10000,fmt:'int'},
+    {k:'liteRate',label:'Tỷ lệ chọn gói Lite',min:0,max:1,step:0.01,fmt:'pct'},
+    {k:'premRate',label:'Tỷ lệ chọn gói Premier',min:0,max:1,step:0.01,fmt:'pct'},
+    {k:'litePrem',label:'Phí gói Lite (₫)',min:0,max:200000,step:5000,fmt:'int'},
+    {k:'premPrem',label:'Phí gói Premier (₫)',min:0,max:300000,step:5000,fmt:'int'}
+  ];
+  const nf=new Intl.NumberFormat('vi-VN');
+  const fmtV=(f,v)=> f.fmt==='pct' ? Math.round(v*100)+'%' : nf.format(Math.round(v));
+  const shortVND=v=> v>=1e9 ? (v/1e9).toFixed(2).replace(/\.?0+$/,'')+' tỷ' : v>=1e6 ? (v/1e6).toFixed(1).replace(/\.0$/,'')+' tr' : nf.format(Math.round(v));
+
+  host.innerHTML=`
+    <div class="rvsim__inputs" id="rvIn"></div>
+    <div class="rvsim__out">
+      <div class="rvbig"><div class="l">Doanh thu bổ trợ ước tính</div><div class="v" id="rvRev">-</div></div>
+      <div class="rvmini">
+        <div class="rvcell"><div class="l">Hợp đồng gói Lite</div><div class="v" id="rvLiteP">-</div></div>
+        <div class="rvcell"><div class="l">Hợp đồng gói Premier</div><div class="v" id="rvPremP">-</div></div>
+        <div class="rvcell"><div class="l">Tổng khách được bảo vệ</div><div class="v" id="rvPax">-</div></div>
+        <div class="rvcell"><div class="l">Doanh thu / khách</div><div class="v" id="rvPer">-</div></div>
+      </div>
+      <div class="rvdonut">
+        <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#e6eef8" stroke-width="4"/>
+          <circle id="rvDlite" cx="18" cy="18" r="15.9" fill="none" stroke="#003087" stroke-width="4" stroke-dasharray="50 50" stroke-dashoffset="25" transform="rotate(-90 18 18)"/>
+          <circle id="rvDprem" cx="18" cy="18" r="15.9" fill="none" stroke="#0097DC" stroke-width="4" stroke-dasharray="50 50" stroke-dashoffset="-25" transform="rotate(-90 18 18)"/>
+        </svg>
+        <div class="leg"><div><i style="background:#003087"></i>Phí gói Lite <b id="rvLiteG">-</b></div><div><i style="background:#0097DC"></i>Phí gói Premier <b id="rvPremG">-</b></div></div>
+      </div>
+    </div>`;
+
+  const box=host.querySelector('#rvIn');
+  F.forEach(f=>{
+    const w=document.createElement('div'); w.className='rvfld';
+    w.innerHTML=`<label>${f.label}</label><b data-v="${f.k}">${fmtV(f,CFG[f.k])}</b><input type="range" min="${f.min}" max="${f.max}" step="${f.step}" value="${CFG[f.k]}" data-k="${f.k}">`;
+    box.appendChild(w);
+    w.querySelector('input').addEventListener('input',e=>{ CFG[f.k]=+e.target.value; w.querySelector('[data-v]').textContent=fmtV(f,CFG[f.k]); calc(); });
+  });
+
+  function calc(){
+    const liteP=CFG.eco*CFG.liteRate, premP=CFG.biz*CFG.premRate;
+    const liteG=liteP*CFG.litePrem, premG=premP*CFG.premPrem;
+    const gwp=liteG+premG, rev=gwp, pax=liteP+premP;
+    const per=(CFG.eco+CFG.biz)>0 ? rev/(CFG.eco+CFG.biz) : 0;
+    host.querySelector('#rvRev').innerHTML=shortVND(rev)+' <small>₫ / năm</small>';
+    host.querySelector('#rvLiteP').textContent=nf.format(Math.round(liteP));
+    host.querySelector('#rvPremP').textContent=nf.format(Math.round(premP));
+    host.querySelector('#rvPax').textContent=nf.format(Math.round(pax));
+    host.querySelector('#rvPer').textContent=nf.format(Math.round(per))+' ₫';
+    host.querySelector('#rvLiteG').textContent=shortVND(liteG)+' ₫';
+    host.querySelector('#rvPremG').textContent=shortVND(premG)+' ₫';
+    const lp=gwp>0 ? liteG/gwp*100 : 50;
+    const dl=host.querySelector('#rvDlite'), dp=host.querySelector('#rvDprem');
+    dl.setAttribute('stroke-dasharray',`${lp} ${100-lp}`); dl.setAttribute('stroke-dashoffset','25');
+    dp.setAttribute('stroke-dasharray',`${100-lp} ${lp}`); dp.setAttribute('stroke-dashoffset',`-${25+lp}`);
+  }
+  calc();
+})();
+
+/* ===== rail nav, counter, progress, observer, keyboard ===== */
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const rail=document.getElementById('rail');
+  const prog=document.getElementById('prog');
+  const cur=document.getElementById('cur'); const tot=document.getElementById('tot');
+  tot.textContent=String(slides.length).padStart(2,'0');
+
+  const nav=document.createElement('nav');
+  nav.style.margin = 'auto 0';
+  nav.style.display = 'flex';
+  nav.style.flexDirection = 'column';
+  nav.style.gap = '.1rem';
+  rail.appendChild(nav);
+
+  // brand head
+  const brand=document.createElement('div'); brand.className='rail__brand';
+  brand.innerHTML=`<img class='pvi-logo' src='PVI%20Logo%20(cropped).png' alt='Bảo hiểm PVI' />`;
+  nav.appendChild(brand);
+  const sub=document.createElement('div'); sub.className='rail__sub'; sub.textContent='PVI × Vietnam Airlines · Concept 2026'; nav.appendChild(sub);
+
+  let currentGroupIdx = 0;
+  let groupCount = 0;
+  slides.forEach((s,idx)=>{
+    const title = s.dataset.title || '';
+    const isMain = title === 'Trang bìa' || title === 'Mục lục' || title.startsWith('Mục 0') || title === 'Khó khăn & Giải pháp' || title === 'Cảm ơn';
+    if(isMain){
+      currentGroupIdx = String(idx);
+      groupCount++;
+      const it=document.createElement('div'); it.className='rail__item'; it.dataset.idx=idx;
+      it.innerHTML=`<span class="dot"></span><span class="rail__num">${String(groupCount).padStart(2,'0')}</span><span>${title}</span>`;
+      it.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+      nav.appendChild(it);
+    }
+    s.dataset.groupIdx = currentGroupIdx;
+  });
+  const items=[...rail.querySelectorAll('.rail__item')];
+
+  // toc jump
+  document.querySelectorAll('[data-go]').forEach(el=>{
+    el.addEventListener('click',()=>{ const t=slides[+el.dataset.go]; if(t) t.scrollIntoView({behavior:'smooth'}); });
+  });
+
+  let current=0;
+  const prev=document.getElementById('navPrev');
+  const next=document.getElementById('navNext');
+  function updateNav(){ if(prev) prev.disabled=current<=0; if(next) next.disabled=current>=slides.length-1; }
+
+  const io=new IntersectionObserver((ents)=>{
+    ents.forEach(e=>{
+      const idx=slides.indexOf(e.target);
+      if(e.isIntersecting && e.intersectionRatio>0.55){
+        current=idx;
+        e.target.classList.add('ac-on');
+        const gIdx = e.target.dataset.groupIdx;
+        items.forEach(i=>i.classList.toggle('is-active', i.dataset.idx === gIdx));
+        cur.textContent=String(idx+1).padStart(2,'0');
+        prog.style.width=((idx+1)/slides.length*100)+'%';
+        updateNav();
+      } else {
+        e.target.classList.remove('ac-on'); // replay on re-entry
+      }
+    });
+  },{threshold:[0,.55,1]});
+  slides.forEach(s=>io.observe(s));
+
+  // navigation
+  let busy=false;
+  function goTo(n){ n=Math.min(slides.length-1,Math.max(0,n)); current=n; busy=true; slides[n].scrollIntoView({behavior:'smooth'}); updateNav(); setTimeout(()=>busy=false,600); }
+  function go(d){ if(busy) return; goTo(current+d); }
+  if(prev) prev.addEventListener('click',()=>go(-1));
+  if(next) next.addEventListener('click',()=>go(1));
+  updateNav();
+
+  window.addEventListener('keydown',e=>{
+    if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); go(1); }
+    else if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); go(-1); }
+    else if(e.key==='Home'){ e.preventDefault(); goTo(0); }
+    else if(e.key==='End'){ e.preventDefault(); goTo(slides.length-1); }
+  });
+})();
+</script>
+</body>
+</html>
