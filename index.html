@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -48,13 +48,13 @@ html{ scroll-snap-type:y mandatory; scroll-behavior:smooth; }
 .slide{ width:100vw; height:100vh; height:100dvh; overflow:hidden; scroll-snap-align:start; display:flex; flex-direction:column; position:relative; }
 .slide-content{ flex:1; display:flex; flex-direction:column; justify-content:center; max-height:100%; overflow:hidden; padding:var(--slide-padding); }
 :root{
-  --title-size:clamp(1.8rem, 6vh, 4rem);
-  --h2-size:clamp(1.5rem, 4.5vh, 3rem);
-  --h3-size:clamp(1.2rem, 3.5vh, 2.1rem);
-  --body-size:clamp(1rem, 2.5vh, 1.7rem);
-  --small-size:clamp(.82rem, 2vh, 1.35rem);
-  --slide-padding:clamp(1.2rem, 4.5vh, 4rem);
-  --content-gap:clamp(.8rem, 2.5vh, 2.2rem);
+  --title-size:clamp(1.8rem, 6vmin, 4rem);
+  --h2-size:clamp(1.5rem, 4.5vmin, 3rem);
+  --h3-size:clamp(1.2rem, 3.5vmin, 2.1rem);
+  --body-size:clamp(1rem, 2.5vmin, 1.7rem);
+  --small-size:clamp(.82rem, 2vmin, 1.35rem);
+  --slide-padding:clamp(1.2rem, 4.5vmin, 4rem);
+  --content-gap:clamp(.8rem, 2.5vmin, 2.2rem);
 }
 @media (max-height:760px){ :root{ --slide-padding:clamp(.9rem,3vh,2rem); --body-size:clamp(.85rem,2vh,1.25rem); --small-size:clamp(.72rem,1.6vh,1rem);} }
 @media (max-height:600px){ :root{ --slide-padding:.7rem; } .hint,.nav-dots{ display:none; } }
@@ -99,7 +99,7 @@ body{
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
 }
 .wrap{ width:min(94%, 1500px); margin-inline:auto; position:relative; z-index:2; }
-@media (min-width:1000px){ .slide-content{ padding-left:calc(var(--slide-padding) + var(--rail)); } }
+@media (min-width:1025px){ .slide-content{ padding-left:calc(var(--slide-padding) + var(--rail)); } }
 
 .head{ display:flex; flex-direction:column; gap:.35rem; margin-bottom:clamp(.6rem,2.2vh,1.4rem); }
 .eyebrow{ font-family:var(--font-display); font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--pvi-cyan); font-size:clamp(.62rem,1vw,.82rem); }
@@ -121,7 +121,7 @@ body{
 .rail__item.is-active{ color:var(--pvi-blue); background:rgba(0,48,135,.10); }
 .rail__item.is-active .dot{ background:var(--pvi-cyan); box-shadow:0 0 0 4px rgba(0,151,220,.18); }
 .rail__item.is-active .rail__num{ opacity:1; color:var(--pvi-blue); }
-@media (max-width:999px){ .rail{ display:none; } }
+@media (max-width:1024px){ .rail{ display:none; } }
 
 /* ============== counter / progress / hint ============== */
 .counter{ position:fixed; top:1rem; right:1.4rem; z-index:60; font-family:var(--font-display); font-weight:700; color:var(--pvi-blue); font-size:.92rem; background:rgba(255,255,255,.75); padding:.3rem .8rem; border-radius:999px; border:1px solid rgba(0,48,135,.14); backdrop-filter:blur(6px); }
@@ -129,7 +129,7 @@ body{
 .progress{ position:fixed; top:0; left:0; height:3px; width:100%; z-index:61; }
 .progress__fill{ height:100%; width:0; background:linear-gradient(90deg,var(--pvi-blue),var(--pvi-cyan)); transition:width .45s var(--ac-ease); }
 .hint{ position:fixed; bottom:.9rem; left:1.4rem; z-index:55; font-size:.64rem; color:var(--ink-500); letter-spacing:.04em; }
-@media (max-width:999px){ .hint{ display:none; } }
+@media (max-width:1024px){ .hint{ display:none; } }
 
 /* nav buttons */
 .navbtns{ position:fixed; right:1.4rem; bottom:1.2rem; z-index:65; display:flex; flex-direction:column; gap:.55rem; }
@@ -255,7 +255,7 @@ body{
 .note--g{ color:var(--green); background:rgba(46,125,50,.08); border-color:rgba(46,125,50,.4); }
 .note--o{ color:var(--gold); background:rgba(230,81,0,.08); border-color:rgba(230,81,0,.4); }
 .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(.8rem,2vw,1.6rem); align-items:center; }
-@media (max-width:860px){ .grid2,.kpis--4{ grid-template-columns:1fr 1fr; } .donut-wrap{ flex-direction:column; } }
+@media (max-width:1024px){ .grid2,.kpis--4{ grid-template-columns:1fr 1fr; } .donut-wrap{ flex-direction:column; } }
 @media (max-width:600px){ .kpis--4,.kpis--3,.cards--3,.cards--2,.grid2{ grid-template-columns:1fr; } }
 
 /* ============================================================
@@ -316,7 +316,7 @@ body{
   .lc-dot{ opacity:1!important; }
 }
 
-.end__big{ font-family:var(--font-display); font-weight:800; font-size:clamp(2.2rem,8vw,5.5rem); line-height:1.05; letter-spacing:-.01em;
+.end__big{ font-family:var(--font-display); font-weight:800; font-size:clamp(2.2rem,8vw,5.5rem); line-height:1.3; letter-spacing:-.01em; padding-top:.1em;
   background:linear-gradient(120deg,var(--pvi-indigo),var(--pvi-blue) 45%,var(--pvi-cyan)); background-size:220% 100%;
   -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
 .ac-on .end__big{ animation:heroIn 1.2s var(--ac-ease-bounce) .15s both, shine 6s linear 1.4s infinite; }
@@ -502,7 +502,7 @@ body{
 .rvdonut .leg div{ display:flex; align-items:center; gap:.45rem; }
 .rvdonut .leg i{ width:12px; height:12px; border-radius:3px; }
 .rvdonut .leg b{ font-family:var(--font-display); color:var(--pvi-blue); }
-@media (max-width:860px){ .rvsim{ grid-template-columns:1fr; } }
+@media (max-width:1024px){ .rvsim{ grid-template-columns:1fr; } }
 @media (max-height:820px){
   .kpis--4{ margin-bottom:.7rem!important; }
   .rvsim__inputs{ gap:.3rem; } .rvfld{ row-gap:.12rem; }
@@ -513,7 +513,7 @@ body{
 
 /* ===== V2 - hero logos no-chip + glow, VNA bigger ===== */
 .slide--hero .hero__logo{ background:none!important; box-shadow:none!important; padding:0!important; -webkit-backdrop-filter:none!important; backdrop-filter:none!important; align-items:center; gap:clamp(.7rem,1.6vw,1.3rem); }
-.slide--hero .hero__logo .pvi-logo{ height:clamp(54px,9vh,92px); filter:drop-shadow(0 0 16px rgba(127,230,255,.55)) drop-shadow(0 6px 22px rgba(0,0,0,.65)); }
+.slide--hero .hero__logo .pvi-logo{ height:clamp(54px,9vh,92px); filter:drop-shadow(0 0 16px rgba(127,230,255,.55)) drop-shadow(0 6px 22px rgba(0,0,0,.65)); transform: translateY(-8px); }
 .slide--hero .hero__logo .vna-logo{ height:clamp(46px,8vh,84px); filter:drop-shadow(0 0 16px rgba(255,214,130,.5)) drop-shadow(0 6px 22px rgba(0,0,0,.65)); }
 .slide--hero .hero__x{ color:#cfeaff; opacity:.75; text-shadow:0 0 12px rgba(127,230,255,.8); }
 .hero__logo .vna-logo{ height:clamp(40px,6.8vh,70px); }
@@ -615,7 +615,7 @@ body{
 .cta__k{ font-family:var(--font-display); font-weight:800; letter-spacing:.08em; font-size:clamp(.9rem,1.9vw,1.4rem); }
 .cta p{ font-size:clamp(.72rem,1.25vw,.95rem); color:#eaf4ff; max-width:56ch; margin-top:.2rem; line-height:1.4; }
 .cta__tag{ font-family:var(--font-display); font-weight:700; font-size:clamp(.66rem,1.15vw,.9rem); text-align:right; border-left:3px solid rgba(255,255,255,.55); padding-left:1rem; line-height:1.5; white-space:nowrap; }
-@media (max-width:860px){ .eco{ grid-template-columns:1fr; } .eco__plus{ justify-self:center; } .rwy__stops,.rwy--5 .rwy__stops{ grid-template-columns:1fr 1fr; row-gap:1.6rem; } .cta{ flex-direction:column; align-items:flex-start; } .cta__tag{ border-left:none; padding-left:0; text-align:left; } .gapc__lane{ grid-template-columns:1fr; row-gap:.15rem; } .gapc__axis{ margin-left:0; } .gapc__zone{ display:none; } }
+@media (max-width:1024px){ .eco{ grid-template-columns:1fr; } .eco__plus{ justify-self:center; } .rwy__stops,.rwy--5 .rwy__stops{ grid-template-columns:1fr 1fr; row-gap:1.6rem; } .cta{ flex-direction:column; align-items:flex-start; } .cta__tag{ border-left:none; padding-left:0; text-align:left; } .gapc__lane{ grid-template-columns:1fr; row-gap:.15rem; } .gapc__axis{ margin-left:0; } .gapc__zone{ display:none; } }
 @media (max-width:600px){ .rwy__stops,.rwy--5 .rwy__stops{ grid-template-columns:1fr; } }
 
 /* ===== phone landscape / short screens ===== */
@@ -678,7 +678,7 @@ body{
 .opt__amt{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(1.05rem,2.2vw,1.7rem); white-space:nowrap; }
 .opt__amt--hi{ color:var(--pvi-cyan); }
 .opt__pro{ margin-top:auto; font-size:clamp(.7rem,1.2vw,.9rem); color:var(--green); font-weight:600; background:rgba(46,125,50,.08); border-radius:10px; padding:.5rem .75rem; }
-@media (max-width:860px){ .opts{ grid-template-columns:1fr; } }
+@media (max-width:1024px){ .opts{ grid-template-columns:1fr; } }
 
 /* ===== V3 — demo giao diện đặt vé VNA ===== */
 .fdemo__route{ font-size:clamp(.78rem,1.4vw,1.05rem); color:var(--ink-700); margin-bottom:.7rem; padding:.5rem .9rem; background:#fff; border:1px solid var(--ac-line); border-radius:12px; box-shadow:0 8px 22px rgba(0,48,135,.06); }
@@ -702,7 +702,7 @@ body{
 .frow--ins b{ color:var(--red); font-size:1.1em; }
 .frow--ins2{ background:rgba(230,81,0,.07); border-color:var(--gold); }
 .frow--ins2 span, .frow--ins2 b{ color:var(--caution); }
-@media (max-width:860px){ .fcards{ grid-template-columns:1fr; } .frow--ins{ margin-top:.3rem; } }
+@media (max-width:1024px){ .fcards{ grid-template-columns:1fr; } .frow--ins{ margin-top:.3rem; } }
 
 /* ===== V3 — roadmap: motion mới (connector fill + gate pop, không máy bay) ===== */
 .rmap{ position:relative; margin-bottom:var(--content-gap); padding-top:clamp(1.6rem,3vh,2.4rem); }
@@ -717,7 +717,7 @@ body{
 .rmap__step h4{ font-family:var(--font-display); font-weight:800; color:var(--pvi-blue); font-size:clamp(.78rem,1.35vw,1.02rem); margin-top:.4rem; line-height:1.15; }
 .rmap__step p{ font-size:clamp(.64rem,1.05vw,.82rem); color:var(--ink-600); line-height:1.32; }
 .rmap__step .tag{ margin-top:auto; }
-@media (max-width:860px){ .rmap__steps{ grid-template-columns:1fr 1fr; row-gap:1.8rem; } .rmap__conn{ display:none; } }
+@media (max-width:1024px){ .rmap__steps{ grid-template-columns:1fr 1fr; row-gap:1.8rem; } .rmap__conn{ display:none; } }
 @media (max-width:600px){ .rmap__steps{ grid-template-columns:1fr; } }
 
 /* ===== V4 — cân đối cỡ chữ + chống xuống dòng gãy từ ===== */
@@ -774,8 +774,10 @@ body{
 .frow--ins b{ font-size:1em; font-weight:700; }
 
 
-/* ===== V9 — roadmap: line nối chạy ngang tâm các nút số, tag căn giữa ===== */
-.rmap__conn{ top:calc(clamp(1.6rem,3vh,2.4rem) - 6px); }
+/* ===== V9 — roadmap: đẩy box rời khỏi timeline ===== */
+.rmap__steps { margin-top: 2rem; }
+.rmap__conn { top: clamp(1.6rem,3vh,2.4rem); }
+.rmap__num { top: -2rem; transform: translate(-50%, -50%); }
 .rmap__step .tag{ align-self:center!important; text-align:center; }
 
 /* ===== V8 — nhãn khung giờ vàng nằm hẳn trên trục giờ ===== */
@@ -808,6 +810,19 @@ body{
   *{ print-color-adjust:exact; -webkit-print-color-adjust:exact; }
 }
 
+/* ===== V10 — Phóng to logo VNA trên trang Cảm ơn ===== */
+section.slide[data-title="Cảm ơn"] .hero__logo {
+  gap: clamp(1.5rem, 4vw, 3.5rem) !important;
+  align-items: center !important;
+}
+section.slide[data-title="Cảm ơn"] .hero__logo .pvi-logo {
+  height: clamp(40px, 6.6vh, 66px) !important;
+}
+section.slide[data-title="Cảm ơn"] .hero__logo .vna-logo {
+  height: clamp(140px, 24vh, 280px) !important;
+  transform: translateY(10px) !important;
+}
+
 </style>
 
 <!-- ===== S1 HERO ===== -->
@@ -816,13 +831,17 @@ body{
     <div class="hero-photo-vna"></div>
     <div class="hero-veil-vna"></div>
   </div>
-  <div class="slide-content"><div class="wrap hero">
+  <div style="position:absolute; top:clamp(2rem, 5vh, 4rem); left:0; width:100%; display:flex; justify-content:center; z-index:10; pointer-events:none;">
     <div class="hero__logo ac-reveal"><img class="pvi-logo" src="PVI%20Logo%20white.png" alt="Bảo hiểm PVI" /><span class="hero__x">×</span><img class="vna-logo" src="VNA%20Logo%20white.png" alt="Vietnam Airlines" /></div>
-    <div class="hero__name ac-reveal" style="--i:2">FLIGHT DELAY</div>
-    <div class="hero__word">PROTECTION</div>
-    <div class="hero__sub ac-reveal nb" style="--i:3; max-width:100%;">Giải pháp bảo hiểm trễ chuyến bay cho Vietnam Airlines</div>
-    <div class="hero__org ac-reveal" style="--i:4">Bổ sung quyền lợi tài chính rõ ràng khi hành trình bị gián đoạn</div>
-  </div></div>
+  </div>
+  <div class="slide-content" style="justify-content:center; align-items:center; text-align:center;">
+    <div class="wrap hero" style="display:flex; flex-direction:column; align-items:center; margin-top:clamp(2rem, 6vh, 4rem);">
+      <div class="hero__name ac-reveal" style="--i:2; font-family:'Be Vietnam Pro', sans-serif; font-weight:700; letter-spacing:.1em; font-size:clamp(1.2rem, 3vw, 2.2rem); color:#ffd98a; margin-bottom:.2rem;">FLIGHT DELAY</div>
+      <div class="hero__word" style="font-family:'Be Vietnam Pro', sans-serif; font-weight:800; letter-spacing:.02em; padding-bottom:.8rem;">PROTECTION</div>
+      <div class="hero__sub ac-reveal nb" style="--i:3; max-width:100%; font-family:'Be Vietnam Pro', sans-serif; font-weight:500; font-size:clamp(1.15rem, 2.2vw, 1.5rem); color:#fff; margin-bottom:.6rem;">Giải pháp bảo hiểm trễ chuyến bay cho Vietnam Airlines</div>
+      <div class="hero__org ac-reveal" style="--i:4; font-family:'Be Vietnam Pro', sans-serif; font-weight:400; font-size:clamp(.95rem, 1.6vw, 1.15rem); color:rgba(255,255,255,.85);">Bổ sung quyền lợi tài chính rõ ràng khi hành trình bị gián đoạn</div>
+    </div>
+  </div>
 </section>
 
 <!-- ===== S2 MỤC LỤC ===== -->
@@ -832,9 +851,8 @@ body{
     <div class="toc">
       <div class="toc__item ac-reveal" style="--i:1" data-go="2"><span class="toc__no">01</span><span class="toc__t">Bối cảnh và cơ hội thị trường</span></div>
       <div class="toc__item ac-reveal" style="--i:2" data-go="6"><span class="toc__no">02</span><span class="toc__t">Đề xuất sản phẩm bảo hiểm trễ chuyến bay</span></div>
-      <div class="toc__item ac-reveal" style="--i:3" data-go="10"><span class="toc__no">03</span><span class="toc__t">Tình huống minh họa quyền lợi</span></div>
-      <div class="toc__item ac-reveal" style="--i:4" data-go="13"><span class="toc__no">04</span><span class="toc__t">Giá trị đối với Vietnam Airlines</span></div>
-      <div class="toc__item ac-reveal" style="--i:5" data-go="15"><span class="toc__no">05</span><span class="toc__t">Định hướng hợp tác giữa Vietnam Airlines và PVI</span></div>
+      <div class="toc__item ac-reveal" style="--i:3" data-go="11"><span class="toc__no">03</span><span class="toc__t">Giá trị đối với Vietnam Airlines</span></div>
+      <div class="toc__item ac-reveal" style="--i:4" data-go="13"><span class="toc__no">04</span><span class="toc__t">Định hướng hợp tác giữa Vietnam Airlines và PVI</span></div>
     </div>
   </div></div>
 </section>
@@ -886,7 +904,7 @@ body{
         </div>
       </div>
     </div>
-    <div class="note ac-reveal" style="--i:7">Nghị định xác lập chuẩn chăm sóc tối thiểu của người vận chuyển. Sản phẩm bảo hiểm có thể bổ sung một quyền lợi tài chính độc lập, giúp hành khách nhận biết rõ hơn giá trị bảo vệ khi chuyến bay bị gián đoạn.</div>
+    <div class="note ac-reveal" style="--i:7">Nghị định quy định rõ trách nhiệm của hãng hàng không theo từng mốc chậm chuyến, qua đó hành khách cũng nhận thức đầy đủ hơn và chủ động yêu cầu thực hiện các quyền lợi khi chuyến bay bị gián đoạn.</div>
     <div class="unit ac-reveal" style="--i:8;margin-top:.35rem">Nguồn: Nghị định số 208/2026/NĐ-CP, Điều 36.</div>
   </div></div>
 </section>
@@ -894,11 +912,11 @@ body{
 <!-- ===== S5 PROTECTION GAP ===== -->
 <section class="slide" data-title="Khoảng trống quyền lợi">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Khoảng trống quyền lợi trong giai đoạn chậm chuyến từ 2 đến dưới 4 giờ</h2><span class="s-sub ac-reveal" style="--i:2">Trong giai đoạn này, hành khách đã phát sinh ảnh hưởng đáng kể đến thời gian và kế hoạch di chuyển, trong khi quyền hoàn vé và bồi thường ứng trước chỉ phát sinh khi đáp ứng các điều kiện pháp lý tương ứng.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Khoảng trống quyền lợi trong giai đoạn chậm chuyến từ 2 đến dưới 4 giờ</h2></div>
     <div class="chart gapc ac-reveal" style="--i:3">
       <div class="gapc__axis"><span style="left:0%">0h</span><span style="left:14.3%">1h</span><span style="left:28.6%">2h</span><span style="left:42.9%">3h</span><span style="left:57.2%">4h</span><span style="left:71.5%">5h</span><span style="left:85.8%">6h</span></div>
       <div class="gapc__stage">
-        <div class="gapc__zone"><span style="font-size:clamp(.4rem,.7vw,.55rem)">GIAI ĐOẠN CẦN BỔ SUNG QUYỀN LỢI<br>2 - 4 GIỜ</span></div>
+        <div class="gapc__zone"><span style="font-size:clamp(.65rem,1.1vw,.85rem)">GIAI ĐOẠN CẦN BỔ SUNG QUYỀN LỢI<br>2 - 4 GIỜ</span></div>
         <div class="gapc__lane">
           <span class="gapc__lbl">✈ Hãng hàng không<br><i>nghĩa vụ chăm sóc</i></span>
           <div class="gapc__row">
@@ -917,10 +935,10 @@ body{
           <div class="gapc__row"><div class="gapc__bar gapc__bar--lite ac-fill-x" style="--w:57.1%">Quyền lợi bảo hiểm được kích hoạt từ mốc 3 giờ</div></div>
         </div>
       </div>
-      <div class="gapc__foot">*Hoàn vé &amp; bồi thường ứng trước tại mốc 4h chỉ khi lỗi thuộc hãng · Nguyên nhân ngoài kiểm soát: quyền lợi bảo hiểm độc lập tùy phạm vi được phê duyệt</div>
+      <div class="gapc__foot">*Hoàn vé và bồi thường ứng trước tại mốc 4 giờ chỉ áp dụng khi chuyến bay bị chậm do lỗi của hãng hàng không.</div>
     </div>
     <div class="grid2" style="align-items:stretch">
-      <div class="note note--o ac-reveal" style="--i:5">Ngay từ mốc 2 giờ, hành khách đã phát sinh ảnh hưởng đến lịch trình và trải nghiệm chuyến đi, trong khi một số quyền lợi pháp lý chưa phát sinh hoặc còn phụ thuộc vào nguyên nhân chậm chuyến.</div>
+      <div class="note note--o ac-reveal" style="--i:5">Trong khoảng chậm từ 2 đến dưới 4 giờ, hành khách đã chịu ảnh hưởng đến lịch trình và trải nghiệm, trong khi quyền hoàn vé hoặc bồi thường ứng trước chỉ phát sinh khi đáp ứng các điều kiện theo quy định.</div>
       <div class="note note--g ac-reveal" style="--i:6">Sản phẩm bảo hiểm bổ sung một khoản hỗ trợ tài chính rõ ràng, dễ nhận biết và được thực hiện độc lập với nghĩa vụ chăm sóc của người vận chuyển.</div>
     </div>
   </div></div>
@@ -941,19 +959,19 @@ body{
 </section>
 
 <!-- ===== COVER 02 ===== -->
-<section class="slide" data-title="Mục 02 · Kiến trúc sản phẩm">
+<section class="slide" data-title="Mục 02 · Đề xuất sản phẩm bảo hiểm trễ chuyến bay">
   <div class="slide-content"><div class="wrap divider cover">
     <div class="divider__kicker ac-reveal">Phần 02</div>
     <div class="divider__no ac-reveal" style="--i:1">02</div>
     <div class="divider__bar ac-reveal" style="--i:2"></div>
-    <div class="divider__t ac-reveal" style="--i:3">Đề xuất sản phẩm</div>
+    <div class="divider__t ac-reveal" style="--i:3">Đề xuất sản phẩm bảo hiểm trễ chuyến bay</div>
   </div></div>
 </section>
 
 <!-- ===== S6 PORTFOLIO ECOSYSTEM ===== -->
 <section class="slide" data-title="Hệ sinh thái sản phẩm">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Flight Delay Protection bổ sung cho hệ sinh thái bảo vệ hành trình của Vietnam Airlines</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm bảo hiểm trễ chuyến bay</div><h2 class="s-title ac-reveal" style="--i:1">Flight Delay Protection bổ sung cho hệ sinh thái bảo vệ hành trình của Vietnam Airlines</h2></div>
     <div class="eco">
       <div class="eco__panel eco__panel--tc ac-reveal" style="--i:2">
         <div class="eco__head"><b>🌐 TripCARE</b><span>Phạm vi bảo vệ toàn diện cho chuyến đi</span></div>
@@ -981,7 +999,7 @@ body{
 <!-- ===== S8 HAI PHƯƠNG ÁN OFFER ===== -->
 <section class="slide" data-title="Hai phương án đề xuất">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Hai cấu trúc quyền lợi để Vietnam Airlines xem xét</h2><span class="s-sub ac-reveal" style="--i:2">Cùng một sản phẩm bảo hiểm trễ chuyến, hai cấu trúc quyền lợi có thể được xem xét nhằm tạo khác biệt giữa các hạng vé.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm bảo hiểm trễ chuyến bay</div><h2 class="s-title ac-reveal" style="--i:1">Hai cấu trúc quyền lợi để Vietnam Airlines xem xét</h2><span class="s-sub ac-reveal" style="--i:2">Cùng một sản phẩm bảo hiểm trễ chuyến, hai cấu trúc quyền lợi có thể được xem xét nhằm tạo sự khác biệt giữa các hạng vé.</span></div>
     <div class="opts">
       <div class="opt ac-reveal" style="--i:3">
         <div class="opt__tag">Phương án 1</div>
@@ -996,10 +1014,10 @@ body{
       <div class="opt ac-reveal" style="--i:4">
         <div class="opt__tag opt__tag--2">Phương án 2</div>
         <h3 class="opt__title">Phân tầng theo mức quyền lợi</h3>
-        <p class="opt__desc">Áp dụng cùng một thời điểm kích hoạt và phân biệt các hạng vé thông qua mức quyền lợi tiền mặt.</p>
+        <p class="opt__desc">Áp dụng cùng một thời điểm kích hoạt (2 giờ) và phân biệt các hạng vé thông qua mức quyền lợi tiền mặt.</p>
         <div class="opt__rows">
-          <div class="opt__row"><div class="opt__cabin"><b>Hạng phổ thông</b><span>Economy · trễ từ 2 giờ</span></div><div class="opt__amt">1.000.000₫</div></div>
-          <div class="opt__row opt__row--hi"><div class="opt__cabin"><b>Phổ thông đặc biệt &amp; Thương gia</b><span>Eco Premium · Business · trễ từ 2 giờ</span></div><div class="opt__amt opt__amt--hi">2.000.000₫</div></div>
+          <div class="opt__row"><div class="opt__cabin"><b>Hạng phổ thông</b><span>Economy Lite · Classic · Flex</span></div><div class="opt__amt">1.000.000₫</div></div>
+          <div class="opt__row opt__row--hi"><div class="opt__cabin"><b>Phổ thông đặc biệt &amp; Thương gia</b><span>Eco Premium · Business Classic/Flex</span></div><div class="opt__amt opt__amt--hi">2.000.000₫</div></div>
         </div>
         <div class="opt__pro">Các hạng vé áp dụng cùng một thời điểm kích hoạt nhưng được phân biệt bằng mức quyền lợi tiền mặt.</div>
       </div>
@@ -1011,41 +1029,69 @@ body{
 <!-- ===== S8B DEMO GIAO DIỆN VNA ===== -->
 <section class="slide" data-title="Demo trên giao diện đặt vé">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Quyền lợi bảo hiểm được hiển thị trực tiếp tại bước lựa chọn hạng vé</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm bảo hiểm trễ chuyến bay</div><h2 class="s-title ac-reveal" style="--i:1">Quyền lợi bảo hiểm được hiển thị trực tiếp tại bước lựa chọn hạng vé</h2></div>
     <div class="fdemo">
-      <div class="fdemo__route ac-reveal" style="--i:2"><b>HAN → SGN</b> · bay thẳng · 05:00 - 07:10 · VN 205 · <span>Chọn hạng vé phổ thông</span></div>
-      <div class="fcards">
-        <div class="fcard ac-reveal" style="--i:3">
-          <div class="fcard__h"><div class="fcard__cl">Economy Lite</div><div class="fcard__pr">2.025.181 <small>VND</small></div></div>
-          <div class="fcard__b">
-            <div class="frow"><span>✏️ Đổi vé</span><b>Phí tối đa 1.600.000₫</b></div>
-            <div class="frow"><span>↩️ Hoàn vé</span><b>Phí tối đa 1.600.000₫</b></div>
-            <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
-            <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
-            <div class="frow"><span>💺 Cộng dặm</span><b>60%</b></div>
-            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Quyền lợi: 1.000.000 VND</b></div>
+      <div class="fdemo__route ac-reveal" style="--i:2"><b>HAN → SGN</b> · bay thẳng · 05:00 - 07:10 · VN 205 · <span>Minh hoạ hiển thị trên giao diện đặt vé</span></div>
+      <div class="grid2" style="align-items:start; gap:1.5rem; margin-top:.8rem">
+        <!-- Phương án 1 -->
+        <div class="ac-reveal" style="--i:3">
+          <div style="font-family:var(--font-display);font-weight:800;color:var(--pvi-blue);font-size:clamp(1rem,1.8vw,1.2rem);margin-bottom:.8rem;border-bottom:2px solid var(--ac-line);padding-bottom:.4rem">Minh hoạ Phương án 1</div>
+          <div class="fcards" style="grid-template-columns:1fr 1fr; gap:clamp(.5rem,1vw,.8rem)">
+            <div class="fcard">
+              <div class="fcard__h"><div class="fcard__cl">Economy Classic</div><div class="fcard__pr">2.609.181 <small>VND</small></div></div>
+              <div class="fcard__b" style="padding:.4rem .5rem .5rem">
+                <div class="frow"><span>✏️ Đổi vé</span><b>1.010.000₫</b></div>
+                <div class="frow"><span>↩️ Hoàn vé</span><b>1.150.000₫</b></div>
+                <div class="frow"><span>🧳 Hành lý KG</span><b>1 × 23kg</b></div>
+                <div class="frow frow--ins" style="align-items:flex-start!important">
+                  <span>✈ Bảo hiểm trễ chuyến</span>
+                  <div style="text-align:right"><small style="font-weight:600;color:var(--ink-500);display:block;font-size:0.85em;line-height:1.2">Kích hoạt từ 3 giờ</small><b>1.000.000₫</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="fcard fcard--flex">
+              <div class="fcard__h"><div class="fcard__cl">Eco Premium</div><div class="fcard__pr">4.250.000 <small>VND</small></div></div>
+              <div class="fcard__b" style="padding:.4rem .5rem .5rem">
+                <div class="frow"><span>✏️ Đổi vé</span><b>Miễn phí</b></div>
+                <div class="frow"><span>↩️ Hoàn vé</span><b>500.000₫</b></div>
+                <div class="frow"><span>🧳 Hành lý KG</span><b>1 × 32kg</b></div>
+                <div class="frow frow--ins" style="align-items:flex-start!important">
+                  <span>✈ Bảo hiểm trễ chuyến</span>
+                  <div style="text-align:right"><small style="font-weight:700;color:var(--pvi-cyan);display:block;font-size:0.85em;line-height:1.2">Sớm từ 2 giờ</small><b style="color:var(--pvi-blue)!important">1.000.000₫</b></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="fcard ac-reveal" style="--i:4">
-          <div class="fcard__h"><div class="fcard__cl">Economy Classic</div><div class="fcard__pr">2.609.181 <small>VND</small></div></div>
-          <div class="fcard__b">
-            <div class="frow"><span>✏️ Đổi vé</span><b>Phí tối đa 1.010.000₫</b></div>
-            <div class="frow"><span>↩️ Hoàn vé</span><b>Phí tối đa 1.150.000₫</b></div>
-            <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
-            <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
-            <div class="frow"><span>💺 Cộng dặm</span><b>80%</b></div>
-            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Quyền lợi: 1.000.000 VND</b></div>
-          </div>
-        </div>
-        <div class="fcard fcard--flex ac-reveal" style="--i:5">
-          <div class="fcard__h"><div class="fcard__cl">Economy Flex</div><div class="fcard__pr">3.666.181 <small>VND</small></div></div>
-          <div class="fcard__b">
-            <div class="frow"><span>✏️ Đổi vé</span><b>Miễn phí</b></div>
-            <div class="frow"><span>↩️ Hoàn vé</span><b>Phí tối đa 500.000₫</b></div>
-            <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
-            <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
-            <div class="frow"><span>💺 Cộng dặm</span><b>110%</b></div>
-            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Quyền lợi: 2.000.000 VND</b></div>
+        
+        <!-- Phương án 2 -->
+        <div class="ac-reveal" style="--i:4">
+          <div style="font-family:var(--font-display);font-weight:800;color:var(--pvi-cyan);font-size:clamp(1rem,1.8vw,1.2rem);margin-bottom:.8rem;border-bottom:2px solid var(--ac-line);padding-bottom:.4rem">Minh hoạ Phương án 2</div>
+          <div class="fcards" style="grid-template-columns:1fr 1fr; gap:clamp(.5rem,1vw,.8rem)">
+            <div class="fcard">
+              <div class="fcard__h"><div class="fcard__cl">Economy Classic</div><div class="fcard__pr">2.609.181 <small>VND</small></div></div>
+              <div class="fcard__b" style="padding:.4rem .5rem .5rem">
+                <div class="frow"><span>✏️ Đổi vé</span><b>1.010.000₫</b></div>
+                <div class="frow"><span>↩️ Hoàn vé</span><b>1.150.000₫</b></div>
+                <div class="frow"><span>🧳 Hành lý KG</span><b>1 × 23kg</b></div>
+                <div class="frow frow--ins" style="align-items:flex-start!important">
+                  <span>✈ Bảo hiểm trễ chuyến</span>
+                  <div style="text-align:right"><small style="font-weight:600;color:var(--ink-500);display:block;font-size:0.85em;line-height:1.2">Kích hoạt từ 2 giờ</small><b>1.000.000₫</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="fcard fcard--flex">
+              <div class="fcard__h"><div class="fcard__cl">Eco Premium</div><div class="fcard__pr">4.250.000 <small>VND</small></div></div>
+              <div class="fcard__b" style="padding:.4rem .5rem .5rem">
+                <div class="frow"><span>✏️ Đổi vé</span><b>Miễn phí</b></div>
+                <div class="frow"><span>↩️ Hoàn vé</span><b>500.000₫</b></div>
+                <div class="frow"><span>🧳 Hành lý KG</span><b>1 × 32kg</b></div>
+                <div class="frow frow--ins" style="align-items:flex-start!important">
+                  <span>✈ Bảo hiểm trễ chuyến</span>
+                  <div style="text-align:right"><small style="font-weight:600;color:var(--ink-500);display:block;font-size:0.85em;line-height:1.2">Kích hoạt từ 2 giờ</small><b style="color:var(--pvi-blue)!important;font-size:1.15em!important">2.000.000₫</b></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1054,20 +1100,12 @@ body{
   </div></div>
 </section>
 
-<!-- ===== COVER 03 ===== -->
-<section class="slide" data-title="Mục 03 · Kịch bản khách hàng">
-  <div class="slide-content"><div class="wrap divider cover">
-    <div class="divider__kicker ac-reveal">Phần 03</div>
-    <div class="divider__no ac-reveal" style="--i:1">03</div>
-    <div class="divider__bar ac-reveal" style="--i:2"></div>
-    <div class="divider__t ac-reveal" style="--i:3">Tình huống minh họa</div>
-  </div></div>
-</section>
+<!-- Removed COVER 03 -->
 
 <!-- ===== S9 SCENARIO 2H ===== -->
 <section class="slide" data-title="Tình huống chậm 130 phút">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Tình huống 1 – Chuyến bay chậm 130 phút: quyền lợi được kích hoạt tại mốc 2 giờ</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm bảo hiểm trễ chuyến bay</div><h2 class="s-title ac-reveal" style="--i:1">Tình huống minh họa – Chuyến bay chậm 130 phút: quyền lợi được kích hoạt tại mốc 2 giờ</h2></div>
     <div class="chart fltbar ac-reveal" style="--i:2">
       <div class="fltbar__meta"><b>VNxxx · HAN → SGN</b><span>Dự kiến <b>10:00</b></span><span>Thực tế <b>12:10</b></span><span class="fltbar__delay">⏱ Trễ 130 phút</span></div>
       <div class="fltbar__scale"><span style="left:0%">10:00</span><span style="left:33.3%">11:00</span><span style="left:66.7%">12:00</span><span style="left:100%">13:00</span></div>
@@ -1079,44 +1117,20 @@ body{
     </div>
     <div class="grid2" style="align-items:stretch;margin-top:var(--content-gap)">
       <div class="step ac-reveal" style="--i:3"><span class="step__n">1</span><div><h4>Vietnam Airlines · Nghĩa vụ chăm sóc</h4><p>Nước uống / voucher tương đương · cập nhật thông tin &amp; lý do chậm chuyến · các nghĩa vụ khác theo quy định.</p></div></div>
-      <div class="step ac-reveal" style="--i:4;border-left:4px solid var(--pvi-cyan)"><span class="step__n">2</span><div><h4>Flight Delay Protection · mốc kích hoạt 2 giờ</h4><p>Hành khách gửi yêu cầu bồi thường trên cổng trực tuyến. PVI hoặc Đơn vị quản lý bồi thường – Third-Party Administrator (TPA) đối chiếu dữ liệu chuyến bay và thực hiện chi trả vào tài khoản đã đăng ký.</p><div class="fltbar__payout">1.000.000₫ - 2.000.000₫ <small style="font-size:.5em;color:var(--ink-500)">tuỳ phương án &amp; hạng vé</small></div></div></div>
+      <div class="step ac-reveal" style="--i:4;border-left:4px solid var(--pvi-cyan)"><span class="step__n">2</span><div><h4>Flight Delay Protection · mốc kích hoạt 2 giờ</h4><p>Hành khách gửi yêu cầu bồi thường trên cổng trực tuyến. PVI sẽ đối chiếu dữ liệu từ Flightradar24 (Tổ chức cung cấp dữ liệu chuyến bay) và thực hiện chi trả vào tài khoản đã đăng ký.</p><div class="fltbar__payout">1.000.000₫ - 2.000.000₫ <small style="font-size:.5em;color:var(--ink-500)">tuỳ phương án &amp; hạng vé</small></div></div></div>
     </div>
     <div class="note note--g ac-reveal" style="--i:5;margin-top:var(--content-gap)">Theo Phương án 1, hành khách Premium Economy và Business được kích hoạt quyền lợi 1.000.000 VND từ mốc 2 giờ, trong khi hành khách Economy được kích hoạt từ mốc 3 giờ. Theo Phương án 2, các hạng vé áp dụng cùng mốc 2 giờ và được phân biệt bằng mức quyền lợi.</div>
-    <div class="unit ac-reveal" style="--i:6;margin-top:.35rem">Quyền lợi chỉ phát sinh khi hợp đồng có hiệu lực và đáp ứng đầy đủ điều kiện bảo hiểm; không thay thế nghĩa vụ của người vận chuyển. Cổng bồi thường trực tuyến do PVI hoặc đơn vị được PVI chỉ định vận hành.</div>
+    <div class="unit ac-reveal" style="--i:6;margin-top:.35rem">Quyền lợi chỉ phát sinh khi hợp đồng có hiệu lực và đáp ứng đầy đủ điều kiện bảo hiểm; không thay thế nghĩa vụ của người vận chuyển.</div>
   </div></div>
 </section>
 
-<!-- ===== S10 SCENARIO 4H DECISION TREE ===== -->
-<section class="slide" data-title="Tình huống chậm trên 4 giờ">
-  <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Tình huống 2 – Chuyến bay chậm trên 4 giờ: quyền lợi được xác định theo nguyên nhân và phạm vi bảo hiểm</h2><span class="s-sub ac-reveal" style="--i:2">VNxxx · SGN → DAD · dự kiến 14:00 · thực tế 18:20 · tổng thời gian chậm 260 phút. Nghĩa vụ của người vận chuyển và quyền lợi bảo hiểm được xem xét độc lập trên các cơ sở pháp lý và điều kiện hợp đồng khác nhau.</span></div>
-    <div class="cards cards--2" style="margin-bottom:var(--content-gap)">
-      <div class="card ac-reveal" style="--i:2;border-left-color:var(--green)"><h4><span class="card__ic" style="background:rgba(46,125,50,.12);color:var(--green)">🛫</span> Nguyên nhân thuộc trách nhiệm của người vận chuyển</h4>
-        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện nghĩa vụ chăm sóc, chuyển đổi hành trình, hoàn vé và bồi thường ứng trước theo quy định.</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Xem xét chi trả khi chuyến bay đạt ngưỡng kích hoạt và đáp ứng đầy đủ điều kiện hợp đồng.</span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét quyền lợi theo quy tắc và điều khoản bảo hiểm tương ứng.</span></div></div>
-      <div class="card card--warn ac-reveal" style="--i:3"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🌧️</span> Thời tiết</h4>
-        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện các nghĩa vụ chăm sóc hành khách theo quy định; các nghĩa vụ gắn với lỗi của người vận chuyển có thể không phát sinh.</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Xem xét chi trả theo nguyên nhân và phạm vi bảo hiểm được phê duyệt.</span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét độc lập theo quy tắc và điều khoản của sản phẩm.</span></div></div>
-      <div class="card card--warn ac-reveal" style="--i:4"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🗼</span> Điều hành bay / khai thác sân bay</h4>
-        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện nghĩa vụ chăm sóc hành khách theo quy định và điều kiện khai thác thực tế.</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Xem xét quyền lợi căn cứ nguyên nhân sự kiện, điều kiện hợp đồng và phạm vi bảo hiểm được phê duyệt.</span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét theo quy tắc và điều khoản bảo hiểm tương ứng.</span></div></div>
-      <div class="card card--bad ac-reveal" style="--i:5"><h4><span class="card__ic" style="background:rgba(198,40,40,.12);color:var(--red)">⚠️</span> Nguyên nhân khác ngoài khả năng kiểm soát</h4>
-        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện các nghĩa vụ áp dụng theo quy định pháp luật.</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Quyền lợi được xác định theo phạm vi bảo hiểm và các trường hợp loại trừ.</span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét theo quy tắc và điều khoản của sản phẩm.</span></div></div>
-    </div>
-    <div class="note ac-reveal" style="--i:6">Việc chi trả bảo hiểm căn cứ vào hợp đồng còn hiệu lực, ngưỡng chậm chuyến, nguyên nhân sự kiện, dữ liệu chuyến bay và phạm vi bảo hiểm được phê duyệt. Quyền lợi bảo hiểm không thay thế nghĩa vụ của người vận chuyển.</div>
-  </div></div>
-</section>
+<!-- Removed Scenario 4h -->
 
-<!-- ===== COVER 04 ===== -->
-<section class="slide" data-title="Mục 04 · Giá trị đối với Vietnam Airlines">
+<!-- ===== COVER 03 ===== -->
+<section class="slide" data-title="Mục 03 · Giá trị đối với Vietnam Airlines">
   <div class="slide-content"><div class="wrap divider cover">
-    <div class="divider__kicker ac-reveal">Phần 04</div>
-    <div class="divider__no ac-reveal" style="--i:1">04</div>
+    <div class="divider__kicker ac-reveal">Phần 03</div>
+    <div class="divider__no ac-reveal" style="--i:1">03</div>
     <div class="divider__bar ac-reveal" style="--i:2"></div>
     <div class="divider__t ac-reveal" style="--i:3">Giá trị đối với <span class="nb">Vietnam Airlines</span></div>
   </div></div>
@@ -1125,7 +1139,7 @@ body{
 <!-- ===== S11 VALUE + REVENUE SIMULATOR ===== -->
 <section class="slide" data-title="Giá trị và Mô phỏng doanh thu">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">04 · Giá trị đối với Vietnam Airlines</div><h2 class="s-title ac-reveal" style="--i:1">Sản phẩm bảo hiểm góp phần mở rộng dư địa doanh thu bổ trợ</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">03 · Giá trị đối với Vietnam Airlines</div><h2 class="s-title ac-reveal" style="--i:1">Sản phẩm bảo hiểm góp phần mở rộng dư địa doanh thu bổ trợ</h2></div>
     <div class="kpis kpis--4 ac-reveal" style="--i:2;margin-bottom:var(--content-gap)">
       <div class="kpi"><span class="kpi__l">01 · Phân nhóm khách hàng</span><span class="kpi__t">Vietnam Airlines phục vụ trọn cả tệp khách phổ thông lẫn nhóm khách cao cấp cần mức bảo vệ cao hơn.</span></div>
       <div class="kpi kpi--cyan"><span class="kpi__l">02 · Khác biệt hạng vé</span><span class="kpi__t">Hạng vé cao hơn có thể gắn với thời điểm kích hoạt sớm hơn hoặc mức quyền lợi cao hơn, tạo giá trị gia tăng rõ rệt.</span></div>
@@ -1133,18 +1147,18 @@ body{
       <div class="kpi kpi--gold"><span class="kpi__l">04 · Theo dõi hiệu quả</span><span class="kpi__t">Tỷ lệ đính kèm, tỷ lệ kích hoạt, doanh thu trên mỗi khách, hiệu quả bán thêm, mức hài lòng sau bồi thường.</span></div>
     </div>
     <div class="chart ac-reveal" style="--i:3">
-      <div class="s-sub" style="margin-bottom:.7rem;font-weight:700;color:var(--pvi-blue);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">Ước tính doanh thu bổ trợ <span class="tag tag--o">Chỉ minh hoạ · có thể chỉnh</span></div>
+      <div class="s-sub" style="margin-bottom:.7rem;font-weight:700;color:var(--pvi-blue);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">Ước tính doanh thu bổ trợ <span class="tag tag--o">CHỈ MANG TÍNH CHẤT MINH HỌA</span></div>
       <div id="rvSim" class="rvsim"></div>
     </div>
     <div class="unit ac-reveal" style="--i:6;margin-top:.5rem">Các số liệu trong mô hình chỉ mang tính chất minh hoạ. Các tham số thực tế sẽ được xác định sau khi thống nhất cấu trúc sản phẩm, mức phí, kênh phân phối và cơ chế hợp tác thương mại.</div>
   </div></div>
 </section>
 
-<!-- ===== COVER 05 ===== -->
-<section class="slide" data-title="Mục 05 · Định hướng hợp tác">
+<!-- ===== COVER 04 ===== -->
+<section class="slide" data-title="Mục 04 · Định hướng hợp tác">
   <div class="slide-content"><div class="wrap divider cover">
-    <div class="divider__kicker ac-reveal">Phần 05</div>
-    <div class="divider__no ac-reveal" style="--i:1">05</div>
+    <div class="divider__kicker ac-reveal">Phần 04</div>
+    <div class="divider__no ac-reveal" style="--i:1">04</div>
     <div class="divider__bar ac-reveal" style="--i:2"></div>
     <div class="divider__t ac-reveal" style="--i:3">Định hướng hợp tác</div>
   </div></div>
@@ -1152,7 +1166,7 @@ body{
 
 <section class="slide" data-title="Mô hình triển khai">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Lựa chọn mô hình triển khai phù hợp với chiến lược của Vietnam Airlines</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">04 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Lựa chọn mô hình triển khai phù hợp với chiến lược của Vietnam Airlines</h2></div>
     <div class="grid2" style="align-items:center">
       <div class="chart radar ac-reveal" style="--i:2">
         <svg viewBox="-50 0 360 240" role="img" aria-label="So sánh mức độ phù hợp chiến lược">
@@ -1188,7 +1202,7 @@ body{
 
 <section class="slide" data-title="Đề xuất lộ trình triển khai">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Đề xuất lộ trình phối hợp triển khai</h2><span class="s-sub ac-reveal" style="--i:2">Lộ trình triển khai dự kiến tập trung vào việc thống nhất mô hình sản phẩm và bài toán thương mại trước khi tiến hành tích hợp kỹ thuật.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">04 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Đề xuất lộ trình phối hợp triển khai</h2><span class="s-sub ac-reveal" style="--i:2">Lộ trình triển khai dự kiến tập trung vào việc thống nhất mô hình sản phẩm và bài toán thương mại trước khi tiến hành tích hợp kỹ thuật.</span></div>
     <div class="rmap ac-reveal" style="--i:2">
       <div class="rmap__conn"><i class="ac-fill-x" style="--w:100%"></i></div>
       <div class="rmap__steps">
@@ -1210,10 +1224,9 @@ body{
 <section class="slide" data-title="Cảm ơn">
   <div class="slide-content"><div class="wrap hero">
     <div class="hero__logo ac-reveal"><img class="pvi-logo" src="PVI%20Logo%20(cropped).png" alt="Bảo hiểm PVI" /><span class="hero__x">×</span><img class="vna-logo" src="VNA%20Logo.png" alt="Vietnam Airlines" /></div>
-    <div class="hero__kicker ac-reveal" style="--i:1;color:var(--pvi-cyan)">PVI Insurance × Vietnam Airlines</div>
     <div class="end__big">TRÂN TRỌNG CẢM ƠN</div>
-    <div class="hero__org ac-reveal" style="--i:3">Flight Delay Protection · Bảo hiểm trễ chuyến bay</div>
-    <div class="hero__meta ac-reveal" style="--i:4">Bảo vệ hành trình · Nâng tầm trải nghiệm · Gia tăng doanh thu.</div>
+    <div class="hero__org ac-reveal" style="--i:1">Flight Delay Protection · Bảo hiểm trễ chuyến bay</div>
+    <div class="hero__meta ac-reveal" style="--i:2">Bảo vệ hành trình · Nâng tầm trải nghiệm · Gia tăng doanh thu.</div>
     
   </div></div>
 </section>
