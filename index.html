@@ -358,8 +358,9 @@ body{
 
 .slide--hero .hero{ z-index:2; }
 /* logo sits on a frosted chip so the navy mark stays legible on the dark photo */
-.hero__logo{ margin-bottom:.7rem; }
+.hero__logo{ margin-bottom:.7rem; display:flex; align-items:center; gap:clamp(1.2rem,2.5vw,2.2rem); }
 .hero__logo .pvi-logo{ height:clamp(48px,8vh,82px); width:auto; display:block; }
+.hero__logo .vna-logo{ height:clamp(90px,15vh,152px); width:auto; display:block; transform: translateY(-4px); }
 .slide--hero .hero__logo{ display:inline-flex; padding:.6rem 1.15rem; border-radius:16px;
   background:rgba(255,255,255,.94); box-shadow:0 12px 34px rgba(0,0,0,.45); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
 .slide:not(.slide--hero) .hero__logo .pvi-logo{ filter:drop-shadow(0 8px 20px rgba(0,48,135,.18)); }
@@ -761,9 +762,9 @@ body{
 
 
 /* ===== V7 — logo bìa to hơn, khung giờ vàng, dòng BH kiểu Bamboo ===== */
-.slide--hero .hero__logo{ gap:clamp(1.2rem,3vw,2.8rem)!important; margin-bottom:clamp(1rem,2.4vh,2rem)!important; }
-.slide--hero .hero__logo .pvi-logo{ height:clamp(96px,16vh,185px)!important; }
-.slide--hero .hero__logo .vna-logo{ height:clamp(120px,20vh,235px)!important; }
+.slide--hero .hero__logo{ gap:clamp(1.5rem,4vw,3.5rem)!important; margin-bottom:clamp(1rem,2.4vh,2rem)!important; align-items: center; }
+.slide--hero .hero__logo .pvi-logo{ height:clamp(130px,22vh,240px)!important; }
+.slide--hero .hero__logo .vna-logo{ height:clamp(240px,40vh,460px)!important; transform: translateY(-12px); }
 @media (max-width:420px){ .slide--hero .hero__sub{ font-size:3.6vw; } }
 /* nhãn khung giờ vàng nằm đáy vùng, không đè trục 3h */
 .gapc__zone span{ top:auto; bottom:.25rem; white-space:normal; width:100%; }
@@ -819,8 +820,8 @@ body{
     <div class="hero__logo ac-reveal"><img class="pvi-logo" src="PVI%20Logo%20white.png" alt="Bảo hiểm PVI" /><span class="hero__x">×</span><img class="vna-logo" src="VNA%20Logo%20white.png" alt="Vietnam Airlines" /></div>
     <div class="hero__name ac-reveal" style="--i:2">FLIGHT DELAY</div>
     <div class="hero__word">PROTECTION</div>
-    <div class="hero__sub ac-reveal nb" style="--i:3">Giải pháp bảo hiểm trễ chuyến bay cho Vietnam Airlines</div>
-    <div class="hero__org ac-reveal" style="--i:4">Chúng tôi biến thời gian chờ đợi của khách thành một trải nghiệm được bảo vệ</div>
+    <div class="hero__sub ac-reveal nb" style="--i:3; max-width:100%;">Giải pháp bảo hiểm trễ chuyến bay cho Vietnam Airlines</div>
+    <div class="hero__org ac-reveal" style="--i:4">Bổ sung quyền lợi tài chính rõ ràng khi hành trình bị gián đoạn</div>
   </div></div>
 </section>
 
@@ -829,11 +830,11 @@ body{
   <div class="slide-content"><div class="wrap">
     <div class="head"><h2 class="s-title ac-reveal">Mục lục</h2></div>
     <div class="toc">
-      <div class="toc__item ac-reveal" style="--i:1" data-go="2"><span class="toc__no">01</span><span class="toc__t">Bối cảnh &amp; cơ hội thị trường</span></div>
+      <div class="toc__item ac-reveal" style="--i:1" data-go="2"><span class="toc__no">01</span><span class="toc__t">Bối cảnh và cơ hội thị trường</span></div>
       <div class="toc__item ac-reveal" style="--i:2" data-go="6"><span class="toc__no">02</span><span class="toc__t">Đề xuất sản phẩm bảo hiểm trễ chuyến bay</span></div>
-      <div class="toc__item ac-reveal" style="--i:3" data-go="10"><span class="toc__no">03</span><span class="toc__t">Tình huống minh họa quyền lợi cho hành khách</span></div>
-      <div class="toc__item ac-reveal" style="--i:4" data-go="13"><span class="toc__no">04</span><span class="toc__t">Giá trị mang lại cho Vietnam Airlines</span></div>
-      <div class="toc__item ac-reveal" style="--i:5" data-go="15"><span class="toc__no">05</span><span class="toc__t">Định hướng hợp tác giữa Vietnam Airlines &amp; PVI</span></div>
+      <div class="toc__item ac-reveal" style="--i:3" data-go="10"><span class="toc__no">03</span><span class="toc__t">Tình huống minh họa quyền lợi</span></div>
+      <div class="toc__item ac-reveal" style="--i:4" data-go="13"><span class="toc__no">04</span><span class="toc__t">Giá trị đối với Vietnam Airlines</span></div>
+      <div class="toc__item ac-reveal" style="--i:5" data-go="15"><span class="toc__no">05</span><span class="toc__t">Định hướng hợp tác giữa Vietnam Airlines và PVI</span></div>
     </div>
   </div></div>
 </section>
@@ -844,28 +845,14 @@ body{
     <div class="divider__kicker ac-reveal">Phần 01</div>
     <div class="divider__no ac-reveal" style="--i:1">01</div>
     <div class="divider__bar ac-reveal" style="--i:2"></div>
-    <div class="divider__t ac-reveal" style="--i:3">Bối cảnh &amp; cơ hội thị trường</div>
-  </div></div>
-</section>
-
-<!-- ===== S3 EXECUTIVE PROPOSITION ===== -->
-<section class="slide" data-title="Đề xuất tổng quan">
-  <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Bối cảnh mở ra cơ hội cho một sản phẩm bổ trợ mới</h2><span class="s-sub ac-reveal" style="--i:2">Trễ chuyến là điều khách khó chịu nhất, trong khi doanh thu bổ trợ đang là hướng tăng trưởng trọng yếu của ngành hàng không.</span></div>
-    <div class="cards cards--3" style="margin-bottom:var(--content-gap)">
-      <div class="card ac-reveal" style="--i:3"><h4><span class="card__ic">⏱️</span> Điểm khách bức xúc nhất</h4><p>Trễ chuyến ảnh hưởng trực tiếp tới thời gian, chi phí và lịch trình - nhưng khách hiếm khi nhận lại giá trị tương xứng cho khoảng thời gian đã mất.</p></div>
-      <div class="card ac-reveal" style="--i:4"><h4><span class="card__ic">📈</span> Doanh thu bổ trợ lên ngôi</h4><p>Bán kèm quyền lợi là hướng tăng trưởng trọng yếu của các hãng - vừa thêm nguồn thu, vừa cho khách thêm lý do chọn hạng vé cao hơn.</p></div>
-      <div class="card card--warn ac-reveal" style="--i:5"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🎯</span> Còn thiếu một sản phẩm</h4><p>Chưa có sản phẩm chuyên biệt cho rủi ro trễ chuyến với quyền lợi tiền mặt rõ ràng, đơn giản, mua được ngay khi đặt vé.</p></div>
-    </div>
-    <div class="note note--o ac-reveal" style="--i:6"><b>Đề xuất:</b> bổ sung một sản phẩm bổ trợ mới - bảo hiểm trễ chuyến bay - với quyền lợi tiền mặt cố định, thông điệp gọn, gắn ngay vào hành trình đặt vé.</div>
-    <div class="note note--g ac-reveal" style="--i:7">🤝 <b>Vì sao làm cùng PVI:</b> tận dụng ngay nền tảng phân phối bảo hiểm TripCARE sẵn có với Vietnam Airlines, gia tăng doanh thu bổ trợ và trao cho khách quyền lợi rõ ràng khi chuyến bay gián đoạn - trong khi Vietnam Airlines không phải tự đứng ra vận hành bảo hiểm.</div>
+    <div class="divider__t ac-reveal" style="--i:3">Bối cảnh và cơ hội thị trường</div>
   </div></div>
 </section>
 
 <!-- ===== S4 REGULATORY NĐ208 ===== -->
 <section class="slide" data-title="Nghị định 208">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Nghị định 208 thay đổi kỳ vọng của hành khách như thế nào?</h2><span class="s-sub ac-reveal" style="--i:2">Nghị định 208/2026/NĐ-CP về vận tải hàng không · hiệu lực từ ngày <b>01/07/2026</b> · nghĩa vụ chăm sóc hành khách tăng dần theo thời gian trễ.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Khung pháp lý mới nâng chuẩn chăm sóc hành khách khi chuyến bay bị chậm</h2><span class="s-sub ac-reveal" style="--i:2">Nghị định số 208/2026/NĐ-CP, có hiệu lực từ ngày 01/07/2026, quy định nghĩa vụ của người vận chuyển theo từng mốc thời gian chậm chuyến.</span></div>
     <div class="rwy ac-reveal" style="--i:2">
       <div class="rwy__track"><span class="rwy__plane">✈</span></div>
       <div class="rwy__stops">
@@ -873,7 +860,7 @@ body{
           <div class="rwy__badge">2h</div>
           <div class="rwy__ic">🥤</div>
           <h4>Nghĩa vụ chăm sóc</h4>
-          <p>Phục vụ nước uống hoặc voucher tương đương · re-book, re-route nếu lỗi thuộc hãng và khách có yêu cầu</p>
+          <p>Phục vụ nước uống hoặc voucher tương đương · chuyển đổi hành trình nếu lỗi thuộc người vận chuyển và hành khách có yêu cầu</p>
           <span class="tag tag--b">Nước uống</span>
         </div>
         <div class="rwy__stop ac-pop" style="--i:4">
@@ -887,7 +874,7 @@ body{
           <div class="rwy__badge">4h</div>
           <div class="rwy__ic">🎫</div>
           <h4>Hoàn vé &amp; bồi thường</h4>
-          <p>Nếu lỗi thuộc hãng: hoàn tiền vé hoặc phần chưa sử dụng · bồi thường ứng trước không hoàn lại theo quy định</p>
+          <p>Nếu lỗi thuộc người vận chuyển: hoàn tiền vé hoặc phần chưa sử dụng · bồi thường ứng trước không hoàn lại theo quy định</p>
           <span class="tag tag--o">Hoàn vé</span>
         </div>
         <div class="rwy__stop ac-pop" style="--i:6">
@@ -899,19 +886,19 @@ body{
         </div>
       </div>
     </div>
-    <div class="note ac-reveal" style="--i:7">⚖️ Nghị định xác lập <b>nghĩa vụ tối thiểu</b> của hãng hàng không đối với hành khách khi chuyến bay bị trễ - đây là chuẩn dịch vụ mà mọi hãng phải tuân thủ.</div>
-    <div class="unit ac-reveal" style="--i:8;margin-top:.35rem">Nguồn: Nghị định 208/2026/NĐ-CP, Điều 36 - rà soát lại số điều và cách diễn giải trước khi trình bày chính thức.</div>
+    <div class="note ac-reveal" style="--i:7">Nghị định xác lập chuẩn chăm sóc tối thiểu của người vận chuyển. Sản phẩm bảo hiểm có thể bổ sung một quyền lợi tài chính độc lập, giúp hành khách nhận biết rõ hơn giá trị bảo vệ khi chuyến bay bị gián đoạn.</div>
+    <div class="unit ac-reveal" style="--i:8;margin-top:.35rem">Nguồn: Nghị định số 208/2026/NĐ-CP, Điều 36.</div>
   </div></div>
 </section>
 
 <!-- ===== S5 PROTECTION GAP ===== -->
-<section class="slide" data-title="Khoảng trống bảo vệ">
+<section class="slide" data-title="Khoảng trống quyền lợi">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Khoảng trống bảo vệ nằm ở đâu?</h2><span class="s-sub ac-reveal" style="--i:2">Hành khách chịu ảnh hưởng từ mốc 2 giờ - quyền hoàn vé &amp; bồi thường tại mốc 4 giờ chỉ áp dụng khi lỗi thuộc người vận chuyển.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">01 · Bối cảnh &amp; cơ hội thị trường</div><h2 class="s-title ac-reveal" style="--i:1">Khoảng trống quyền lợi trong giai đoạn chậm chuyến từ 2 đến dưới 4 giờ</h2><span class="s-sub ac-reveal" style="--i:2">Trong giai đoạn này, hành khách đã phát sinh ảnh hưởng đáng kể đến thời gian và kế hoạch di chuyển, trong khi quyền hoàn vé và bồi thường ứng trước chỉ phát sinh khi đáp ứng các điều kiện pháp lý tương ứng.</span></div>
     <div class="chart gapc ac-reveal" style="--i:3">
       <div class="gapc__axis"><span style="left:0%">0h</span><span style="left:14.3%">1h</span><span style="left:28.6%">2h</span><span style="left:42.9%">3h</span><span style="left:57.2%">4h</span><span style="left:71.5%">5h</span><span style="left:85.8%">6h</span></div>
       <div class="gapc__stage">
-        <div class="gapc__zone"><span>KHUNG GIỜ VÀNG<br>2 - 4 GIỜ</span></div>
+        <div class="gapc__zone"><span style="font-size:clamp(.4rem,.7vw,.55rem)">GIAI ĐOẠN CẦN BỔ SUNG QUYỀN LỢI<br>2 - 4 GIỜ</span></div>
         <div class="gapc__lane">
           <span class="gapc__lbl">✈ Hãng hàng không<br><i>nghĩa vụ chăm sóc</i></span>
           <div class="gapc__row">
@@ -922,20 +909,34 @@ body{
           </div>
         </div>
         <div class="gapc__lane">
-          <span class="gapc__lbl">🛡 Quyền lợi nâng cao<br><i>từ 2 giờ</i></span>
-          <div class="gapc__row"><div class="gapc__bar gapc__bar--prem ac-fill-x" style="--w:71.4%">Bảo hiểm chi trả tiền mặt ngay từ mốc 2 giờ</div></div>
+          <span class="gapc__lbl">🛡 Phương án quyền lợi từ 2 giờ</span>
+          <div class="gapc__row"><div class="gapc__bar gapc__bar--prem ac-fill-x" style="--w:71.4%">Quyền lợi bảo hiểm được kích hoạt từ mốc 2 giờ</div></div>
         </div>
         <div class="gapc__lane">
-          <span class="gapc__lbl">🛡 Quyền lợi cơ bản<br><i>từ 3 giờ</i></span>
-          <div class="gapc__row"><div class="gapc__bar gapc__bar--lite ac-fill-x" style="--w:57.1%">Bảo hiểm chi trả từ mốc 3 giờ</div></div>
+          <span class="gapc__lbl">🛡 Phương án quyền lợi từ 3 giờ</span>
+          <div class="gapc__row"><div class="gapc__bar gapc__bar--lite ac-fill-x" style="--w:57.1%">Quyền lợi bảo hiểm được kích hoạt từ mốc 3 giờ</div></div>
         </div>
       </div>
       <div class="gapc__foot">*Hoàn vé &amp; bồi thường ứng trước tại mốc 4h chỉ khi lỗi thuộc hãng · Nguyên nhân ngoài kiểm soát: quyền lợi bảo hiểm độc lập tùy phạm vi được phê duyệt</div>
     </div>
     <div class="grid2" style="align-items:stretch">
-      <div class="note note--o ac-reveal" style="--i:5"><b>Khách đã chịu thiệt ngay từ mốc 2 giờ</b>, nhưng theo quy định, hãng chưa chắc đã phải hoàn vé hay bồi thường ở mốc này.</div>
-      <div class="note note--g ac-reveal" style="--i:6">🎯 Nghị định đặt ra <b>chuẩn dịch vụ tối thiểu</b>; sản phẩm bảo hiểm bổ sung cho khách <b>một khoản hỗ trợ tài chính</b> rõ ràng, dễ nhận biết.</div>
+      <div class="note note--o ac-reveal" style="--i:5">Ngay từ mốc 2 giờ, hành khách đã phát sinh ảnh hưởng đến lịch trình và trải nghiệm chuyến đi, trong khi một số quyền lợi pháp lý chưa phát sinh hoặc còn phụ thuộc vào nguyên nhân chậm chuyến.</div>
+      <div class="note note--g ac-reveal" style="--i:6">Sản phẩm bảo hiểm bổ sung một khoản hỗ trợ tài chính rõ ràng, dễ nhận biết và được thực hiện độc lập với nghĩa vụ chăm sóc của người vận chuyển.</div>
     </div>
+  </div></div>
+</section>
+
+<!-- ===== S3 EXECUTIVE PROPOSITION ===== -->
+<section class="slide" data-title="Bối cảnh và cơ hội">
+  <div class="slide-content"><div class="wrap">
+    <div class="head"><div class="eyebrow ac-reveal">01 · BỐI CẢNH VÀ CƠ HỘI THỊ TRƯỜNG</div><h2 class="s-title ac-reveal" style="--i:1">Bối cảnh thị trường tạo dư địa cho một giải pháp bảo vệ bổ sung</h2><span class="s-sub ac-reveal" style="--i:2">Trễ chuyến tác động trực tiếp đến trải nghiệm hành khách, đồng thời mở ra cơ hội phát triển doanh thu bổ trợ thông qua một quyền lợi đơn giản, dễ nhận biết và được tích hợp ngay trong hành trình đặt vé.</span></div>
+    <div class="cards cards--3" style="margin-bottom:var(--content-gap)">
+      <div class="card ac-reveal" style="--i:3"><h4><span class="card__ic">⏱️</span> Tác động trực tiếp đến trải nghiệm hành khách</h4><p>Trễ chuyến ảnh hưởng đến thời gian, chi phí và kế hoạch di chuyển của hành khách. Tuy nhiên, các quyền lợi hiện có chưa phải lúc nào cũng tạo ra một khoản hỗ trợ tài chính trực tiếp, dễ nhận biết.</p></div>
+      <div class="card ac-reveal" style="--i:4"><h4><span class="card__ic">📈</span> Dư địa tăng trưởng doanh thu bổ trợ</h4><p>Các sản phẩm và dịch vụ bổ sung ngày càng giữ vai trò quan trọng trong chiến lược gia tăng doanh thu, đồng thời góp phần nâng cao giá trị của từng hạng vé.</p></div>
+      <div class="card card--warn ac-reveal" style="--i:5"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🎯</span> Khoảng trống về quyền lợi chuyên biệt</h4><p>Thị trường còn dư địa cho một sản phẩm tập trung riêng vào rủi ro trễ chuyến, với quyền lợi tiền mặt cố định, điều kiện rõ ràng và quy trình tiếp cận thuận tiện.</p></div>
+    </div>
+    <div class="note note--o ac-reveal" style="--i:6"><b>Đề xuất:</b> Phát triển sản phẩm bảo hiểm trễ chuyến bay với quyền lợi tiền mặt cố định, thông điệp đơn giản và khả năng tích hợp trực tiếp vào hành trình đặt vé của Vietnam Airlines.</div>
+    <div class="note note--g ac-reveal" style="--i:7"><b>Nền tảng triển khai:</b> Hai bên có thể tận dụng nền tảng phân phối bảo hiểm TripCARE hiện hữu để rút ngắn thời gian triển khai. PVI là đầu mối thiết kế, quản trị và vận hành sản phẩm bảo hiểm; Vietnam Airlines tập trung vào trải nghiệm hành khách và hiệu quả thương mại.</div>
   </div></div>
 </section>
 
@@ -950,12 +951,12 @@ body{
 </section>
 
 <!-- ===== S6 PORTFOLIO ECOSYSTEM ===== -->
-<section class="slide" data-title="Hệ sinh thái bảo vệ">
+<section class="slide" data-title="Hệ sinh thái sản phẩm">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1"><span class="nb">Flight Delay Protection</span> không thay thế TripCARE, mà bổ sung để trọn vẹn việc bảo vệ hành trình</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Flight Delay Protection bổ sung cho hệ sinh thái bảo vệ hành trình của Vietnam Airlines</h2></div>
     <div class="eco">
       <div class="eco__panel eco__panel--tc ac-reveal" style="--i:2">
-        <div class="eco__head"><b>🌐 TripCARE</b><span>Bảo vệ trọn cả chuyến đi</span></div>
+        <div class="eco__head"><b>🌐 TripCARE</b><span>Phạm vi bảo vệ toàn diện cho chuyến đi</span></div>
         <div class="eco__chips">
           <span>🏥 Tai nạn &amp; chi phí y tế</span><span>🔁 Hủy / rút ngắn chuyến đi</span><span>🧳 Mất / hỏng / chậm hành lý</span><span>🌍 Hỗ trợ toàn cầu 24/7</span><span>⚠️ Sự cố &amp; bất tiện khi đi lại</span><span>⏱ Trễ chuyến theo điều kiện TripCARE</span>
         </div>
@@ -963,15 +964,15 @@ body{
       </div>
       <div class="eco__plus ac-pop" style="--i:3">+</div>
       <div class="eco__panel eco__panel--fa ac-reveal" style="--i:4">
-        <div class="eco__head"><b>🛡️ Flight Delay Protection</b><span>Chuyên cho một rủi ro: trễ chuyến</span></div>
+        <div class="eco__head"><b>🛡️ Flight Delay Protection</b><span>Tập trung vào rủi ro trễ chuyến</span></div>
         <div class="eco__chips">
           <span>⚡ Quyền lợi phân theo hạng vé</span><span>💵 Chi trả tiền mặt cố định</span><span>🧾 Không phải chứng minh chi phí</span><span>📱 Cổng bồi thường riêng</span><span>🎫 Gắn sẵn vào hạng vé</span><span>📣 Thông điệp gọn, dễ hiểu</span>
         </div>
-        <div class="eco__foot">Phí nhỏ · số lượng lớn · dễ tiếp cận</div>
+        <div class="eco__foot">Mức phí phù hợp · Dễ tích hợp · Có khả năng triển khai trên quy mô lớn</div>
       </div>
     </div>
     <div class="eco__eq ac-reveal" style="--i:5">= HỆ SINH THÁI BẢO VỆ HÀNH TRÌNH CỦA VIETNAM AIRLINES</div>
-    <div class="note note--g ac-reveal" style="--i:6">TripCARE lo trọn cả hành trình; <span class="nb">Flight Delay Protection</span> tập trung xử lý đúng một rủi ro - trễ chuyến - với quyền lợi gọn và rõ ràng hơn.</div>
+    <div class="note note--g ac-reveal" style="--i:6">TripCARE cung cấp phạm vi bảo vệ toàn diện cho chuyến đi; Flight Delay Protection tập trung vào một rủi ro cụ thể với quyền lợi tiền mặt cố định, điều kiện đơn giản và khả năng tích hợp trực tiếp theo hạng vé.</div>
   </div></div>
 </section>
 
@@ -980,37 +981,37 @@ body{
 <!-- ===== S8 HAI PHƯƠNG ÁN OFFER ===== -->
 <section class="slide" data-title="Hai phương án đề xuất">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Hai phương án để Vietnam Airlines lựa chọn</h2><span class="s-sub ac-reveal" style="--i:2">Cùng một sản phẩm bảo hiểm trễ chuyến, hai cách tạo khác biệt giữa các hạng vé. Vietnam Airlines chọn cách phù hợp với chiến lược hạng vé của mình.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Hai cấu trúc quyền lợi để Vietnam Airlines xem xét</h2><span class="s-sub ac-reveal" style="--i:2">Cùng một sản phẩm bảo hiểm trễ chuyến, hai cấu trúc quyền lợi có thể được xem xét nhằm tạo khác biệt giữa các hạng vé.</span></div>
     <div class="opts">
       <div class="opt ac-reveal" style="--i:3">
         <div class="opt__tag">Phương án 1</div>
-        <h3 class="opt__title">Khác nhau ở <b>thời gian trễ</b></h3>
-        <p class="opt__desc">Giữ nguyên mức chi trả <b>1.000.000₫</b> cho mọi hạng vé - chỉ khác nhau ở mốc thời gian được kích hoạt.</p>
+        <h3 class="opt__title">Phân tầng theo thời điểm kích hoạt</h3>
+        <p class="opt__desc">Duy trì mức quyền lợi 1.000.000 VND cho các hạng vé, đồng thời phân biệt thời điểm kích hoạt theo từng nhóm hạng vé.</p>
         <div class="opt__rows">
           <div class="opt__row"><div class="opt__cabin"><b>Hạng phổ thông</b><span>Economy Lite · Classic · Flex</span></div><div class="opt__val">từ<em>3</em>giờ</div></div>
           <div class="opt__row opt__row--hi"><div class="opt__cabin"><b>Phổ thông đặc biệt &amp; Thương gia</b><span>Eco Premium · Business Classic/Flex</span></div><div class="opt__val opt__val--hi">từ<em>2</em>giờ</div></div>
         </div>
-        <div class="opt__pro">✔ Hạng vé cao được bảo vệ <b>sớm hơn</b> - đặc quyền về thời gian, giữ chi trả đồng nhất 1.000.000₫</div>
+        <div class="opt__pro">Hạng vé cao được kích hoạt quyền lợi sớm hơn, tạo khác biệt về trải nghiệm trong khi vẫn duy trì mức chi trả đồng nhất.</div>
       </div>
       <div class="opt ac-reveal" style="--i:4">
         <div class="opt__tag opt__tag--2">Phương án 2</div>
-        <h3 class="opt__title">Khác nhau ở <b>số tiền chi trả</b></h3>
-        <p class="opt__desc">Giữ nguyên mốc trễ <b>2 giờ</b> cho mọi hạng vé - chỉ khác nhau ở mức tiền được chi trả.</p>
+        <h3 class="opt__title">Phân tầng theo mức quyền lợi</h3>
+        <p class="opt__desc">Áp dụng cùng một thời điểm kích hoạt và phân biệt các hạng vé thông qua mức quyền lợi tiền mặt.</p>
         <div class="opt__rows">
           <div class="opt__row"><div class="opt__cabin"><b>Hạng phổ thông</b><span>Economy · trễ từ 2 giờ</span></div><div class="opt__amt">1.000.000₫</div></div>
           <div class="opt__row opt__row--hi"><div class="opt__cabin"><b>Phổ thông đặc biệt &amp; Thương gia</b><span>Eco Premium · Business · trễ từ 2 giờ</span></div><div class="opt__amt opt__amt--hi">2.000.000₫</div></div>
         </div>
-        <div class="opt__pro">✔ Khác biệt bằng <b>giá trị tiền mặt</b> rõ ràng - dễ truyền thông, giữ mốc trễ đồng nhất 2 giờ</div>
+        <div class="opt__pro">Các hạng vé áp dụng cùng một thời điểm kích hoạt nhưng được phân biệt bằng mức quyền lợi tiền mặt.</div>
       </div>
     </div>
-    <div class="note note--g ac-reveal" style="--i:5">🧭 Vietnam Airlines chọn một trong hai phương án, hoặc kết hợp cả hai. Ở cả hai phương án, hạng vé cao hơn luôn nhận ưu đãi tốt hơn: được chi trả sớm hơn (từ 2 giờ) hoặc nhận số tiền cao hơn (2.000.000₫). PVI sẽ chốt mốc trễ, mức phí và phạm vi sau khi hai bên thẩm định rủi ro và tính phí.</div>
+    <div class="note note--g ac-reveal" style="--i:5">Vietnam Airlines có thể lựa chọn một trong hai cấu trúc hoặc xây dựng phương án kết hợp. Mốc trễ, mức quyền lợi, phí bảo hiểm và phạm vi bảo hiểm sẽ được hai bên xác định trên cơ sở dữ liệu khai thác, kết quả thẩm định rủi ro và định hướng thương mại của Vietnam Airlines.</div>
   </div></div>
 </section>
 
 <!-- ===== S8B DEMO GIAO DIỆN VNA ===== -->
 <section class="slide" data-title="Demo trên giao diện đặt vé">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Quyền lợi bảo hiểm hiện ngay tại bước chọn hạng vé</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">02 · Đề xuất sản phẩm</div><h2 class="s-title ac-reveal" style="--i:1">Quyền lợi bảo hiểm được hiển thị trực tiếp tại bước lựa chọn hạng vé</h2></div>
     <div class="fdemo">
       <div class="fdemo__route ac-reveal" style="--i:2"><b>HAN → SGN</b> · bay thẳng · 05:00 - 07:10 · VN 205 · <span>Chọn hạng vé phổ thông</span></div>
       <div class="fcards">
@@ -1022,7 +1023,7 @@ body{
             <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
             <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
             <div class="frow"><span>💺 Cộng dặm</span><b>60%</b></div>
-            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Hạn mức: VND 1.000.000</b></div>
+            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Quyền lợi: 1.000.000 VND</b></div>
           </div>
         </div>
         <div class="fcard ac-reveal" style="--i:4">
@@ -1033,7 +1034,7 @@ body{
             <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
             <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
             <div class="frow"><span>💺 Cộng dặm</span><b>80%</b></div>
-            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Hạn mức: VND 1.000.000</b></div>
+            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Quyền lợi: 1.000.000 VND</b></div>
           </div>
         </div>
         <div class="fcard fcard--flex ac-reveal" style="--i:5">
@@ -1044,12 +1045,12 @@ body{
             <div class="frow"><span>🧳 Hành lý ký gửi</span><b>1 × 23kg</b></div>
             <div class="frow"><span>🎒 Hành lý xách tay</span><b>≤ 10kg</b></div>
             <div class="frow"><span>💺 Cộng dặm</span><b>110%</b></div>
-            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Hạn mức: VND 2.000.000</b></div>
+            <div class="frow frow--ins"><span>✈ Bảo hiểm trễ chuyến bay</span><b>Quyền lợi: 2.000.000 VND</b></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="note note--g ac-reveal" style="--i:6">🎫 Dòng bảo hiểm hiện cùng các quyền lợi khác của hạng vé, khách thấy ngay giá trị được bảo vệ; vé linh hoạt hơn đi kèm mức bảo vệ cao hơn. Áp dụng tương tự cho Eco Premium &amp; Business.</div>
+    <div class="note note--g ac-reveal" style="--i:6">Quyền lợi bảo hiểm được hiển thị đồng thời với các điều kiện của hạng vé, giúp hành khách nhận biết trực tiếp giá trị gia tăng. Hạng vé cao hơn có thể đi kèm thời điểm kích hoạt sớm hơn hoặc mức quyền lợi cao hơn. Cách hiển thị có thể được áp dụng tương tự đối với Premium Economy và Business.</div>
   </div></div>
 </section>
 
@@ -1064,78 +1065,78 @@ body{
 </section>
 
 <!-- ===== S9 SCENARIO 2H ===== -->
-<section class="slide" data-title="Kịch bản trễ 2 giờ">
+<section class="slide" data-title="Tình huống chậm 130 phút">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Chuyến bay trễ 130 phút: khách chạm mốc 2 giờ và nhận quyền lợi</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Tình huống 1 – Chuyến bay chậm 130 phút: quyền lợi được kích hoạt tại mốc 2 giờ</h2></div>
     <div class="chart fltbar ac-reveal" style="--i:2">
       <div class="fltbar__meta"><b>VNxxx · HAN → SGN</b><span>Dự kiến <b>10:00</b></span><span>Thực tế <b>12:10</b></span><span class="fltbar__delay">⏱ Trễ 130 phút</span></div>
       <div class="fltbar__scale"><span style="left:0%">10:00</span><span style="left:33.3%">11:00</span><span style="left:66.7%">12:00</span><span style="left:100%">13:00</span></div>
       <div class="fltbar__track">
         <div class="fltbar__fill ac-fill-x" style="--w:72.2%"></div>
-        <div class="fltbar__mark fltbar__mark--on" style="left:66.7%"><i></i><em>2h · quyền lợi kích hoạt ✓</em></div>
-        <div class="fltbar__mark" style="left:100%"><i></i><em>3h · chưa chạm mốc</em></div>
+        <div class="fltbar__mark fltbar__mark--on" style="left:66.7%"><i></i><em>2 giờ · quyền lợi được kích hoạt ✓</em></div>
+        <div class="fltbar__mark" style="left:100%"><i></i><em>3 giờ · chưa đạt ngưỡng</em></div>
       </div>
     </div>
     <div class="grid2" style="align-items:stretch;margin-top:var(--content-gap)">
       <div class="step ac-reveal" style="--i:3"><span class="step__n">1</span><div><h4>Vietnam Airlines · Nghĩa vụ chăm sóc</h4><p>Nước uống / voucher tương đương · cập nhật thông tin &amp; lý do chậm chuyến · các nghĩa vụ khác theo quy định.</p></div></div>
-      <div class="step ac-reveal" style="--i:4;border-left:4px solid var(--pvi-cyan)"><span class="step__n">2</span><div><h4>Flight Delay Protection · mốc kích hoạt 2 giờ</h4><p>Khách vào cổng bồi thường trực tuyến, PVI/TPA đối chiếu dữ liệu chuyến bay rồi chi trả thẳng vào tài khoản.</p><div class="fltbar__payout">1.000.000₫ - 2.000.000₫ <small style="font-size:.5em;color:var(--ink-500)">tuỳ phương án &amp; hạng vé</small></div></div></div>
+      <div class="step ac-reveal" style="--i:4;border-left:4px solid var(--pvi-cyan)"><span class="step__n">2</span><div><h4>Flight Delay Protection · mốc kích hoạt 2 giờ</h4><p>Hành khách gửi yêu cầu bồi thường trên cổng trực tuyến. PVI hoặc Đơn vị quản lý bồi thường – Third-Party Administrator (TPA) đối chiếu dữ liệu chuyến bay và thực hiện chi trả vào tài khoản đã đăng ký.</p><div class="fltbar__payout">1.000.000₫ - 2.000.000₫ <small style="font-size:.5em;color:var(--ink-500)">tuỳ phương án &amp; hạng vé</small></div></div></div>
     </div>
-    <div class="note note--g ac-reveal" style="--i:5;margin-top:var(--content-gap)">✨ Với phương án 1, khách hạng Eco Premium &amp; Business nhận 1.000.000₫ ngay từ mốc 2 giờ, còn khách Economy chờ mốc 3 giờ. Với phương án 2, mọi hạng vé đều được chi trả từ mốc 2 giờ.</div>
-    <div class="unit ac-reveal" style="--i:6;margin-top:.35rem">Quyền lợi chỉ phát sinh khi hợp đồng có hiệu lực và đủ điều kiện, không thay thế nghĩa vụ của hãng. Cổng bồi thường trực tuyến do PVI vận hành.</div>
+    <div class="note note--g ac-reveal" style="--i:5;margin-top:var(--content-gap)">Theo Phương án 1, hành khách Premium Economy và Business được kích hoạt quyền lợi 1.000.000 VND từ mốc 2 giờ, trong khi hành khách Economy được kích hoạt từ mốc 3 giờ. Theo Phương án 2, các hạng vé áp dụng cùng mốc 2 giờ và được phân biệt bằng mức quyền lợi.</div>
+    <div class="unit ac-reveal" style="--i:6;margin-top:.35rem">Quyền lợi chỉ phát sinh khi hợp đồng có hiệu lực và đáp ứng đầy đủ điều kiện bảo hiểm; không thay thế nghĩa vụ của người vận chuyển. Cổng bồi thường trực tuyến do PVI hoặc đơn vị được PVI chỉ định vận hành.</div>
   </div></div>
 </section>
 
 <!-- ===== S10 SCENARIO 4H DECISION TREE ===== -->
-<section class="slide" data-title="Kịch bản trễ 4 giờ">
+<section class="slide" data-title="Tình huống chậm trên 4 giờ">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Chuyến bay trễ hơn 4 giờ: mọi hạng vé, ở cả hai phương án, đều được chi trả</h2><span class="s-sub ac-reveal" style="--i:2"><b>VNxxx · SGN → DAD</b> · dự kiến 14:00 · thực tế 18:20 · <b style="color:var(--red)">tổng trễ 260 phút</b> - quyền lợi phụ thuộc nguyên nhân sự cố.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">03 · Tình huống minh họa</div><h2 class="s-title ac-reveal" style="--i:1">Tình huống 2 – Chuyến bay chậm trên 4 giờ: quyền lợi được xác định theo nguyên nhân và phạm vi bảo hiểm</h2><span class="s-sub ac-reveal" style="--i:2">VNxxx · SGN → DAD · dự kiến 14:00 · thực tế 18:20 · tổng thời gian chậm 260 phút. Nghĩa vụ của người vận chuyển và quyền lợi bảo hiểm được xem xét độc lập trên các cơ sở pháp lý và điều kiện hợp đồng khác nhau.</span></div>
     <div class="cards cards--2" style="margin-bottom:var(--content-gap)">
-      <div class="card ac-reveal" style="--i:2;border-left-color:var(--green)"><h4><span class="card__ic" style="background:rgba(46,125,50,.12);color:var(--green)">🛫</span> Lỗi thuộc hãng</h4>
-        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Chăm sóc · hoàn vé · đổi hành trình · bồi thường ứng trước</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">BH</b><span>Mọi hạng vé đã vượt mốc kích hoạt · PVI chi trả <b>1.000.000₫ hoặc 2.000.000₫</b> theo phương án đã chọn</span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Quyền lợi trễ chuyến theo điều kiện hợp đồng</span></div></div>
+      <div class="card ac-reveal" style="--i:2;border-left-color:var(--green)"><h4><span class="card__ic" style="background:rgba(46,125,50,.12);color:var(--green)">🛫</span> Nguyên nhân thuộc trách nhiệm của người vận chuyển</h4>
+        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện nghĩa vụ chăm sóc, chuyển đổi hành trình, hoàn vé và bồi thường ứng trước theo quy định.</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Xem xét chi trả khi chuyến bay đạt ngưỡng kích hoạt và đáp ứng đầy đủ điều kiện hợp đồng.</span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét quyền lợi theo quy tắc và điều khoản bảo hiểm tương ứng.</span></div></div>
       <div class="card card--warn ac-reveal" style="--i:3"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🌧️</span> Thời tiết</h4>
-        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Nghĩa vụ chăm sóc vẫn phát sinh · quyền lợi do lỗi hãng có thể không áp dụng</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">BH</b><span><i>Theo phạm vi được phê duyệt - không mặc nhiên chi trả</i></span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Tùy điều khoản hợp đồng</span></div></div>
-      <div class="card card--warn ac-reveal" style="--i:4"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🗼</span> ATC / Sân bay</h4>
-        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Chăm sóc hành khách theo khung giờ thực tế</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">BH</b><span><i>Tùy điều khoản hợp đồng &amp; phạm vi phê duyệt</i></span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Đối chiếu điều kiện riêng</span></div></div>
-      <div class="card card--bad ac-reveal" style="--i:5"><h4><span class="card__ic" style="background:rgba(198,40,40,.12);color:var(--red)">⚠️</span> Ngoài kiểm soát của hãng</h4>
-        <div class="oc"><b class="oc__k oc__k--v">Hãng</b><span>Một số quyền lợi do lỗi hãng không áp dụng</span></div>
-        <div class="oc"><b class="oc__k oc__k--i">BH</b><span><i>Xác định theo phạm vi được phê duyệt</i></span></div>
-        <div class="oc"><b class="oc__k oc__k--t">TC</b><span>Theo điều khoản hợp đồng</span></div></div>
+        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện các nghĩa vụ chăm sóc hành khách theo quy định; các nghĩa vụ gắn với lỗi của người vận chuyển có thể không phát sinh.</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Xem xét chi trả theo nguyên nhân và phạm vi bảo hiểm được phê duyệt.</span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét độc lập theo quy tắc và điều khoản của sản phẩm.</span></div></div>
+      <div class="card card--warn ac-reveal" style="--i:4"><h4><span class="card__ic" style="background:rgba(230,81,0,.12);color:var(--gold)">🗼</span> Điều hành bay / khai thác sân bay</h4>
+        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện nghĩa vụ chăm sóc hành khách theo quy định và điều kiện khai thác thực tế.</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Xem xét quyền lợi căn cứ nguyên nhân sự kiện, điều kiện hợp đồng và phạm vi bảo hiểm được phê duyệt.</span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét theo quy tắc và điều khoản bảo hiểm tương ứng.</span></div></div>
+      <div class="card card--bad ac-reveal" style="--i:5"><h4><span class="card__ic" style="background:rgba(198,40,40,.12);color:var(--red)">⚠️</span> Nguyên nhân khác ngoài khả năng kiểm soát</h4>
+        <div class="oc"><b class="oc__k oc__k--v">VNA</b><span>Thực hiện các nghĩa vụ áp dụng theo quy định pháp luật.</span></div>
+        <div class="oc"><b class="oc__k oc__k--i">Bảo hiểm</b><span>Quyền lợi được xác định theo phạm vi bảo hiểm và các trường hợp loại trừ.</span></div>
+        <div class="oc"><b class="oc__k oc__k--t">TripCARE</b><span>Xem xét theo quy tắc và điều khoản của sản phẩm.</span></div></div>
     </div>
-    <div class="note ac-reveal" style="--i:6">🔀 Nghĩa vụ của hãng &amp; quyền lợi bảo hiểm <b>vận hành song song</b> - phát sinh từ các cơ sở pháp lý khác nhau. Mỗi hành khách chỉ nhận một mức quyền lợi cho một sự kiện; cách phối hợp với TripCARE do điều khoản hợp đồng quy định.</div>
+    <div class="note ac-reveal" style="--i:6">Việc chi trả bảo hiểm căn cứ vào hợp đồng còn hiệu lực, ngưỡng chậm chuyến, nguyên nhân sự kiện, dữ liệu chuyến bay và phạm vi bảo hiểm được phê duyệt. Quyền lợi bảo hiểm không thay thế nghĩa vụ của người vận chuyển.</div>
   </div></div>
 </section>
 
 <!-- ===== COVER 04 ===== -->
-<section class="slide" data-title="Mục 04 · Giá trị cho Vietnam Airlines">
+<section class="slide" data-title="Mục 04 · Giá trị đối với Vietnam Airlines">
   <div class="slide-content"><div class="wrap divider cover">
     <div class="divider__kicker ac-reveal">Phần 04</div>
     <div class="divider__no ac-reveal" style="--i:1">04</div>
     <div class="divider__bar ac-reveal" style="--i:2"></div>
-    <div class="divider__t ac-reveal" style="--i:3">Giá trị cho <span class="nb">Vietnam Airlines</span></div>
+    <div class="divider__t ac-reveal" style="--i:3">Giá trị đối với <span class="nb">Vietnam Airlines</span></div>
   </div></div>
 </section>
 
 <!-- ===== S11 VALUE + REVENUE SIMULATOR ===== -->
-<section class="slide" data-title="Giá trị &amp; Mô phỏng doanh thu">
+<section class="slide" data-title="Giá trị và Mô phỏng doanh thu">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">04 · Giá trị cho Vietnam Airlines</div><h2 class="s-title ac-reveal" style="--i:1">Sản phẩm mới mở thêm dư địa doanh thu cho Vietnam Airlines</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">04 · Giá trị đối với Vietnam Airlines</div><h2 class="s-title ac-reveal" style="--i:1">Sản phẩm bảo hiểm góp phần mở rộng dư địa doanh thu bổ trợ</h2></div>
     <div class="kpis kpis--4 ac-reveal" style="--i:2;margin-bottom:var(--content-gap)">
       <div class="kpi"><span class="kpi__l">01 · Phân nhóm khách hàng</span><span class="kpi__t">Vietnam Airlines phục vụ trọn cả tệp khách phổ thông lẫn nhóm khách cao cấp cần mức bảo vệ cao hơn.</span></div>
-      <div class="kpi kpi--cyan"><span class="kpi__l">02 · Khác biệt hạng vé</span><span class="kpi__t">Hạng vé cao hơn luôn được ưu đãi hơn: chi trả sớm hơn hoặc số tiền lớn hơn, tuỳ phương án đã chọn.</span></div>
-      <div class="kpi kpi--cyan"><span class="kpi__l">03 · Cơ hội bán thêm</span><span class="kpi__t">Khách thấy rõ hạng vé cao hơn được bảo vệ tốt hơn, nên có thêm lý do nâng hạng.</span></div>
+      <div class="kpi kpi--cyan"><span class="kpi__l">02 · Khác biệt hạng vé</span><span class="kpi__t">Hạng vé cao hơn có thể gắn với thời điểm kích hoạt sớm hơn hoặc mức quyền lợi cao hơn, tạo giá trị gia tăng rõ rệt.</span></div>
+      <div class="kpi kpi--cyan"><span class="kpi__l">03 · Gia tăng tỷ lệ chuyển đổi</span><span class="kpi__t">Sự khác biệt về quyền lợi bảo hiểm tạo thêm động lực để hành khách lựa chọn các hạng vé cao hơn.</span></div>
       <div class="kpi kpi--gold"><span class="kpi__l">04 · Theo dõi hiệu quả</span><span class="kpi__t">Tỷ lệ đính kèm, tỷ lệ kích hoạt, doanh thu trên mỗi khách, hiệu quả bán thêm, mức hài lòng sau bồi thường.</span></div>
     </div>
     <div class="chart ac-reveal" style="--i:3">
       <div class="s-sub" style="margin-bottom:.7rem;font-weight:700;color:var(--pvi-blue);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">Ước tính doanh thu bổ trợ <span class="tag tag--o">Chỉ minh hoạ · có thể chỉnh</span></div>
       <div id="rvSim" class="rvsim"></div>
     </div>
-    <div class="unit ac-reveal" style="--i:6;margin-top:.5rem">Toàn bộ số liệu chỉ mang tính minh hoạ và có thể chỉnh sửa. Các giả định cuối cùng sẽ được xác nhận sau khi thống nhất thiết kế sản phẩm, mức phí, kênh phân phối và cơ chế thương mại.</div>
+    <div class="unit ac-reveal" style="--i:6;margin-top:.5rem">Các số liệu trong mô hình chỉ mang tính chất minh hoạ. Các tham số thực tế sẽ được xác định sau khi thống nhất cấu trúc sản phẩm, mức phí, kênh phân phối và cơ chế hợp tác thương mại.</div>
   </div></div>
 </section>
 
@@ -1149,13 +1150,12 @@ body{
   </div></div>
 </section>
 
-<!-- ===== S12 FINTECH VS INSURANCE ===== -->
-<section class="slide" data-title="Định vị vs Fintech">
+<section class="slide" data-title="Mô hình triển khai">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Không chỉ là "Fintech hay Bảo hiểm" - mà mô hình nào phù hợp nhất với chiến lược Vietnam Airlines</h2></div>
+    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Lựa chọn mô hình triển khai phù hợp với chiến lược của Vietnam Airlines</h2></div>
     <div class="grid2" style="align-items:center">
       <div class="chart radar ac-reveal" style="--i:2">
-        <svg viewBox="0 0 260 240" role="img" aria-label="So sánh mức độ phù hợp chiến lược">
+        <svg viewBox="-50 0 360 240" role="img" aria-label="So sánh mức độ phù hợp chiến lược">
           <g fill="none" stroke="rgba(0,48,135,.13)" stroke-width="1">
             <polygon points="130,95 153.8,112.3 144.7,140.2 115.3,140.2 106.2,112.3"/>
             <polygon points="130,70 177.6,104.6 159.4,160.5 100.6,160.5 82.4,104.6"/>
@@ -1173,35 +1173,34 @@ body{
             <text x="29" y="86" text-anchor="end">Hệ sinh thái VNA</text>
           </g>
         </svg>
-        <div class="lc-legend"><span><i style="background:#003087"></i>PVI Insurance</span><span><i style="background:#64748B"></i>Nền tảng Fintech</span><span class="unit" style="font-style:italic">Đánh giá định tính minh hoạ</span></div>
+        <div class="lc-legend"><span><i style="background:#003087"></i>Mô hình Bảo hiểm (PVI)</span><span><i style="background:#64748B"></i>Mô hình Fintech</span><span class="unit" style="font-style:italic">Đánh giá định tính minh hoạ</span></div>
       </div>
       <div>
-        <div class="card ac-reveal" style="--i:3;margin-bottom:.7rem"><h4><span class="card__ic">⚡</span> Nền tảng Fintech · điểm mạnh</h4>
+        <div class="card ac-reveal" style="--i:3;margin-bottom:.7rem"><h4><span class="card__ic">⚡</span> Mô hình Fintech</h4>
           <div class="eco__chips" style="margin-top:.3rem"><span>Trải nghiệm số nhanh</span><span>Hệ sinh thái công nghệ HK</span><span>Hoàn tiền tức thời</span><span>Đồng nhất đa thị trường</span></div></div>
-        <div class="card ac-reveal" style="--i:4;border-left-color:var(--pvi-blue)"><h4><span class="card__ic">🛡️</span> PVI Insurance · lợi thế chiến lược</h4>
+        <div class="card ac-reveal" style="--i:4;border-left-color:var(--pvi-blue)"><h4><span class="card__ic">🛡️</span> Mô hình Bảo hiểm</h4>
           <div class="eco__chips" style="margin-top:.3rem"><span>Khuôn khổ pháp lý Việt Nam</span><span>Quan hệ TripCARE hiện hữu</span><span>Thiết kế quyền lợi theo nhu cầu</span><span>Bồi thường &amp; CSKH trong nước</span><span>VNA không phải xử lý bồi thường</span></div></div>
       </div>
     </div>
-    <div class="note note--o ac-reveal" style="--i:5;margin-top:var(--content-gap)">🤝 <b>PVI cam kết đồng hành cùng Vietnam Airlines:</b> chi trả quyền lợi hoa hồng hấp dẫn cho kênh phân phối · cơ chế chia sẻ doanh thu linh hoạt · đồng hành truyền thông, đào tạo và vận hành lâu dài · sẵn sàng điều chỉnh sản phẩm theo chiến lược thương mại của Vietnam Airlines.</div>
+    <div class="note note--o ac-reveal" style="--i:5;margin-top:var(--content-gap)">PVI cam kết đồng hành cùng Vietnam Airlines thông qua chính sách phân phối cạnh tranh, cơ chế hợp tác linh hoạt, hỗ trợ vận hành dài hạn và khả năng tuỳ biến sản phẩm theo định hướng thương mại của hãng.</div>
   </div></div>
 </section>
 
-<!-- ===== S13 NEXT STEPS ===== -->
-<section class="slide" data-title="Lộ trình phối hợp">
+<section class="slide" data-title="Đề xuất lộ trình triển khai">
   <div class="slide-content"><div class="wrap">
-    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Đề xuất lộ trình phối hợp tiếp theo</h2><span class="s-sub ac-reveal" style="--i:2">Hai bên thống nhất bài toán kinh doanh và trải nghiệm khách hàng trước, rồi mới bàn sâu về kết nối kỹ thuật.</span></div>
+    <div class="head"><div class="eyebrow ac-reveal">05 · Định hướng hợp tác</div><h2 class="s-title ac-reveal" style="--i:1">Đề xuất lộ trình phối hợp triển khai</h2><span class="s-sub ac-reveal" style="--i:2">Lộ trình triển khai dự kiến tập trung vào việc thống nhất mô hình sản phẩm và bài toán thương mại trước khi tiến hành tích hợp kỹ thuật.</span></div>
     <div class="rmap ac-reveal" style="--i:2">
       <div class="rmap__conn"><i class="ac-fill-x" style="--w:100%"></i></div>
       <div class="rmap__steps">
-        <div class="rmap__step ac-pop" style="--i:3"><div class="rmap__num">1</div><h4>Thống nhất bài toán</h4><p>Gói mua thêm độc lập · nhúng theo hạng vé · hay kết hợp cả hai</p><span class="tag tag--b">Bản mô tả ý tưởng</span></div>
-        <div class="rmap__step ac-pop" style="--i:4"><div class="rmap__num">2</div><h4>Thiết kế hai cấp độ</h4><p>Ngưỡng trễ, mức phí, tần suất trễ, nguồn dữ liệu chuyến bay</p><span class="tag tag--b">Bảng quyền lợi · điều khoản</span></div>
-        <div class="rmap__step ac-pop" style="--i:5"><div class="rmap__num">3</div><h4>Bài toán kinh doanh</h4><p>Kịch bản theo hạng vé · mô hình mua thêm / nhúng sẵn / kết hợp</p><span class="tag tag--b">Mô phỏng doanh thu</span></div>
-        <div class="rmap__step ac-pop" style="--i:6"><div class="rmap__num">4</div><h4>Demo trải nghiệm</h4><p>Giao diện hạng vé · thông báo · cổng bồi thường trực tuyến</p><span class="tag tag--b">Bản demo tương tác</span></div>
-        <div class="rmap__step ac-pop" style="--i:7"><div class="rmap__num">5</div><h4>Khả thi &amp; Thí điểm</h4><p>Nguồn dữ liệu · đối soát · chọn tuyến, kênh thí điểm</p><span class="tag tag--o">Kế hoạch thí điểm</span></div>
+        <div class="rmap__step ac-pop" style="--i:3"><div class="rmap__num">1</div><h4>Thống nhất bài toán</h4><p>Xác định cấu trúc sản phẩm phù hợp với định hướng thương mại của Vietnam Airlines</p><span class="tag tag--b">Bản mô tả ý tưởng</span></div>
+        <div class="rmap__step ac-pop" style="--i:4"><div class="rmap__num">2</div><h4>Thiết kế hai cấp độ</h4><p>Thiết kế chi tiết quyền lợi, ngưỡng kích hoạt, mức phí và đánh giá khả năng tích hợp nguồn dữ liệu</p><span class="tag tag--b">Bảng quyền lợi · điều khoản</span></div>
+        <div class="rmap__step ac-pop" style="--i:5"><div class="rmap__num">3</div><h4>Bài toán kinh doanh</h4><p>Xây dựng mô hình dự phóng doanh thu, tỷ lệ đính kèm và hiệu quả bán chéo</p><span class="tag tag--b">Mô phỏng doanh thu</span></div>
+        <div class="rmap__step ac-pop" style="--i:6"><div class="rmap__num">4</div><h4>Demo trải nghiệm</h4><p>Mô phỏng trải nghiệm khách hàng tại các điểm chạm: đặt vé, nhận thông báo và bồi thường</p><span class="tag tag--b">Bản demo tương tác</span></div>
+        <div class="rmap__step ac-pop" style="--i:7"><div class="rmap__num">5</div><h4>Khả thi &amp; Thí điểm</h4><p>Đánh giá tính khả thi về mặt kỹ thuật, thống nhất phương án đối soát và lập kế hoạch thí điểm</p><span class="tag tag--o">Kế hoạch thí điểm</span></div>
       </div>
     </div>
     <div class="cta ac-reveal" style="--i:8">
-      <div><div class="cta__k">PVI SẴN SÀNG ĐỒNG HÀNH</div><p>Chúng tôi sẽ xây dựng <b>ý tưởng sản phẩm &amp; demo trải nghiệm</b> để hai bên cùng xem xét trong các bước triển khai tiếp theo.</p></div>
+      <div><div class="cta__k">PVI CAM KẾT ĐỒNG HÀNH CÙNG VIETNAM AIRLINES</div><p>Chúng tôi đã sẵn sàng các nguồn lực để phối hợp thiết kế chi tiết sản phẩm và mô phỏng trải nghiệm khách hàng trong các giai đoạn tiếp theo.</p></div>
       <div class="cta__tag">Bảo vệ hành trình<br>Nâng tầm trải nghiệm<br>Gia tăng doanh thu</div>
     </div>
   </div></div>
@@ -1213,7 +1212,7 @@ body{
     <div class="hero__logo ac-reveal"><img class="pvi-logo" src="PVI%20Logo%20(cropped).png" alt="Bảo hiểm PVI" /><span class="hero__x">×</span><img class="vna-logo" src="VNA%20Logo.png" alt="Vietnam Airlines" /></div>
     <div class="hero__kicker ac-reveal" style="--i:1;color:var(--pvi-cyan)">PVI Insurance × Vietnam Airlines</div>
     <div class="end__big">TRÂN TRỌNG CẢM ƠN</div>
-    <div class="hero__org ac-reveal" style="--i:3">Flight Delay Protection · Giải pháp bảo hiểm trễ chuyến bay</div>
+    <div class="hero__org ac-reveal" style="--i:3">Flight Delay Protection · Bảo hiểm trễ chuyến bay</div>
     <div class="hero__meta ac-reveal" style="--i:4">Bảo vệ hành trình · Nâng tầm trải nghiệm · Gia tăng doanh thu.</div>
     
   </div></div>
